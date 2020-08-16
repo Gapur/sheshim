@@ -37,8 +37,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "pre-commit": "lint-staged && npm run check",
-    "pre-push": "concurrently \"npm run web:test\"",
+    "pre-commit": "lint-staged && tsc -p tsconfig.json",
+    "pre-push": "tsc -p tsconfig.json",
     "eslint": "eslint '**/*.{ts,tsx}' --fix",
     "prettier": "prettier --write \"**/*.+(ts|tsx|scss|json)\""
   },
