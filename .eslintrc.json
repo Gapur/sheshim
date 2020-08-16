@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": ["plugin:react/recommended", "plugin:react-native/all"],
+  "extends": ["plugin:react/recommended"],
   "plugins": ["@typescript-eslint", "react-hooks", "eslintio", "react", "unicorn"],
   "ignorePatterns": ["node_modules"],
   "parserOptions": {
@@ -54,12 +54,7 @@
     ],
     "@typescript-eslint/await-thenable": "error",
     "@typescript-eslint/no-for-in-array": "error",
-    "@typescript-eslint/no-unnecessary-condition": [
-      "error",
-      {
-        "ignoreRhs": true
-      }
-    ],
+    "@typescript-eslint/no-unnecessary-condition": "error",
     "@typescript-eslint/no-misused-promises": "error",
     "@typescript-eslint/no-unnecessary-type-arguments": "error",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
@@ -85,9 +80,6 @@
     "react/prop-types": "error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    "react-native/sort-styles": 0,
-    "react-native/no-inline-styles": "error",
-    "react-native/no-raw-text": 0,
     "unicorn/filename-case": [
       "error",
       {
