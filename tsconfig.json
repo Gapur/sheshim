@@ -16,9 +16,8 @@
     "noEmit": true,
     "jsx": "react",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "paths": {
-      "root/*": ["./*"]
-    }
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
 }
