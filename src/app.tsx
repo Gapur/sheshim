@@ -1,14 +1,16 @@
 import React from 'react'
-import styled from 'styled-components'
 
-const Title = styled.h1`
-  margin-left: 12px;
-`
+import { useAuth } from './context/auth-context'
+import { FullPageSpinner } from './components'
 
-export default function App() {
+const AuthenticatedApp = React.lazy(() => import('./authenticated-app'))
+const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'))
+
+export function App() {
+  const { user } = useAuth()
   return (
-    <div className="App">
-      <Title>Sheshim</Title>
-    </div>
+    <React.Suspense fallback={<FullPageSpinner />}>
+      {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+    </React.Suspense>
   )
 }

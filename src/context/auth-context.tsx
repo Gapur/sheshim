@@ -50,7 +50,7 @@ export function AuthProvider(props: AuthProviderProps) {
   return <AuthContext.Provider value={state} {...props} />
 }
 
-export function useAuthState() {
+export function useAuth() {
   const state = React.useContext(AuthContext)
   const isIdle = state.status === AuthStatus.Idle
   const isPending = state.status === AuthStatus.Pending
