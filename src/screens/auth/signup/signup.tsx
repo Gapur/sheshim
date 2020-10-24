@@ -3,19 +3,7 @@ import styled from 'styled-components'
 import { Grid, Button, Form, Icon, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-const AuthLayout = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`
-
-const SignupButton = styled(Button)`
-  && {
-    margin-top: 8px;
-    margin-bottom: 8px;
-  }
-`
+import { AuthLayout } from '../../../components'
 
 const Span = styled.span`
   display: block;
@@ -28,14 +16,14 @@ export function Signup() {
     <AuthLayout>
       <Grid columns={3} centered container stackable>
         <Grid.Column>
-          <SignupButton fluid color="google plus">
+          <Button fluid color="google plus">
             <Icon name="google" />
             Sign up with Google
-          </SignupButton>
-          <SignupButton color="facebook" fluid>
+          </Button>
+          <Button color="facebook" fluid>
             <Icon name="facebook" />
             Sign up with Facebook
-          </SignupButton>
+          </Button>
           <Segment raised>
             <Form>
               <Form.Field>
