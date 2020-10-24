@@ -11,7 +11,7 @@ const Span = styled.span`
   padding-top: 16px;
 `
 
-export function Signup() {
+export function SignUp() {
   return (
     <AuthLayout>
       <Grid columns={3} centered container stackable>

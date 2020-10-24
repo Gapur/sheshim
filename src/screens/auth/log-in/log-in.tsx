@@ -17,7 +17,12 @@ const Span = styled.span`
   padding-top: 16px;
 `
 
-export function Login() {
+const FormFieldEnd = styled(Form.Field)`
+  display: flex;
+  justify-content: flex-end;
+`
+
+export function LogIn() {
   return (
     <AuthLayout>
       <Grid columns={3} centered container stackable>
@@ -38,6 +43,9 @@ export function Login() {
                 <input placeholder="example@gmail.com" />
               </Form.Field>
               <Form.Input label="Password" type="password" placeholder="password" />
+              <FormFieldEnd>
+                <Link to="/forgot">Forgot password?</Link>
+              </FormFieldEnd>
               <Button type="submit" fluid color="twitter">
                 Log in
               </Button>

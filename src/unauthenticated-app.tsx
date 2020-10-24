@@ -4,14 +4,16 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 import { FullPageErrorFallback } from './components'
 
-import { Login } from './screens/auth/login/login'
-import { Signup } from './screens/auth/signup/signup'
+import { LogIn } from './screens/auth/log-in/log-in'
+import { SignUp } from './screens/auth/sign-up/sign-up'
+import { ForgotPassword } from './screens/auth/forgot-password/forgot-password'
 
 function AuthRoutes() {
   return (
     <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/signup" component={Signup} />
+      <Route path="/login" component={LogIn} />
+      <Route path="/signup" component={SignUp} />
+      <Route path="/forgot" component={ForgotPassword} />
     </Switch>
   )
 }
