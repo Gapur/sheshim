@@ -10,7 +10,6 @@ const AuthLayout = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: #f6f7f9;
 `
 
 const LoginButton = styled(Button)`
@@ -49,7 +48,7 @@ export function Login() {
             <Form>
               <Form.Field>
                 <label>Email</label>
-                <input placeholder="email" />
+                <input placeholder="example@gmail.com" />
               </Form.Field>
               <Form.Input label="Password" type="password" placeholder="password" />
               <Button type="submit" fluid color="twitter">
