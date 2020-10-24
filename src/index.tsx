@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom'
 
 import { App } from './app'
 import { AppProviders } from './context'
+import { GlobalStyle } from './theme'
 import * as serviceWorker from './service-worker'
+
+import 'semantic-ui-css/semantic.min.css'
 
 ReactDOM.render(
   <React.StrictMode>
     <AppProviders>
+      <GlobalStyle />
       <App />
     </AppProviders>
   </React.StrictMode>,
