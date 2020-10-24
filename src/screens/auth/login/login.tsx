@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Grid, Button, Form, Icon, Segment, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 import { images } from '../../../assets'
 
@@ -24,13 +25,19 @@ const Logo = styled(Image)`
   margin-bottom: 32px;
 `
 
+const Span = styled.span`
+  display: block;
+  text-align: center;
+  padding-top: 16px;
+`
+
 export function Login() {
   return (
     <AuthLayout>
       <Grid columns={3} centered container stackable>
         <Grid.Column>
           <Logo src={images.logo} centered />
-          <LoginButton basic fluid>
+          <LoginButton fluid color="google plus">
             <Icon name="google" />
             Log in with Google
           </LoginButton>
@@ -38,7 +45,7 @@ export function Login() {
             <Icon name="facebook" />
             Log in with Facebook
           </LoginButton>
-          <Segment>
+          <Segment raised>
             <Form>
               <Form.Field>
                 <label>Email</label>
@@ -50,6 +57,9 @@ export function Login() {
               </Button>
             </Form>
           </Segment>
+          <Span>
+            Don’t have an account? <Link to="/signup">Sign Up</Link>
+          </Span>
         </Grid.Column>
       </Grid>
     </AuthLayout>
