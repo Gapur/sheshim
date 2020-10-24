@@ -10,7 +10,7 @@ import { Home } from './screens/home/home'
 function AppRoutes() {
   return (
     <Switch>
-      <Route path="/" element={<Home />} />
+      <Route path="/" component={Home} />
     </Switch>
   )
 }
