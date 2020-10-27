@@ -3,7 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { Switch, Route } from 'react-router-dom'
 
 import { useAuth } from './context/auth-context'
-import { FullPageErrorFallback } from './components'
+import { FullPageErrorFallback, AppLayout } from './components'
 
 import { Home } from './screens/home/home'
 
@@ -19,13 +19,9 @@ export default function AuthenticatedApp() {
   const { user } = useAuth()
   return (
     <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
-      <div>
-        {user}
-        <button>Logout</button>
-      </div>
-      <div>
+      <AppLayout>
         <AppRoutes />
-      </div>
+      </AppLayout>
     </ErrorBoundary>
   )
 }
