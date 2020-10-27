@@ -7,11 +7,20 @@ import { images } from '../../assets'
 
 const PLACEHOLDER_IMAGE = 'https://react.semantic-ui.com/images/wireframe/square-image.png'
 
+const Layout = styled.div`
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  flex-wrap: wrap;
+  padding-top: 50px;
+`
+
 const Header = styled.div`
   && {
     display: flex;
     align-items: center;
     height: 50px;
+    top: 0;
     position: fixed;
     width: 100%;
     z-index: 5050;
@@ -72,47 +81,50 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <Header>
-      <Container>
-        <Grid columns="equal" stackable>
-          <Grid.Column>
-            <Logo>
-              <Image src={images.logo} />
-              <span>Sheshim</span>
-            </Logo>
-          </Grid.Column>
-          <Grid.Column width={10}>
-            <Search loading={false} onResultSelect={(e, data) => {}} onSearchChange={() => {}} results={[]} />
-          </Grid.Column>
-          <Grid.Column>
-            <Menu secondary size="large">
-              <Menu.Menu>
-                <Dropdown
-                  item
-                  className="profile"
-                  trigger={
-                    <DropdownAvatar>
-                      <Image src={PLACEHOLDER_IMAGE} />
-                      Gapur
-                    </DropdownAvatar>
-                  }
-                >
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => {
-                        window.location.href = 'mailto:gapur.kassym@gmail.com'
-                      }}
-                    >
-                      Help
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={() => {}}>Logout</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Menu.Menu>
-            </Menu>
-          </Grid.Column>
-        </Grid>
-      </Container>
-    </Header>
+    <Layout>
+      <Header>
+        <Container>
+          <Grid columns="equal" stackable>
+            <Grid.Column>
+              <Logo>
+                <Image src={images.logo} />
+                <span>Sheshim</span>
+              </Logo>
+            </Grid.Column>
+            <Grid.Column width={10}>
+              <Search loading={false} onResultSelect={(e, data) => {}} onSearchChange={() => {}} results={[]} />
+            </Grid.Column>
+            <Grid.Column>
+              <Menu secondary size="large">
+                <Menu.Menu>
+                  <Dropdown
+                    item
+                    className="profile"
+                    trigger={
+                      <DropdownAvatar>
+                        <Image src={PLACEHOLDER_IMAGE} />
+                        Gapur
+                      </DropdownAvatar>
+                    }
+                  >
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        onClick={() => {
+                          window.location.href = 'mailto:gapur.kassym@gmail.com'
+                        }}
+                      >
+                        Help
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={() => {}}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Menu.Menu>
+              </Menu>
+            </Grid.Column>
+          </Grid>
+        </Container>
+      </Header>
+      {children}
+    </Layout>
   )
 }
