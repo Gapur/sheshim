@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Image, Grid, Search, Dropdown, Menu } from 'semantic-ui-react'
+import { Image, Search, Dropdown, Menu } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 import { images } from '../assets'
@@ -17,19 +17,19 @@ const Header = styled.div`
     width: 100%;
     z-index: 5050;
     box-shadow: 0 1px 3px 0 rgba(32, 33, 36, 0.28);
-
-    .grid > .column {
-      padding-top: 0;
-      padding-bottom: 0;
-    }
+    background: ${colors.white};
 
     .search {
-      margin-top: 2px;
-      margin-bottom: 2px;
+      width: 68%;
     }
     .search > .input {
       width: 100%;
     }
+  }
+
+  .header-menu {
+    width: 16%;
+    margin: 0;
   }
 
   .ui.menu .item.dropdown.profile {
@@ -40,10 +40,19 @@ const Header = styled.div`
   }
 `
 
+const Nav = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 94em;
+  margin: 0 auto;
+`
+
 const Logo = styled.div`
   display: flex;
   align-items: center;
   height: 100%;
+  width: 16%;
 
   .image {
     width: 28px;
@@ -70,46 +79,38 @@ const DropdownAvatar = styled.span`
 export function AppHeader() {
   return (
     <Header>
-      <Container>
-        <Grid columns="equal" stackable>
-          <Grid.Column>
-            <Logo>
-              <Image src={images.logo} />
-              <span>Sheshim</span>
-            </Logo>
-          </Grid.Column>
-          <Grid.Column width={10}>
-            <Search loading={false} onResultSelect={(e, data) => {}} onSearchChange={() => {}} results={[]} />
-          </Grid.Column>
-          <Grid.Column>
-            <Menu secondary size="large">
-              <Menu.Menu>
-                <Dropdown
-                  item
-                  className="profile"
-                  trigger={
-                    <DropdownAvatar>
-                      <Image src={PLACEHOLDER_IMAGE} />
-                      Gapur
-                    </DropdownAvatar>
-                  }
+      <Nav>
+        <Logo>
+          <Image src={images.logo} />
+          <span>Sheshim</span>
+        </Logo>
+        <Search loading={false} onResultSelect={(e, data) => {}} onSearchChange={() => {}} results={[]} />
+        <Menu className="header-menu" secondary size="large">
+          <Menu.Menu position="right">
+            <Dropdown
+              item
+              className="profile"
+              trigger={
+                <DropdownAvatar>
+                  <Image src={PLACEHOLDER_IMAGE} />
+                  Gapur
+                </DropdownAvatar>
+              }
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  onClick={() => {
+                    window.location.href = 'mailto:gapur.kassym@gmail.com'
+                  }}
                 >
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => {
-                        window.location.href = 'mailto:gapur.kassym@gmail.com'
-                      }}
-                    >
-                      Help
-                    </Dropdown.Item>
-                    <Dropdown.Item onClick={() => {}}>Logout</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Menu.Menu>
-            </Menu>
-          </Grid.Column>
-        </Grid>
-      </Container>
+                  Help
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => {}}>Logout</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Menu>
+        </Menu>
+      </Nav>
     </Header>
   )
 }
