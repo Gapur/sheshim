@@ -2,10 +2,10 @@ import React from 'react'
 
 import { AppLayout } from '../../components'
 
-export function Home() {
+export function Users() {
   return (
-    <AppLayout page="home">
-      <span>Home</span>
+    <AppLayout page="users">
+      <span>Users</span>
     </AppLayout>
   )
 }

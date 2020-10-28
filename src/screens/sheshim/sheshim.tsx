@@ -2,10 +2,10 @@ import React from 'react'
 
 import { AppLayout } from '../../components'
 
-export function Home() {
+export function Sheshim() {
   return (
-    <AppLayout page="home">
-      <span>Home</span>
+    <AppLayout page="sheshim">
+      <span>Sheshim</span>
     </AppLayout>
   )
 }
