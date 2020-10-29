@@ -3,10 +3,10 @@ import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 
 import { AppLayout } from '../../components'
-import { QuestionSegment } from './components/question-segment'
+import { QuestionListItem } from './components/question-list-item'
 import { data } from './mock'
 
-const QuestionSegments = styled.div`
+const QuestionList = styled.div`
   width: 72%;
 
   .segment {
@@ -23,11 +23,11 @@ export function Home() {
           Ask Question
         </Button>
       </Header>
-      <QuestionSegments>
+      <QuestionList>
         {data.map((item) => (
-          <QuestionSegment key={item.id} question={item} />
+          <QuestionListItem key={item.id} question={item} />
         ))}
-      </QuestionSegments>
+      </QuestionList>
     </AppLayout>
   )
 }

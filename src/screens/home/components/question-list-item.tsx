@@ -52,11 +52,11 @@ const Started = styled.div`
   color: ${colors.eclipse};
 `
 
-interface QuestionSegmentProps {
+interface QuestionListItemProps {
   question: Question
 }
 
-export function QuestionSegment({ question }: QuestionSegmentProps) {
+export function QuestionListItem({ question }: QuestionListItemProps) {
   return (
     <Segment color="yellow">
       <QuestionStats>
