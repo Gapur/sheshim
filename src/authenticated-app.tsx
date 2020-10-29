@@ -7,7 +7,8 @@ import { FullPageErrorFallback, AppHeader } from './components'
 
 import { Home } from './screens/home/home'
 import { Sheshim } from './screens/sheshim/sheshim'
-import { Users } from './screens/users/users'
+import { UserList } from './screens/users/user-list/user-list'
+import { UserDetails } from './screens/users/user-details/user-details'
 
 export default function AuthenticatedApp() {
   const { user } = useAuth()
@@ -15,8 +16,9 @@ export default function AuthenticatedApp() {
     <ErrorBoundary FallbackComponent={FullPageErrorFallback}>
       <AppHeader />
       <Switch>
-        <Route path="/sheshim" component={Sheshim} />
-        <Route path="/users" component={Users} />
+        <Route exact path="/sheshim" component={Sheshim} />
+        <Route exact path="/users" component={UserList} />
+        <Route exact path="/users/:id" component={UserDetails} />
         <Route path="/" component={Home} />
       </Switch>
     </ErrorBoundary>

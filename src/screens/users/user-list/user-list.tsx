@@ -1,10 +1,11 @@
 import React from 'react'
 import { Header, Table, Image } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
-import { AppLayout } from '../../components'
-import { data } from './mock'
+import { AppLayout } from '../../../components'
+import { data } from '../mock'
 
-export function Users() {
+export function UserList() {
   return (
     <AppLayout page="users">
       <Header>Users</Header>
@@ -24,7 +25,7 @@ export function Users() {
                 <Header as="h4" image>
                   <Image src={item.avatar} rounded size="mini" />
                   <Header.Content>
-                    {`${item.firstName} ${item.lastName}`}
+                    <Link to={`/users/${item.id}`}>{`${item.firstName} ${item.lastName}`}</Link>
                     <Header.Subheader>{item.email}</Header.Subheader>
                   </Header.Content>
                 </Header>
