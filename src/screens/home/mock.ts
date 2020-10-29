@@ -1,4 +1,15 @@
-export const data = [
+export interface Question {
+  id: number
+  votes: number
+  answers: number
+  views: number
+  question: string
+  tags: string[]
+  createdAt: string
+  createdBy: string
+}
+
+export const data: Question[] = [
   {
     id: 1,
     votes: 0,
