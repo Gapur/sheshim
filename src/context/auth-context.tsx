@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState, useContext, createContext } from 'react'
 
 const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
 
@@ -23,16 +23,16 @@ interface AuthProviderProps {
 
 const defaultInitialState: AuthContextProps = { status: AuthStatus.Idle, user: null, error: null }
 
-const AuthContext = React.createContext<AuthContextProps>(defaultInitialState)
+const AuthContext = createContext<AuthContextProps>(defaultInitialState)
 
 export function AuthProvider(props: AuthProviderProps) {
-  const [state, setState] = React.useState<AuthContextProps>({
+  const [state, setState] = useState<AuthContextProps>({
     status: AuthStatus.Pending,
     error: null,
     user: null,
   })
 
-  React.useEffect(() => {
+  useEffect(() => {
     getUser().then(
       (user) => setState({ status: AuthStatus.Success, error: null, user }),
       (error) => setState({ status: AuthStatus.Error, error, user: null }),
@@ -51,7 +51,7 @@ export function AuthProvider(props: AuthProviderProps) {
 }
 
 export function useAuth() {
-  const state = React.useContext(AuthContext)
+  const state = useContext(AuthContext)
   const isIdle = state.status === AuthStatus.Idle
   const isPending = state.status === AuthStatus.Pending
   const isError = state.status === AuthStatus.Error

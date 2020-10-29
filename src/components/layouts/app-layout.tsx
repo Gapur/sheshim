@@ -18,6 +18,14 @@ const Layout = styled.div`
   }
 `
 
+const Content = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  flex-direction: column;
+  padding: 2%;
+`
+
 interface AppLayoutProps {
   page: 'home' | 'sheshim' | 'users'
   children: React.ReactNode
@@ -33,7 +41,7 @@ export function AppLayout({ page, children }: AppLayoutProps) {
         <Menu.Item name="sheshim" active={page === 'sheshim'} onClick={() => history.push({ pathname: '/sheshim' })} />
         <Menu.Item name="users" active={page === 'users'} onClick={() => history.push({ pathname: '/users' })} />
       </Menu>
-      {children}
+      <Content>{children}</Content>
     </Layout>
   )
 }
