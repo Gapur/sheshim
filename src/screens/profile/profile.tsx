@@ -3,7 +3,7 @@ import { Header, Form, TextArea, Select, Button, Image } from 'semantic-ui-react
 import { useDropzone } from 'react-dropzone'
 import styled from 'styled-components'
 
-import { AppLayout } from '../../../components'
+import { AppLayout } from '../../components'
 
 const DragDropzone = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ interface DropzoneFile extends File {
   preview: string
 }
 
-export function UserDetails() {
+export function Profile() {
   const [files, setFiles] = useState<DropzoneFile[]>([])
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -32,7 +32,7 @@ export function UserDetails() {
 
   return (
     <AppLayout page="users">
-      <Header>User Details</Header>
+      <Header>Profile</Header>
       <Form>
         <DragDropzone {...getRootProps({ refKey: 'ref' })}>
           <input {...getInputProps()} />
