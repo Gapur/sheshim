@@ -3,26 +3,47 @@ import { Segment, Header } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { Question } from '../mock'
+import { Question } from '../../home/mock'
 import { colors } from '../../../theme'
 
 const QuestionStats = styled.div`
   display: flex;
-  flex-wrap: nowrap;
-  margin-right: 8px;
+  flex-direction: column;
+  margin-right: 16px;
 `
 
-const Stat = styled.div`
+const Vote = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-bottom: 8px;
 
-  span {
+  strong {
     font-size: 17px;
     font-weight: 400;
+  }
+
+  span {
+    font-size: 12px;
     color: ${colors.eclipse};
+  }
+`
+
+const AnswerStatus = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #75b782;
+  padding: 4px;
+  border-radius: 3px;
+  color: ${colors.white};
+
+  strong {
+    font-size: 17px;
+  }
+
+  span {
+    font-size: 12px;
   }
 `
 
@@ -44,6 +65,14 @@ const Tags = styled.div`
   }
 `
 
+const QuestionText = styled.p`
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`
+
 const Started = styled.div`
   float: right;
   padding-top: 4px;
@@ -52,31 +81,28 @@ const Started = styled.div`
   color: ${colors.eclipse};
 `
 
-interface QuestionListItemProps {
+interface SheshimListItemProps {
   question: Question
 }
 
-export function QuestionListItem({ question }: QuestionListItemProps) {
+export function SheshimListItem({ question }: SheshimListItemProps) {
   return (
     <Segment color="yellow">
       <QuestionStats>
-        <Stat>
-          <span>{question.votes}</span>
+        <Vote>
+          <strong>{question.votes}</strong>
           <span>votes</span>
-        </Stat>
-        <Stat>
-          <span>{question.answers}</span>
+        </Vote>
+        <AnswerStatus>
+          <strong>{question.answers}</strong>
           <span>answers</span>
-        </Stat>
-        <Stat>
-          <span>{question.views}</span>
-          <span>views</span>
-        </Stat>
+        </AnswerStatus>
       </QuestionStats>
       <div>
         <Header>
           <Link to="/">{question.title}</Link>
         </Header>
+        <QuestionText>{question.body}</QuestionText>
         <Tags>
           {question.tags.map((tag, idx) => (
             <span key={idx}>{tag}</span>

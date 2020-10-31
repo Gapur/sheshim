@@ -22,7 +22,7 @@ export function UserDetails() {
     <AppLayout page="users">
       <Header>User Details</Header>
 
-      <Card>
+      <Card color="yellow">
         <Image src={user.avatar} wrapped ui={false} />
         <Card.Content>
           <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
