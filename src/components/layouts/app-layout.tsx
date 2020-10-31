@@ -27,7 +27,7 @@ const Content = styled.div`
 `
 
 interface AppLayoutProps {
-  page: 'home' | 'sheshim' | 'users'
+  page: 'home' | 'sheshim' | 'users' | 'profile'
   children: React.ReactNode
 }
 

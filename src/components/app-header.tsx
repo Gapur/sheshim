@@ -1,6 +1,7 @@
 import React from 'react'
 import { Image, Search, Dropdown, Menu } from 'semantic-ui-react'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 
 import { images } from '../assets'
 import { colors } from '../theme'
@@ -77,6 +78,8 @@ const DropdownAvatar = styled.span`
 `
 
 export function AppHeader() {
+  const history = useHistory()
+
   return (
     <Header>
       <Nav>
@@ -98,6 +101,7 @@ export function AppHeader() {
               }
             >
               <Dropdown.Menu>
+                <Dropdown.Item onClick={() => history.push('/profile')}>Profile</Dropdown.Item>
                 <Dropdown.Item
                   onClick={() => {
                     window.location.href = 'mailto:gapur.kassym@gmail.com'
