@@ -31,7 +31,7 @@ export function Profile() {
   }, [files])
 
   return (
-    <AppLayout page="users">
+    <AppLayout page="profile">
       <Header>Profile</Header>
       <Form>
         <DragDropzone {...getRootProps({ refKey: 'ref' })}>

@@ -19,7 +19,7 @@ export default function AuthenticatedApp() {
       <Switch>
         <Route exact path="/sheshim" component={Sheshim} />
         <Route exact path="/users" component={UserList} />
-        <Route exact path="/users/:id" component={UserDetails} />
+        <Route exact path="/users/:userId" component={UserDetails} />
         <Route exact path="/profile" component={Profile} />
         <Route path="/" component={Home} />
       </Switch>
