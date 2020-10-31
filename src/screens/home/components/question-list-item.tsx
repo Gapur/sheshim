@@ -75,7 +75,7 @@ export function QuestionListItem({ question }: QuestionListItemProps) {
       </QuestionStats>
       <div>
         <Header>
-          <Link to="/">{question.title}</Link>
+          <Link to={`sheshim/${question.id}`}>{question.title}</Link>
         </Header>
         <Tags>
           {question.tags.map((tag, idx) => (

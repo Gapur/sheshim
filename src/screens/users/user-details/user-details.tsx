@@ -5,12 +5,12 @@ import { Link, useParams } from 'react-router-dom'
 import { AppLayout } from '../../../components'
 import { data } from '../mock'
 
-interface UserDetailsParamsProps {
+interface UserDetailsParams {
   userId: string
 }
 
 export function UserDetails() {
-  const { userId } = useParams<UserDetailsParamsProps>()
+  const { userId } = useParams<UserDetailsParams>()
 
   const user = data.find((item) => String(item.id) === userId)
 
