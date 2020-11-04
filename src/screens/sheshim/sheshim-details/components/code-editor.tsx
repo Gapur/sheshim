@@ -1,8 +1,7 @@
 import React, { useState, useCallback, useMemo } from 'react'
-import { Slate, Editable, withReact, RenderLeafProps } from 'slate-react'
+import { Slate, Editable, withReact } from 'slate-react'
 import { Text, createEditor, Node as SlateNode, Range } from 'slate'
 import { withHistory } from 'slate-history'
-import styled, { css } from 'styled-components'
 import Prism from 'prismjs'
 
 import 'prismjs/components/prism-python'
@@ -10,92 +9,33 @@ import 'prismjs/components/prism-php'
 import 'prismjs/components/prism-sql'
 import 'prismjs/components/prism-java'
 
-interface LeafSpanProps {
-  [key: string]: unknown
+import { SlateLeaf } from './slate-leaf'
+
+interface CodeEditorProps {
+  initialValue: string
 }
 
-const LeafSpan = styled.span<LeafSpanProps>`
-  font-family: monospace;
-  background: hsla(0, 0%, 100%, 0.5);
+export function CodeEditor({ initialValue }: CodeEditorProps) {
+  const slateInitialValue = [{ children: [{ text: initialValue }] }]
 
-  ${(props) => {
-    if (props.comment) {
-      return css`
-        color: slategray;
-      `
-    }
-    if (props.operator || props.url) {
-      return css`
-        color: #9a6e3a;
-      `
-    }
-    if (props.keyword) {
-      return css`
-        color: #07a;
-      `
-    }
-    if (props.variable || props.regex) {
-      return css`
-        color: #e90;
-      `
-    }
-    if (props.number || props.boolean || props.tag || props.constant || props.symbol || props.attr || props.selector) {
-      return css`
-        color: #999;
-      `
-    }
-    if (props.punctuation) {
-      return css`
-        color: #999;
-      `
-    }
-    if (props.string || props.char) {
-      return css`
-        color: #690;
-      `
-    }
-    if (props.function || props.class) {
-      return css`
-        color: #dd4a68;
-      `
-    }
-  }}
-`
-
-const getLength = (token: string | Prism.Token): number => {
-  if (typeof token === 'string') {
-    return token.length
-  } else if (typeof token.content === 'string') {
-    return token.content.length
-  } else {
-    return (token.content as (string | Prism.Token)[]).reduce(
-      (l: number, t: string | Prism.Token) => l + getLength(t),
-      0,
-    )
-  }
-}
-
-const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
-  return <span {...attributes}>{children}</span>
-}
-
-const initialValue = [
-  {
-    children: [
-      {
-        text: '<h1>Hi!</h1>',
-      },
-    ],
-  },
-]
-
-export function CodeEditor() {
-  const [value, setValue] = useState<SlateNode[]>(initialValue)
+  const [slateValue, setSlateValue] = useState<SlateNode[]>(slateInitialValue)
   const [language, setLanguage] = useState('html')
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
+  const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
 
-  // decorate function depends on the language selected
+  const getLength = useCallback((token: string | Prism.Token): number => {
+    if (typeof token === 'string') {
+      return token.length
+    } else if (typeof token.content === 'string') {
+      return token.content.length
+    } else {
+      return (token.content as (string | Prism.Token)[]).reduce(
+        (acc: number, curr: string | Prism.Token) => acc + getLength(curr),
+        0,
+      )
+    }
+  }, [])
+
   const decorate = useCallback(
     ([node, path]) => {
       const ranges: Range[] = []
@@ -122,26 +62,28 @@ export function CodeEditor() {
 
       return ranges
     },
-    [language],
+    [language, getLength],
   )
 
   return (
-    <Slate editor={editor} value={value} onChange={setValue}>
-      <div contentEditable={false} style={{ position: 'relative', top: '5px', right: '5px' }}>
-        <h3>
-          Select a language
-          <select value={language} style={{ float: 'right' }} onChange={(e) => setLanguage(e.target.value)}>
-            <option value="js">JavaScript</option>
-            <option value="css">CSS</option>
-            <option value="html">HTML</option>
-            <option value="python">Python</option>
-            <option value="sql">SQL</option>
-            <option value="java">Java</option>
-            <option value="php">PHP</option>
-          </select>
-        </h3>
+    <Slate editor={editor} value={slateValue} onChange={setSlateValue}>
+      <div style={{ position: 'relative', top: '5px', right: '5px' }}>
+        <select value={language} style={{ float: 'right' }} onChange={(e) => setLanguage(e.target.value)}>
+          <option value="js">JavaScript</option>
+          <option value="css">CSS</option>
+          <option value="html">HTML</option>
+          <option value="python">Python</option>
+          <option value="sql">SQL</option>
+          <option value="java">Java</option>
+          <option value="php">PHP</option>
+        </select>
       </div>
-      <Editable decorate={decorate} renderLeaf={renderLeaf} placeholder="Write some code..." />
+      <Editable
+        decorate={decorate}
+        renderLeaf={renderLeaf}
+        style={{ background: '#F6F6F6' }}
+        placeholder="Write some code..."
+      />
     </Slate>
   )
 }
@@ -216,14 +158,3 @@ Prism.languages.insertBefore(
   },
   {},
 )
-
-// Prism.languages.markdown.bold.inside.url = Prism.util.clone(
-//   Prism.languages.markdown.url
-// )
-// Prism.languages.markdown.italic.inside.url = Prism.util.clone(
-//   Prism.languages.markdown.url
-// )
-// Prism.languages.markdown.bold.inside.italic = Prism.util.clone(
-//   Prism.languages.markdown.italic
-// )
-// Prism.languages.markdown.italic.inside.bold = Prism.util.clone(Prism.languages.markdown.bold);

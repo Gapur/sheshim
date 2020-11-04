@@ -30,7 +30,7 @@ export const data: Question[] = [
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
-      "I accidentally committed the wrong files to Git, but I haven't pushed the commit to the server yet. How can I undo those commits from the local repository?",
+      'we could do something like this <div id="tags-container"> {tags.map(t => <Link className="tags" activeStyle={{ color: \'red\' }} to={t.path}>{t.title}</Link>)}</div> I wanna know how can I do same thing in v4?',
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
