@@ -1,11 +1,29 @@
 export interface Question {
   id: number
   votes: number
-  answers: number
+  answersCount: number
   views: number
   title: string
   body: string
   tags: string[]
+  createdAt: string
+  createdBy: string
+  answers: Answer[]
+}
+
+export interface Answer {
+  id: number
+  votes: number
+  body: string
+  createdAt: string
+  createdBy: string
+  comments: Comment[]
+}
+
+export interface Comment {
+  id: number
+  votes: number
+  text: string
   createdAt: string
   createdBy: string
 }
@@ -14,7 +32,7 @@ export const data: Question[] = [
   {
     id: 1,
     votes: 0,
-    answers: 8,
+    answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
@@ -22,11 +40,29 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    answers: [
+      {
+        id: 1,
+        votes: 1,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+      {
+        id: 2,
+        votes: 6,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+    ],
   },
   {
     id: 2,
     votes: 0,
-    answers: 8,
+    answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
@@ -34,11 +70,29 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    answers: [
+      {
+        id: 1,
+        votes: 1,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+      {
+        id: 2,
+        votes: 6,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+    ],
   },
   {
     id: 3,
     votes: 0,
-    answers: 8,
+    answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
@@ -46,11 +100,29 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    answers: [
+      {
+        id: 1,
+        votes: 1,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+      {
+        id: 2,
+        votes: 6,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+    ],
   },
   {
     id: 4,
     votes: 0,
-    answers: 8,
+    answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
@@ -58,11 +130,12 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    answers: [],
   },
   {
     id: 5,
     votes: 0,
-    answers: 8,
+    answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
@@ -70,11 +143,29 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    answers: [
+      {
+        id: 1,
+        votes: 1,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+      {
+        id: 2,
+        votes: 6,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+    ],
   },
   {
     id: 6,
     votes: 0,
-    answers: 8,
+    answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
@@ -82,11 +173,12 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    answers: [],
   },
   {
     id: 7,
     votes: 0,
-    answers: 8,
+    answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
     body:
@@ -94,5 +186,23 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    answers: [
+      {
+        id: 1,
+        votes: 1,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+      {
+        id: 2,
+        votes: 6,
+        body: 'If you are using React Router, you have to use this',
+        createdAt: 'asked 3 hours ago',
+        createdBy: 'Gapur Kassym',
+        comments: [],
+      },
+    ],
   },
 ]

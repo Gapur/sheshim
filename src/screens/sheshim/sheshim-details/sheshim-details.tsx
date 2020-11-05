@@ -49,7 +49,7 @@ export function SheshimDetails() {
             <Button>{sheshim.votes}</Button>
             <Button icon="angle down" />
           </Button.Group>
-          <CodeEditor initialValue={sheshim.body} />
+          <CodeEditor initialValue={sheshim.body} readonly />
         </SheshimResponse>
       </Sheshimder>
     </AppLayout>

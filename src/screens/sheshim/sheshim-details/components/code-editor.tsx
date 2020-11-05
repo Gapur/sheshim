@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react'
+import styled from 'styled-components'
 import { Slate, Editable, withReact } from 'slate-react'
 import { Text, createEditor, Node as SlateNode, Range } from 'slate'
 import { withHistory } from 'slate-history'
@@ -10,12 +11,21 @@ import 'prismjs/components/prism-sql'
 import 'prismjs/components/prism-java'
 
 import { SlateLeaf } from './slate-leaf'
+import { colors } from '../../../../theme'
 
 interface CodeEditorProps {
   initialValue: string
+  readonly?: boolean
 }
 
-export function CodeEditor({ initialValue }: CodeEditorProps) {
+const StyledEditable = styled(Editable)`
+  background: ${colors.whiteSmoke};
+  margin-left: 8px;
+  padding: 8px;
+  border-radius: 4px;
+`
+
+export function CodeEditor({ initialValue, readonly = false }: CodeEditorProps) {
   const slateInitialValue = [{ children: [{ text: initialValue }] }]
 
   const [slateValue, setSlateValue] = useState<SlateNode[]>(slateInitialValue)
@@ -67,21 +77,23 @@ export function CodeEditor({ initialValue }: CodeEditorProps) {
 
   return (
     <Slate editor={editor} value={slateValue} onChange={setSlateValue}>
-      <div style={{ position: 'relative', top: '5px', right: '5px' }}>
-        <select value={language} style={{ float: 'right' }} onChange={(e) => setLanguage(e.target.value)}>
-          <option value="js">JavaScript</option>
-          <option value="css">CSS</option>
-          <option value="html">HTML</option>
-          <option value="python">Python</option>
-          <option value="sql">SQL</option>
-          <option value="java">Java</option>
-          <option value="php">PHP</option>
-        </select>
-      </div>
-      <Editable
+      {!readonly && (
+        <div style={{ position: 'relative', top: '5px', right: '5px' }}>
+          <select value={language} style={{ float: 'right' }} onChange={(e) => setLanguage(e.target.value)}>
+            <option value="js">JavaScript</option>
+            <option value="css">CSS</option>
+            <option value="html">HTML</option>
+            <option value="python">Python</option>
+            <option value="sql">SQL</option>
+            <option value="java">Java</option>
+            <option value="php">PHP</option>
+          </select>
+        </div>
+      )}
+      <StyledEditable
         decorate={decorate}
+        readOnly={readonly}
         renderLeaf={renderLeaf}
-        style={{ background: '#F6F6F6' }}
         placeholder="Write some code..."
       />
     </Slate>
