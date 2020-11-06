@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { Grid, Button, Form, Icon, Segment, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import { images } from '../../../assets'
-import { AuthLayout } from '../../../components'
+import { AuthLayout } from 'components'
+import { images } from 'assets'
 
 const Logo = styled(Image)`
   width: 72px;

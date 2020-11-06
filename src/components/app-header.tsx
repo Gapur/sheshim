@@ -3,8 +3,8 @@ import { Image, Search, Dropdown, Menu } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
+import { colors } from 'theme'
 import { images } from '../assets'
-import { colors } from '../theme'
 
 const PLACEHOLDER_IMAGE = 'https://react.semantic-ui.com/images/wireframe/square-image.png'
 

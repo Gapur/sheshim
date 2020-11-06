@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { AppLayout } from '../../../components'
+import { AppLayout } from 'components'
+import { data, Answer } from 'screens/home/mock'
+import { colors } from 'theme'
+
 import { CodeEditor } from './components/code-editor'
-import { data, Answer } from '../../home/mock'
-import { colors } from '../../../theme'
+import { SheshimComments } from './components/sheshim-comments'
 
 interface SheshimDetailsParams {
   sheshimId: string
@@ -65,7 +67,7 @@ export function SheshimDetails() {
           Ask Question
         </Button>
       </Header>
-      <Label.Group tag>
+      <Label.Group tag color="teal">
         <Label as="a">{`Asked: ${sheshim.createdAt}`}</Label>
         <Label as="a">{`Responded: ${sheshim.answersCount}`}</Label>
         <Label as="a">{`Viewed: ${sheshim.views} times`}</Label>
@@ -90,6 +92,7 @@ export function SheshimDetails() {
             <span>{sheshim.createdAt}</span>&nbsp;
             <Link to="/users">{sheshim.createdBy}</Link>
           </Started>
+          <SheshimComments comments={[]} />
         </SheshimResponse>
 
         <Header>{`${sheshim.answers.length} Answers`}</Header>
@@ -108,6 +111,7 @@ export function SheshimDetails() {
               <span>{answer.createdAt}</span>&nbsp;
               <Link to="/users">{answer.createdBy}</Link>
             </Started>
+            <SheshimComments comments={answer.comments} />
             <Divider />
           </SheshimResponse>
         ))}
