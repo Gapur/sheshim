@@ -5,4 +5,5 @@ export default {
   eclipse: '#3e3e3e',
   solitude: '#E3ECF3',
   airForceBlue: '#5A82A5',
+  whiteSmoke: '#F6F6F6',
 }
