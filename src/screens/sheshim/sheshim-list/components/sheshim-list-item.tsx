@@ -3,8 +3,8 @@ import { Segment, Header } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { Question } from '../../../home/mock'
-import { colors } from '../../../../theme'
+import { colors } from 'theme'
+import { Question } from 'screens/home/mock'
 
 const QuestionStats = styled.div`
   display: flex;

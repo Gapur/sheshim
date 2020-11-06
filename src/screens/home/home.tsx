@@ -2,7 +2,7 @@ import React from 'react'
 import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 
-import { AppLayout } from '../../components'
+import { AppLayout } from 'components'
 import { QuestionListItem } from './components/question-list-item'
 import { data } from './mock'
 

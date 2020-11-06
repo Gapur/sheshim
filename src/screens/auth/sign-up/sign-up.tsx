@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Grid, Button, Form, Icon, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import { AuthLayout } from '../../../components'
+import { AuthLayout } from 'components'
 
 const Span = styled.span`
   display: block;

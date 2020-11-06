@@ -10,8 +10,8 @@ import 'prismjs/components/prism-php'
 import 'prismjs/components/prism-sql'
 import 'prismjs/components/prism-java'
 
+import { colors } from 'theme'
 import { SlateLeaf } from './slate-leaf'
-import { colors } from '../../../../theme'
 
 interface CodeEditorProps {
   initialValue: string
@@ -34,14 +34,14 @@ export function CodeEditor({ initialValue, readonly = false }: CodeEditorProps) 
   const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
 
-  const getLength = useCallback((token: string | Prism.Token): number => {
+  const getTokenSize = useCallback((token: string | Prism.Token): number => {
     if (typeof token === 'string') {
       return token.length
     } else if (typeof token.content === 'string') {
       return token.content.length
     } else {
       return (token.content as (string | Prism.Token)[]).reduce(
-        (acc: number, curr: string | Prism.Token) => acc + getLength(curr),
+        (acc: number, curr: string | Prism.Token) => acc + getTokenSize(curr),
         0,
       )
     }
@@ -57,8 +57,8 @@ export function CodeEditor({ initialValue, readonly = false }: CodeEditorProps) 
       let start = 0
 
       for (const token of tokens) {
-        const length = getLength(token)
-        const end = start + length
+        const size = getTokenSize(token)
+        const end = start + size
 
         if (typeof token !== 'string') {
           ranges.push({
@@ -73,7 +73,7 @@ export function CodeEditor({ initialValue, readonly = false }: CodeEditorProps) 
 
       return ranges
     },
-    [language, getLength],
+    [language, getTokenSize],
   )
 
   return (

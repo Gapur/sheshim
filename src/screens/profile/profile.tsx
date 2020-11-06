@@ -3,7 +3,7 @@ import { Header, Form, TextArea, Select, Button, Image } from 'semantic-ui-react
 import { useDropzone } from 'react-dropzone'
 import styled from 'styled-components'
 
-import { AppLayout } from '../../components'
+import { AppLayout } from 'components'
 
 const DragDropzone = styled.div`
   display: flex;

@@ -2,7 +2,7 @@ import React from 'react'
 import { Header, Image, Card, Icon, List } from 'semantic-ui-react'
 import { Link, useParams } from 'react-router-dom'
 
-import { AppLayout } from '../../../components'
+import { AppLayout } from 'components'
 import { data } from '../mock'
 
 interface UserDetailsParams {

@@ -2,9 +2,9 @@ import React from 'react'
 import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 
-import { AppLayout } from '../../../components'
+import { AppLayout } from 'components'
+import { data } from 'screens/home/mock'
 import { SheshimListItem } from './components/sheshim-list-item'
-import { data } from '../../home/mock'
 
 const List = styled.div`
   width: 72%;

@@ -2,6 +2,8 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { RenderLeafProps } from 'slate-react'
 
+import { colors } from 'theme'
+
 interface LeafSpanProps {
   [key: string]: unknown
 }
@@ -18,37 +20,37 @@ const LeafSpan = styled.span<LeafSpanProps>`
     }
     if (props.operator || props.url) {
       return css`
-        color: #9a6e3a;
+        color: ${colors.butteredRum};
       `
     }
     if (props.keyword) {
       return css`
-        color: #07a;
+        color: ${colors.cerulean};
       `
     }
     if (props.variable || props.regex) {
       return css`
-        color: #e90;
+        color: ${colors.gamboge};
       `
     }
     if (props.number || props.boolean || props.tag || props.constant || props.symbol || props.attr || props.selector) {
       return css`
-        color: #905;
+        color: ${colors.jazzberryJam};
       `
     }
     if (props.punctuation) {
       return css`
-        color: #999;
+        color: ${colors.nobel};
       `
     }
     if (props.string || props.char) {
       return css`
-        color: #690;
+        color: ${colors.christi};
       `
     }
     if (props.function || props.class) {
       return css`
-        color: #dd4a68;
+        color: ${colors.cabaret};
       `
     }
   }}

@@ -4,11 +4,12 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { AppLayout } from '../../../components'
+import { AppLayout } from 'components'
+import { data, Answer } from 'screens/home/mock'
+import { colors } from 'theme'
+
 import { CodeEditor } from './components/code-editor'
 import { SheshimComments } from './components/sheshim-comments'
-import { data, Answer } from '../../home/mock'
-import { colors } from '../../../theme'
 
 interface SheshimDetailsParams {
   sheshimId: string

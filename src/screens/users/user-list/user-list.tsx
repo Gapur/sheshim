@@ -2,7 +2,7 @@ import React from 'react'
 import { Header, Table, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import { AppLayout } from '../../../components'
+import { AppLayout } from 'components'
 import { data } from '../mock'
 
 export function UserList() {
