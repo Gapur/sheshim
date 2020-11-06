@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 import { AppLayout } from '../../../components'
 import { CodeEditor } from './components/code-editor'
+import { SheshimComments } from './components/sheshim-comments'
 import { data, Answer } from '../../home/mock'
 import { colors } from '../../../theme'
 
@@ -65,7 +66,7 @@ export function SheshimDetails() {
           Ask Question
         </Button>
       </Header>
-      <Label.Group tag>
+      <Label.Group tag color="teal">
         <Label as="a">{`Asked: ${sheshim.createdAt}`}</Label>
         <Label as="a">{`Responded: ${sheshim.answersCount}`}</Label>
         <Label as="a">{`Viewed: ${sheshim.views} times`}</Label>
@@ -90,6 +91,7 @@ export function SheshimDetails() {
             <span>{sheshim.createdAt}</span>&nbsp;
             <Link to="/users">{sheshim.createdBy}</Link>
           </Started>
+          <SheshimComments />
         </SheshimResponse>
 
         <Header>{`${sheshim.answers.length} Answers`}</Header>
@@ -108,6 +110,7 @@ export function SheshimDetails() {
               <span>{answer.createdAt}</span>&nbsp;
               <Link to="/users">{answer.createdBy}</Link>
             </Started>
+            <SheshimComments />
             <Divider />
           </SheshimResponse>
         ))}
