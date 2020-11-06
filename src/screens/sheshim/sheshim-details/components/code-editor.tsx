@@ -19,6 +19,7 @@ interface CodeEditorProps {
 }
 
 const StyledEditable = styled(Editable)`
+  width: 100%;
   background: ${colors.whiteSmoke};
   margin-left: 8px;
   padding: 8px;

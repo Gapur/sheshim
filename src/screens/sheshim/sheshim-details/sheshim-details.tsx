@@ -91,7 +91,7 @@ export function SheshimDetails() {
             <span>{sheshim.createdAt}</span>&nbsp;
             <Link to="/users">{sheshim.createdBy}</Link>
           </Started>
-          <SheshimComments />
+          <SheshimComments comments={[]} />
         </SheshimResponse>
 
         <Header>{`${sheshim.answers.length} Answers`}</Header>
@@ -110,7 +110,7 @@ export function SheshimDetails() {
               <span>{answer.createdAt}</span>&nbsp;
               <Link to="/users">{answer.createdBy}</Link>
             </Started>
-            <SheshimComments />
+            <SheshimComments comments={answer.comments} />
             <Divider />
           </SheshimResponse>
         ))}

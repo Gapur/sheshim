@@ -9,6 +9,7 @@ export interface Question {
   createdAt: string
   createdBy: string
   answers: Answer[]
+  comments: Comment[]
 }
 
 export interface Answer {
@@ -40,6 +41,7 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    comments: [],
     answers: [
       {
         id: 1,
@@ -47,7 +49,22 @@ export const data: Question[] = [
         body: 'If you are using React Router, you have to use this',
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
-        comments: [],
+        comments: [
+          {
+            id: 1,
+            votes: 1,
+            text: 'This has been very useful for my research. Thanks as well!',
+            createdAt: 'Yesterday at 12:30AM',
+            createdBy: 'Elliot Fu',
+          },
+          {
+            id: 2,
+            votes: 1,
+            text: 'Dude, this is awesome. Thanks so much',
+            createdBy: 'Joe Henderson',
+            createdAt: '2 days ago',
+          },
+        ],
       },
       {
         id: 2,
@@ -70,6 +87,7 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    comments: [],
     answers: [
       {
         id: 1,
@@ -100,6 +118,7 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    comments: [],
     answers: [
       {
         id: 1,
@@ -131,6 +150,7 @@ export const data: Question[] = [
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
     answers: [],
+    comments: [],
   },
   {
     id: 5,
@@ -143,6 +163,7 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    comments: [],
     answers: [
       {
         id: 1,
@@ -174,6 +195,7 @@ export const data: Question[] = [
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
     answers: [],
+    comments: [],
   },
   {
     id: 7,
@@ -186,6 +208,7 @@ export const data: Question[] = [
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
+    comments: [],
     answers: [
       {
         id: 1,
