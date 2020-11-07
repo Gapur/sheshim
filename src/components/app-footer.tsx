@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { colors } from 'theme'
+import { colors, metrics } from 'theme'
 
 const Footer = styled.footer`
+  height: ${metrics.footer_height};
   background: ${colors.cinder};
-  padding-top: 8px;
-  padding-bottom: 8px;
 
   .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
     max-width: 93em;
     margin: 0 auto;
   }
