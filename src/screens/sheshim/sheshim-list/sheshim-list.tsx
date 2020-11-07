@@ -1,6 +1,7 @@
 import React from 'react'
 import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 
 import { AppLayout } from 'components'
 import { data } from 'screens/home/mock'
@@ -15,11 +16,13 @@ const List = styled.div`
 `
 
 export function SheshimList() {
+  const history = useHistory()
+
   return (
     <AppLayout page="sheshim">
       <Header>
         All Questions
-        <Button color="twitter" floated="right">
+        <Button color="twitter" floated="right" onClick={() => history.push('/sheshim/create')}>
           Ask Question
         </Button>
       </Header>

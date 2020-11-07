@@ -2,7 +2,7 @@ import React from 'react'
 import { Header, Label, Divider, Button } from 'semantic-ui-react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { AppLayout } from 'components'
 import { data, Answer } from 'screens/home/mock'
@@ -51,6 +51,7 @@ const Started = styled.div`
 `
 
 export function SheshimDetails() {
+  const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
 
   const sheshim = data.find((item) => String(item.id) === sheshimId)
@@ -63,7 +64,7 @@ export function SheshimDetails() {
     <AppLayout page="sheshim">
       <Header>
         {sheshim.title}
-        <Button color="twitter" floated="right">
+        <Button color="twitter" floated="right" onClick={() => history.push('/sheshim/create')}>
           Ask Question
         </Button>
       </Header>
