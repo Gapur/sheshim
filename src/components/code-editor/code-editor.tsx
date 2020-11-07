@@ -14,7 +14,7 @@ import { colors } from 'theme'
 import { SlateLeaf } from './slate-leaf'
 
 interface CodeEditorProps {
-  initialValue: string
+  initialValue?: string
   readonly?: boolean
 }
 
@@ -26,7 +26,7 @@ const StyledEditable = styled(Editable)`
   border-radius: 4px;
 `
 
-export function CodeEditor({ initialValue, readonly = false }: CodeEditorProps) {
+export function CodeEditor({ initialValue = '', readonly = false }: CodeEditorProps) {
   const slateInitialValue = [{ children: [{ text: initialValue }] }]
 
   const [slateValue, setSlateValue] = useState<SlateNode[]>(slateInitialValue)
