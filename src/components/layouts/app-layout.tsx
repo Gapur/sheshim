@@ -3,6 +3,8 @@ import { Menu } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
+import { metrics } from 'theme'
+
 const Layout = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -11,7 +13,7 @@ const Layout = styled.div`
   max-width: 94em;
   min-height: 100vh;
   margin: 0 auto;
-  padding-top: 50px;
+  padding-top: ${metrics.header_height};
 
   .menu {
     margin-bottom: 0;

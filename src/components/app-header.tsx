@@ -3,7 +3,7 @@ import { Image, Search, Dropdown, Menu } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
-import { colors } from 'theme'
+import { colors, metrics } from 'theme'
 import { images } from '../assets'
 
 const PLACEHOLDER_IMAGE = 'https://react.semantic-ui.com/images/wireframe/square-image.png'
@@ -12,7 +12,7 @@ const Header = styled.header`
   && {
     display: flex;
     align-items: center;
-    height: 50px;
+    height: ${metrics.header_height};
     top: 0;
     position: fixed;
     width: 100%;

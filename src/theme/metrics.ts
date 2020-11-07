@@ -8,5 +8,6 @@ export default {
     laptop_l: '1440px',
     desktop: '2560px',
   },
+  header_height: '50px',
   footer_height: '48px',
 }
