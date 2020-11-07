@@ -6,9 +6,10 @@ import { useHistory } from 'react-router-dom'
 const Layout = styled.div`
   display: flex;
   flex-wrap: wrap;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   max-width: 94em;
+  min-height: 100vh;
   margin: 0 auto;
   padding-top: 50px;
 

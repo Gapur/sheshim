@@ -3,7 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { Switch, Route } from 'react-router-dom'
 
 import { useAuth } from './context/auth-context'
-import { FullPageErrorFallback, AppHeader } from './components'
+import { FullPageErrorFallback, AppHeader, AppFooter } from './components'
 
 import { Home } from './screens/home/home'
 import { SheshimList } from './screens/sheshim/sheshim-list/sheshim-list'
@@ -25,6 +25,7 @@ export default function AuthenticatedApp() {
         <Route exact path="/profile" component={Profile} />
         <Route path="/" component={Home} />
       </Switch>
+      <AppFooter />
     </ErrorBoundary>
   )
 }

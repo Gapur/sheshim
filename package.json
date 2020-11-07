@@ -9,6 +9,7 @@
     "@types/prismjs": "^1.16.2",
     "@types/react-router-dom": "^5.1.6",
     "lodash": "^4.17.20",
+    "moment": "^2.29.1",
     "prismjs": "^1.22.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

@@ -8,7 +8,7 @@ import { images } from '../assets'
 
 const PLACEHOLDER_IMAGE = 'https://react.semantic-ui.com/images/wireframe/square-image.png'
 
-const Header = styled.div`
+const Header = styled.header`
   && {
     display: flex;
     align-items: center;
