@@ -65,7 +65,7 @@ export function QuestionListItem({ question }: QuestionListItemProps) {
           <span>votes</span>
         </Stat>
         <Stat>
-          <span>{question.answersCount}</span>
+          <span>{question.answers}</span>
           <span>answers</span>
         </Stat>
         <Stat>
