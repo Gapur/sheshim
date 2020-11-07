@@ -13,4 +13,8 @@ export default {
   nobel: '#999999',
   christi: '#669900',
   cabaret: '#dd4a68',
+  cinder: '#242729',
+  amber: '#fbbd08',
+  malibu: '#55acee',
+  cinnabar: '#dd4b39',
 }

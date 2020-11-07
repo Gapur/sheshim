@@ -1,4 +1,5 @@
-export * from './full-page-error-fallback'
-export * from './full-page-spinner'
+export * from './page-error-fallback'
+export * from './page-loader'
 export * from './layouts'
 export * from './app-header'
+export * from './app-footer'

@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useContext, createContext } from 'react'
 
+import { PageLoader } from 'components'
+
 const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
 
 const getUser = () => sleep(1000).then(() => 'gapur')
@@ -40,7 +42,7 @@ export function AuthProvider(props: AuthProviderProps) {
   }, [])
 
   if (state.status === AuthStatus.Idle || state.status === AuthStatus.Pending) {
-    return <div>Loading</div>
+    return <PageLoader />
   }
 
   if (state.error === AuthStatus.Error) {
