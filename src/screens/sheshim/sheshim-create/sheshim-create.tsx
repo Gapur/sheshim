@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Header, Form, Button, Dropdown } from 'semantic-ui-react'
 
-import { AppLayout, CodeEditor } from 'components'
-import { RichText } from 'components/code-editor/rich-text'
+import { AppLayout, TextEditor } from 'components'
 
 export function SheshimCreate() {
   const [tags, setTags] = useState<string[]>([])
@@ -17,8 +16,7 @@ export function SheshimCreate() {
           <label>Title</label>
           <input placeholder="First Name" />
         </Form.Field>
-        {/* <CodeEditor /> */}
-        <RichText />
+        <TextEditor />
         <Form.Field>
           <label>Tags</label>
           <Dropdown

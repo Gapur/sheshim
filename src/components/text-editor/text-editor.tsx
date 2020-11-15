@@ -1,18 +1,19 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editable, withReact, useSlate, Slate, RenderLeafProps, RenderElementProps } from 'slate-react'
+import { Editable, withReact, useSlate, Slate, RenderElementProps } from 'slate-react'
 import { Editor, Transforms, createEditor, Node as SlateNode } from 'slate'
 import { withHistory } from 'slate-history'
 import { Icon, SemanticICONS } from 'semantic-ui-react'
 
 import { Button } from './button'
 import { Toolbar } from './toolbar'
+import { SlateLeaf } from './slate-leaf'
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
-export const RichText = () => {
+export const TextEditor = () => {
   const [value, setValue] = useState<SlateNode[]>(initialValue)
   const renderElement = useCallback((props) => <Element {...props} />, [])
-  const renderLeaf = useCallback((props) => <Leaf {...props} />, [])
+  const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
 
   return (
@@ -31,7 +32,7 @@ export const RichText = () => {
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
+        placeholder="Enter some text..."
         spellCheck
         autoFocus
       />
@@ -98,29 +99,6 @@ const Element = ({ attributes, children, element }: RenderElementProps) => {
     default:
       return <p {...attributes}>{children}</p>
   }
-}
-
-const Leaf = (props: RenderLeafProps) => {
-  const { attributes, leaf } = props
-  let children = props.children
-
-  if (leaf.bold) {
-    children = <strong>{children}</strong>
-  }
-
-  if (leaf.code) {
-    children = <code>{children}</code>
-  }
-
-  if (leaf.italic) {
-    children = <em>{children}</em>
-  }
-
-  if (leaf.underline) {
-    children = <u>{children}</u>
-  }
-
-  return <span {...attributes}>{children}</span>
 }
 
 const BlockButton = ({ format, icon }: { format: string; icon: SemanticICONS }) => {

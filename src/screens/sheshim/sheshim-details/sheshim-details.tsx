@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link, useHistory } from 'react-router-dom'
 
-import { AppLayout, CodeEditor } from 'components'
+import { AppLayout, TextEditor } from 'components'
 import { data, Answer } from 'screens/home/mock'
 import { colors } from 'theme'
 
@@ -81,7 +81,7 @@ export function SheshimDetails() {
               <Button>{sheshim.votes}</Button>
               <Button icon="angle down" />
             </Button.Group>
-            <CodeEditor initialValue={sheshim.body} readonly />
+            {/* <CodeEditor initialValue={sheshim.body} readonly /> */}
           </SheshimResponseContent>
           <div>
             {sheshim.tags.map((tag, idx) => (
@@ -105,7 +105,7 @@ export function SheshimDetails() {
                 <Button>{answer.votes}</Button>
                 <Button icon="angle down" />
               </Button.Group>
-              <CodeEditor initialValue={answer.body} readonly />
+              {/* <CodeEditor initialValue={answer.body} readonly /> */}
             </SheshimResponseContent>
             <Started>
               <span>{answer.createdAt}</span>&nbsp;
