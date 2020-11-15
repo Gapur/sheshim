@@ -16,7 +16,7 @@ export function SheshimCreate() {
           <label>Title</label>
           <input placeholder="First Name" />
         </Form.Field>
-        <TextEditor />
+        <TextEditor initialValue={[{ text: '' }]} />
         <Form.Field>
           <label>Tags</label>
           <Dropdown

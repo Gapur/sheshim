@@ -81,7 +81,7 @@ export function SheshimDetails() {
               <Button>{sheshim.votes}</Button>
               <Button icon="angle down" />
             </Button.Group>
-            {/* <CodeEditor initialValue={sheshim.body} readonly /> */}
+            <TextEditor initialValue={sheshim.body} readonly />
           </SheshimResponseContent>
           <div>
             {sheshim.tags.map((tag, idx) => (
@@ -105,7 +105,7 @@ export function SheshimDetails() {
                 <Button>{answer.votes}</Button>
                 <Button icon="angle down" />
               </Button.Group>
-              {/* <CodeEditor initialValue={answer.body} readonly /> */}
+              <TextEditor initialValue={answer.body} readonly />
             </SheshimResponseContent>
             <Started>
               <span>{answer.createdAt}</span>&nbsp;

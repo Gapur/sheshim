@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react'
-import { Editable, withReact, useSlate, Slate, RenderElementProps } from 'slate-react'
+import { Editable, withReact, useSlate, Slate } from 'slate-react'
 import { Editor, Transforms, createEditor, Node as SlateNode } from 'slate'
 import { withHistory } from 'slate-history'
 import { Icon, SemanticICONS } from 'semantic-ui-react'
@@ -7,29 +7,36 @@ import { Icon, SemanticICONS } from 'semantic-ui-react'
 import { Button } from './button'
 import { Toolbar } from './toolbar'
 import { SlateLeaf } from './slate-leaf'
+import { SlateElement, SlateElementType } from './slate-element'
 
 const LIST_TYPES = ['numbered-list', 'bulleted-list']
 
-export const TextEditor = () => {
+interface TextEditorProps {
+  initialValue: SlateNode[]
+  readonly?: boolean
+}
+
+export const TextEditor = ({ initialValue, readonly = false }: TextEditorProps) => {
   const [value, setValue] = useState<SlateNode[]>(initialValue)
-  const renderElement = useCallback((props) => <Element {...props} />, [])
+  const renderElement = useCallback((props) => <SlateElement {...props} />, [])
   const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, [])
   const editor = useMemo(() => withHistory(withReact(createEditor())), [])
 
   return (
     <Slate editor={editor} value={value} onChange={setValue}>
       <Toolbar>
-        <MarkButton format="bold" icon="bold" />
-        <MarkButton format="italic" icon="italic" />
-        <MarkButton format="underline" icon="underline" />
-        <MarkButton format="code" icon="code" />
-        <BlockButton format="heading-one" icon="heading" />
-        <BlockButton format="heading-two" icon="heading" />
-        <BlockButton format="block-quote" icon="quote left" />
-        <BlockButton format="numbered-list" icon="numbered list" />
-        <BlockButton format="bulleted-list" icon="unordered list" />
+        <MarkButton format={SlateElementType.BOLD} icon="bold" />
+        <MarkButton format={SlateElementType.ITALIC} icon="italic" />
+        <MarkButton format={SlateElementType.UNDERLINE} icon="underline" />
+        <MarkButton format={SlateElementType.CODE} icon="code" />
+        <BlockButton format={SlateElementType.HEADING_ONE} icon="heading" />
+        <BlockButton format={SlateElementType.HEADING_TWO} icon="heading" />
+        <BlockButton format={SlateElementType.BLOCK_QUOTE} icon="quote left" />
+        <BlockButton format={SlateElementType.NUMBERED_LIST} icon="numbered list" />
+        <BlockButton format={SlateElementType.BULLETED_LIST} icon="unordered list" />
       </Toolbar>
       <Editable
+        readOnly={readonly}
         renderElement={renderElement}
         renderLeaf={renderLeaf}
         placeholder="Enter some text..."
@@ -40,7 +47,7 @@ export const TextEditor = () => {
   )
 }
 
-const toggleBlock = (editor: Editor, format: string) => {
+const toggleBlock = (editor: Editor, format: SlateElementType) => {
   const isActive = isBlockActive(editor, format)
   const isList = LIST_TYPES.includes(format)
 
@@ -59,7 +66,7 @@ const toggleBlock = (editor: Editor, format: string) => {
   }
 }
 
-const toggleMark = (editor: Editor, format: string) => {
+const toggleMark = (editor: Editor, format: SlateElementType) => {
   const isActive = isMarkActive(editor, format)
 
   if (isActive) {
@@ -69,7 +76,7 @@ const toggleMark = (editor: Editor, format: string) => {
   }
 }
 
-const isBlockActive = (editor: Editor, format: string) => {
+const isBlockActive = (editor: Editor, format: SlateElementType) => {
   const [match] = Editor.nodes(editor, {
     match: (n) => n.type === format,
   })
@@ -77,31 +84,12 @@ const isBlockActive = (editor: Editor, format: string) => {
   return Boolean(match)
 }
 
-const isMarkActive = (editor: Editor, format: string) => {
+const isMarkActive = (editor: Editor, format: SlateElementType) => {
   const marks = Editor.marks(editor)
   return marks ? marks[format] === true : false
 }
 
-const Element = ({ attributes, children, element }: RenderElementProps) => {
-  switch (element.type) {
-    case 'block-quote':
-      return <blockquote {...attributes}>{children}</blockquote>
-    case 'bulleted-list':
-      return <ul {...attributes}>{children}</ul>
-    case 'heading-one':
-      return <h1 {...attributes}>{children}</h1>
-    case 'heading-two':
-      return <h2 {...attributes}>{children}</h2>
-    case 'list-item':
-      return <li {...attributes}>{children}</li>
-    case 'numbered-list':
-      return <ol {...attributes}>{children}</ol>
-    default:
-      return <p {...attributes}>{children}</p>
-  }
-}
-
-const BlockButton = ({ format, icon }: { format: string; icon: SemanticICONS }) => {
+const BlockButton = ({ format, icon }: { format: SlateElementType; icon: SemanticICONS }) => {
   const editor = useSlate()
   return (
     <Button
@@ -116,7 +104,7 @@ const BlockButton = ({ format, icon }: { format: string; icon: SemanticICONS }) 
   )
 }
 
-const MarkButton = ({ format, icon }: { format: string; icon: SemanticICONS }) => {
+const MarkButton = ({ format, icon }: { format: SlateElementType; icon: SemanticICONS }) => {
   const editor = useSlate()
   return (
     <Button
@@ -130,38 +118,3 @@ const MarkButton = ({ format, icon }: { format: string; icon: SemanticICONS }) =
     </Button>
   )
 }
-
-const initialValue = [
-  {
-    type: 'paragraph',
-    children: [
-      { text: 'This is editable ' },
-      { text: 'rich', bold: true },
-      { text: ' text, ' },
-      { text: 'much', italic: true },
-      { text: ' better than a ' },
-      { text: '<textarea>', code: true },
-      { text: '!' },
-    ],
-  },
-  {
-    type: 'paragraph',
-    children: [
-      {
-        text: "Since it's rich text, you can do things like turn a selection of text ",
-      },
-      { text: 'bold', bold: true },
-      {
-        text: ', or add a semantically rendered block quote in the middle of the page, like this:',
-      },
-    ],
-  },
-  {
-    type: 'block-quote',
-    children: [{ text: 'A wise quote.' }],
-  },
-  {
-    type: 'paragraph',
-    children: [{ text: 'Try it out for yourself!' }],
-  },
-]
