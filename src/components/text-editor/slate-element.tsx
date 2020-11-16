@@ -14,6 +14,8 @@ export enum SlateElementType {
   NUMBERED_LIST = 'numbered-list',
 }
 
+export const SLATE_LIST_TYPES = [SlateElementType.NUMBERED_LIST, SlateElementType.BULLETED_LIST]
+
 export function SlateElement({ attributes, children, element }: RenderElementProps) {
   switch (element.type) {
     case SlateElementType.BLOCK_QUOTE:
