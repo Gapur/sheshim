@@ -1,10 +1,12 @@
+import { Node as SlateNode } from 'slate'
+
 export interface Question {
   id: number
   votes: number
   answersCount: number
   views: number
   title: string
-  body: string
+  body: SlateNode[]
   tags: string[]
   createdAt: string
   createdBy: string
@@ -15,7 +17,7 @@ export interface Question {
 export interface Answer {
   id: number
   votes: number
-  body: string
+  body: SlateNode[]
   createdAt: string
   createdBy: string
   comments: Comment[]
@@ -36,8 +38,40 @@ export const data: Question[] = [
     answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
-    body:
-      "I accidentally committed the wrong files to Git, but I haven't pushed the commit to the server yet. How can I undo those commits from the local repository?",
+    body: [
+      {
+        type: 'paragraph',
+        children: [
+          { text: 'This is editable ' },
+          { text: 'rich', bold: true },
+          { text: ' text, ' },
+          { text: 'much', italic: true },
+          { text: ' better than a ' },
+          { text: '<textarea>', code: true },
+          { text: '!' },
+        ],
+      },
+      {
+        type: 'paragraph',
+        children: [
+          {
+            text: "Since it's rich text, you can do things like turn a selection of text ",
+          },
+          { text: 'bold', bold: true },
+          {
+            text: ', or add a semantically rendered block quote in the middle of the page, like this:',
+          },
+        ],
+      },
+      {
+        type: 'block-quote',
+        children: [{ text: 'A wise quote.' }],
+      },
+      {
+        type: 'paragraph',
+        children: [{ text: 'Try it out for yourself!' }],
+      },
+    ],
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
@@ -46,7 +80,7 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [
@@ -69,7 +103,7 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -82,8 +116,7 @@ export const data: Question[] = [
     answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
-    body:
-      'we could do something like this <div id="tags-container"> {tags.map(t => <Link className="tags" activeStyle={{ color: \'red\' }} to={t.path}>{t.title}</Link>)}</div> I wanna know how can I do same thing in v4?',
+    body: [],
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
@@ -92,7 +125,7 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -100,7 +133,7 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -113,8 +146,7 @@ export const data: Question[] = [
     answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
-    body:
-      "I accidentally committed the wrong files to Git, but I haven't pushed the commit to the server yet. How can I undo those commits from the local repository?",
+    body: [],
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
@@ -123,7 +155,7 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -131,7 +163,7 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -144,8 +176,7 @@ export const data: Question[] = [
     answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
-    body:
-      "I accidentally committed the wrong files to Git, but I haven't pushed the commit to the server yet. How can I undo those commits from the local repository?",
+    body: [],
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
@@ -158,8 +189,7 @@ export const data: Question[] = [
     answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
-    body:
-      "I accidentally committed the wrong files to Git, but I haven't pushed the commit to the server yet. How can I undo those commits from the local repository?",
+    body: [],
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
@@ -168,7 +198,7 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -176,7 +206,7 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -189,8 +219,7 @@ export const data: Question[] = [
     answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
-    body:
-      "I accidentally committed the wrong files to Git, but I haven't pushed the commit to the server yet. How can I undo those commits from the local repository?",
+    body: [],
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
@@ -203,8 +232,7 @@ export const data: Question[] = [
     answersCount: 8,
     views: 9,
     title: 'React live server is not displaying anything just showing the tab keep on loading',
-    body:
-      "I accidentally committed the wrong files to Git, but I haven't pushed the commit to the server yet. How can I undo those commits from the local repository?",
+    body: [],
     tags: ['reactjs', 'create-react-app'],
     createdAt: 'asked 3 hours ago',
     createdBy: 'Gapur Kassym',
@@ -213,7 +241,7 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -221,7 +249,7 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: 'If you are using React Router, you have to use this',
+        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],

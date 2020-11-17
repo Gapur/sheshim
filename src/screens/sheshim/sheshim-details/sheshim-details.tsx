@@ -2,13 +2,12 @@ import React from 'react'
 import { Header, Label, Divider, Button } from 'semantic-ui-react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
-import { AppLayout } from 'components'
+import { AppLayout, TextEditor } from 'components'
 import { data, Answer } from 'screens/home/mock'
 import { colors } from 'theme'
 
-import { CodeEditor } from './components/code-editor'
 import { SheshimComments } from './components/sheshim-comments'
 
 interface SheshimDetailsParams {
@@ -51,6 +50,7 @@ const Started = styled.div`
 `
 
 export function SheshimDetails() {
+  const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
 
   const sheshim = data.find((item) => String(item.id) === sheshimId)
@@ -63,7 +63,7 @@ export function SheshimDetails() {
     <AppLayout page="sheshim">
       <Header>
         {sheshim.title}
-        <Button color="twitter" floated="right">
+        <Button color="twitter" floated="right" onClick={() => history.push('/sheshim/create')}>
           Ask Question
         </Button>
       </Header>
@@ -81,7 +81,7 @@ export function SheshimDetails() {
               <Button>{sheshim.votes}</Button>
               <Button icon="angle down" />
             </Button.Group>
-            <CodeEditor initialValue={sheshim.body} readonly />
+            <TextEditor initialValue={sheshim.body} readonly />
           </SheshimResponseContent>
           <div>
             {sheshim.tags.map((tag, idx) => (
@@ -105,7 +105,7 @@ export function SheshimDetails() {
                 <Button>{answer.votes}</Button>
                 <Button icon="angle down" />
               </Button.Group>
-              <CodeEditor initialValue={answer.body} readonly />
+              <TextEditor initialValue={answer.body} readonly />
             </SheshimResponseContent>
             <Started>
               <span>{answer.createdAt}</span>&nbsp;
