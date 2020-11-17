@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import { colors } from 'theme'
+import { TextEditor } from 'components'
 import { Question } from 'screens/home/mock'
 
 const QuestionStats = styled.div`
@@ -102,7 +103,9 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
         <Header>
           <Link to={`/sheshim/${question.id}`}>{question.title}</Link>
         </Header>
-        <QuestionText>{question.body}</QuestionText>
+        <QuestionText>
+          <TextEditor initialValue={question.body} readonly />
+        </QuestionText>
         <Tags>
           {question.tags.map((tag, idx) => (
             <span key={idx}>{tag}</span>

@@ -20,7 +20,7 @@ export function TextEditor({ initialValue = [{ children: [{ text: '' }] }], read
 
   return (
     <Slate editor={slateEditor} value={slateValue} onChange={setSlateValue}>
-      <SlateToolbar />
+      {!readonly && <SlateToolbar />}
       <Editable
         readOnly={readonly}
         renderElement={renderElement}
