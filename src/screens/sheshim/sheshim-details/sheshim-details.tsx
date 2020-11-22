@@ -28,19 +28,6 @@ const SheshimResponseContent = styled.div`
   margin-bottom: 8px;
 `
 
-const Tag = styled.span`
-  background: ${colors.solitude};
-  color: ${colors.airForceBlue};
-  white-space: nowrap;
-  text-decoration: none;
-  text-align: center;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  margin: 2px 2px 2px 0;
-  padding: 1px 4px;
-  cursor: pointer;
-`
-
 const Started = styled.div`
   align-self: flex-end;
   padding-top: 4px;
@@ -83,11 +70,13 @@ export function SheshimDetails() {
             </Button.Group>
             <TextEditor initialValue={sheshim.body} readonly />
           </SheshimResponseContent>
-          <div>
+          <Label.Group color="blue">
             {sheshim.tags.map((tag, idx) => (
-              <Tag key={idx}>{tag}</Tag>
+              <Label as="a" key={idx}>
+                {tag}
+              </Label>
             ))}
-          </div>
+          </Label.Group>
           <Started>
             <span>{sheshim.createdAt}</span>&nbsp;
             <Link to="/users">{sheshim.createdBy}</Link>

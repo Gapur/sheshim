@@ -1,5 +1,5 @@
 import React from 'react'
-import { Segment, Header } from 'semantic-ui-react'
+import { Segment, Header, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -48,30 +48,13 @@ const AnswerStatus = styled.div`
   }
 `
 
-const Tags = styled.div`
-  float: left;
-  line-height: 18px;
-
-  span {
-    background: ${colors.solitude};
-    color: ${colors.airForceBlue};
-    white-space: nowrap;
-    text-decoration: none;
-    text-align: center;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    margin: 2px 2px 2px 0;
-    padding: 1px 4px;
-    cursor: pointer;
-  }
-`
-
-const QuestionText = styled.p`
+const QuestionBody = styled.div`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-bottom: 8px;
 `
 
 const Started = styled.div`
@@ -103,14 +86,16 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
         <Header>
           <Link to={`/sheshim/${question.id}`}>{question.title}</Link>
         </Header>
-        <QuestionText>
+        <QuestionBody>
           <TextEditor initialValue={question.body} readonly />
-        </QuestionText>
-        <Tags>
+        </QuestionBody>
+        <Label.Group color="blue">
           {question.tags.map((tag, idx) => (
-            <span key={idx}>{tag}</span>
+            <Label as="a" key={idx}>
+              {tag}
+            </Label>
           ))}
-        </Tags>
+        </Label.Group>
         <Started>
           <span>{question.createdAt}</span>&nbsp;
           <Link to="/users">{question.createdBy}</Link>
