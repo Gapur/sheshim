@@ -4,14 +4,8 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import { colors } from 'theme'
-import { TextEditor } from 'components'
+import { TextEditor, QuestionItem } from 'components'
 import { Question } from 'screens/home/mock'
-
-const QuestionStats = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 16px;
-`
 
 const Vote = styled.div`
   display: flex;
@@ -34,7 +28,7 @@ const AnswerStatus = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #75b782;
+  background: ${colors.bayLeaf};
   padding: 4px;
   border-radius: 3px;
   color: ${colors.white};
@@ -48,23 +42,6 @@ const AnswerStatus = styled.div`
   }
 `
 
-const QuestionBody = styled.div`
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 8px;
-`
-
-const Started = styled.div`
-  float: right;
-  padding-top: 4px;
-  line-height: 18px;
-  font-size: 12px;
-  color: ${colors.eclipse};
-`
-
 interface SheshimListItemProps {
   question: Question
 }
@@ -72,7 +49,7 @@ interface SheshimListItemProps {
 export function SheshimListItem({ question }: SheshimListItemProps) {
   return (
     <Segment color="yellow">
-      <QuestionStats>
+      <QuestionItem.Stats direction="column">
         <Vote>
           <strong>{question.votes}</strong>
           <span>votes</span>
@@ -81,14 +58,14 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           <strong>{question.answersCount}</strong>
           <span>answers</span>
         </AnswerStatus>
-      </QuestionStats>
-      <div>
+      </QuestionItem.Stats>
+      <QuestionItem.Content>
         <Header>
           <Link to={`/sheshim/${question.id}`}>{question.title}</Link>
         </Header>
-        <QuestionBody>
+        <QuestionItem.Body>
           <TextEditor initialValue={question.body} readonly />
-        </QuestionBody>
+        </QuestionItem.Body>
         <Label.Group color="blue">
           {question.tags.map((tag, idx) => (
             <Label as="a" key={idx}>
@@ -96,11 +73,11 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
             </Label>
           ))}
         </Label.Group>
-        <Started>
+        <QuestionItem.Started>
           <span>{question.createdAt}</span>&nbsp;
           <Link to="/users">{question.createdBy}</Link>
-        </Started>
-      </div>
+        </QuestionItem.Started>
+      </QuestionItem.Content>
     </Segment>
   )
 }

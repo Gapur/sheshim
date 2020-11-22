@@ -4,10 +4,10 @@ export default {
   lavender: '#ececee',
   eclipse: '#3e3e3e',
   solitude: '#E3ECF3',
-  airForceBlue: '#5A82A5',
   whiteSmoke: '#F6F6F6',
   cinder: '#242729',
   amber: '#fbbd08',
   malibu: '#55acee',
   cinnabar: '#dd4b39',
+  bayLeaf: '#75b782',
 }
