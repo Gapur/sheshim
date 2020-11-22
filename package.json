@@ -9,6 +9,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "react": "^16.13.1",
+    "react-blob": "^2.1.0",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.2.3",
     "react-error-boundary": "^3.0.2",

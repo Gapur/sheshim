@@ -10,4 +10,5 @@ export default {
   malibu: '#55acee',
   cinnabar: '#dd4b39',
   bayLeaf: '#75b782',
+  lightSkyBlue: '#77ddff',
 }
