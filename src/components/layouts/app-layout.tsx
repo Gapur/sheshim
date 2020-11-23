@@ -11,7 +11,7 @@ const Layout = styled.div`
   height: 100%;
   width: 100%;
   max-width: 94em;
-  min-height: 100vh;
+  min-height: calc(100vh - ${metrics.footer_height});
   margin: 0 auto;
   padding-top: ${metrics.header_height};
 

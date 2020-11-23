@@ -1,17 +1,11 @@
 import React from 'react'
-import { Segment, Header } from 'semantic-ui-react'
+import { Segment, Header, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import { colors } from 'theme'
-import { TextEditor } from 'components'
+import { TextEditor, QuestionItem } from 'components'
 import { Question } from 'screens/home/mock'
-
-const QuestionStats = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 16px;
-`
 
 const Vote = styled.div`
   display: flex;
@@ -34,7 +28,7 @@ const AnswerStatus = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #75b782;
+  background: ${colors.bayLeaf};
   padding: 4px;
   border-radius: 3px;
   color: ${colors.white};
@@ -48,40 +42,6 @@ const AnswerStatus = styled.div`
   }
 `
 
-const Tags = styled.div`
-  float: left;
-  line-height: 18px;
-
-  span {
-    background: ${colors.solitude};
-    color: ${colors.airForceBlue};
-    white-space: nowrap;
-    text-decoration: none;
-    text-align: center;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    margin: 2px 2px 2px 0;
-    padding: 1px 4px;
-    cursor: pointer;
-  }
-`
-
-const QuestionText = styled.p`
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`
-
-const Started = styled.div`
-  float: right;
-  padding-top: 4px;
-  line-height: 18px;
-  font-size: 12px;
-  color: ${colors.eclipse};
-`
-
 interface SheshimListItemProps {
   question: Question
 }
@@ -89,7 +49,7 @@ interface SheshimListItemProps {
 export function SheshimListItem({ question }: SheshimListItemProps) {
   return (
     <Segment color="yellow">
-      <QuestionStats>
+      <QuestionItem.Stats direction="column">
         <Vote>
           <strong>{question.votes}</strong>
           <span>votes</span>
@@ -98,24 +58,26 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           <strong>{question.answersCount}</strong>
           <span>answers</span>
         </AnswerStatus>
-      </QuestionStats>
-      <div>
+      </QuestionItem.Stats>
+      <QuestionItem.Content>
         <Header>
           <Link to={`/sheshim/${question.id}`}>{question.title}</Link>
         </Header>
-        <QuestionText>
+        <QuestionItem.Body>
           <TextEditor initialValue={question.body} readonly />
-        </QuestionText>
-        <Tags>
+        </QuestionItem.Body>
+        <Label.Group color="blue">
           {question.tags.map((tag, idx) => (
-            <span key={idx}>{tag}</span>
+            <Label as="a" key={idx}>
+              {tag}
+            </Label>
           ))}
-        </Tags>
-        <Started>
+        </Label.Group>
+        <QuestionItem.Started>
           <span>{question.createdAt}</span>&nbsp;
           <Link to="/users">{question.createdBy}</Link>
-        </Started>
-      </div>
+        </QuestionItem.Started>
+      </QuestionItem.Content>
     </Segment>
   )
 }
