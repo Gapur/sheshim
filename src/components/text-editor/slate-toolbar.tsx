@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { colors } from 'theme'
+
 import { SlateElementType } from './slate-element'
 import { SlateToolbarButton, ToolbarButtonProps, ToolbarButtonType } from './slate-toolbar-button'
 
@@ -16,19 +18,17 @@ const ToolbarButtons: ToolbarButtonProps[] = [
   { type: ToolbarButtonType.BLOCK, format: SlateElementType.BULLETED_LIST, icon: 'unordered list' },
 ]
 
-const Menu = styled.div`
+const Toolbar = styled.div`
+  border-bottom: 2px solid ${colors.whisper};
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+
   & > * {
     display: inline-block;
   }
   & > * + * {
     margin-left: 15px;
   }
-`
-
-const Toolbar = styled(Menu)`
-  position: relative;
-  border-bottom: 2px solid #eee;
-  margin-bottom: 20px;
 `
 
 export function SlateToolbar() {
