@@ -40,9 +40,6 @@ interface FormValues {
 
 export function SheshimCreate() {
   const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
-  const onSubmit = (data: unknown) => console.log(data)
-
-  console.log(errors)
 
   useEffect(() => {
     register('title', { required: 'Title is required' })
@@ -59,6 +56,8 @@ export function SheshimCreate() {
     await trigger(name)
   }
 
+  const onSubmit = (data: FormValues) => console.log(data)
+
   return (
     <AppLayout page="sheshim">
       <HeaderBlob size="8em">Ask a question</HeaderBlob>
@@ -67,7 +66,7 @@ export function SheshimCreate() {
       </ReactBlob>
       <Container>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Field error={errors?.title ?? false}>
+          <Form.Field error={Boolean(errors?.title)}>
             <label>Title</label>
             <input
               placeholder="Title"
@@ -80,7 +79,7 @@ export function SheshimCreate() {
             )}
           </Form.Field>
           <TextEditor />
-          <Form.Field error={errors?.tags ?? false}>
+          <Form.Field error={Boolean(errors?.tags)}>
             <label>Tags</label>
             <Dropdown
               label="Tags"
