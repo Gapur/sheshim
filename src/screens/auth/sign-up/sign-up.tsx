@@ -23,7 +23,7 @@ interface FormValues {
 }
 
 export function SignUp() {
-  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
+  const { errors, register, handleSubmit, setValue, trigger, watch } = useForm<FormValues>()
 
   useEffect(() => {
     register('name', { required: 'Name is required' })
@@ -32,9 +32,12 @@ export function SignUp() {
       required: 'Password is required',
       pattern: { value: REGEX_PASSWORD, message: 'Password it not valid' },
     })
-  }, [register])
+    register('confirmPassword', {
+      validate: (value: string) => value === watch('password') || 'Password don`t match',
+    })
+  }, [register, watch])
 
-  const onInputChange = async (name: 'name' | 'email' | 'password', value: string) => {
+  const onInputChange = async (name: 'name' | 'email' | 'password' | 'confirmPassword', value: string) => {
     setValue(name, value)
     await trigger(name)
   }
@@ -83,7 +86,7 @@ export function SignUp() {
                 <label>Password</label>
                 <input
                   type="password"
-                  placeholder="example@gmail.com"
+                  placeholder="Password"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('password', e.target.value)}
                 />
                 {errors.password && (
@@ -92,7 +95,21 @@ export function SignUp() {
                   </Label>
                 )}
               </Form.Field>
-              <Form.Input label="Confirm Password" type="password" placeholder="confirm password" />
+              <Form.Field error={Boolean(errors?.confirmPassword)}>
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  placeholder="Confirm password"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onInputChange('confirmPassword', e.target.value)
+                  }
+                />
+                {errors.confirmPassword && (
+                  <Label pointing prompt>
+                    {errors.confirmPassword.message}
+                  </Label>
+                )}
+              </Form.Field>
               <Button type="submit" fluid color="twitter">
                 Sign up
               </Button>
