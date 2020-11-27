@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import { Form, Button, Dropdown, Icon } from 'semantic-ui-react'
+import React, { useEffect } from 'react'
+import { Form, Button, Icon, Dropdown, DropdownProps, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Blob } from 'react-blob'
+import { useForm, NestedValue } from 'react-hook-form'
+import { Node as SlateNode } from 'slate'
 
 import { AppLayout, TextEditor } from 'components'
 import { colors } from 'theme'
@@ -30,10 +32,31 @@ const ReactBlob = styled(Blob)`
   }
 `
 
-export function SheshimCreate() {
-  const [tags, setTags] = useState<string[]>([])
+interface FormValues {
+  title: string
+  tags: NestedValue<string[]>
+  body: SlateNode[]
+}
 
-  const tagOptions = tags.map((tag) => ({ text: tag, value: tag }))
+export function SheshimCreate() {
+  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
+
+  useEffect(() => {
+    register('title', { required: 'Title is required' })
+    register('tags', { validate: (value) => value?.length || 'Tags are required' })
+  }, [register])
+
+  const onInputChange = async (name: string, value: string) => {
+    setValue(name, value)
+    await trigger(name)
+  }
+
+  const onSelectChange = async ({ name, value }: DropdownProps) => {
+    setValue(name, value)
+    await trigger(name)
+  }
+
+  const onSubmit = (data: FormValues) => console.log(data)
 
   return (
     <AppLayout page="sheshim">
@@ -42,22 +65,36 @@ export function SheshimCreate() {
         <Icon name="react" />
       </ReactBlob>
       <Container>
-        <Form>
-          <Form.Field>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form.Field error={Boolean(errors?.title)}>
             <label>Title</label>
-            <input placeholder="First Name" />
+            <input
+              placeholder="Title"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('title', e.target.value)}
+            />
+            {errors.title && (
+              <Label pointing prompt>
+                {errors.title.message}
+              </Label>
+            )}
           </Form.Field>
           <TextEditor />
-          <Form.Field>
+          <Form.Field error={Boolean(errors?.tags)}>
             <label>Tags</label>
             <Dropdown
+              label="Tags"
               search
               selection
               multiple
               allowAdditions
-              options={tagOptions}
-              onChange={(_, { value }) => setTags(value as string[])}
+              options={[]}
+              onChange={(_, data: DropdownProps) => onSelectChange({ name: 'tags', ...data })}
             />
+            {errors.tags && (
+              <Label pointing prompt>
+                {errors.tags.message}
+              </Label>
+            )}
           </Form.Field>
           <Button type="submit" color="twitter">
             Save

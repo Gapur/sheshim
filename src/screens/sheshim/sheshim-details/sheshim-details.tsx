@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Link, useHistory } from 'react-router-dom'
 
-import { AppLayout, TextEditor } from 'components'
+import { AppLayout, TextEditor, PageLoader, QuestionItem } from 'components'
 import { data, Answer } from 'screens/home/mock'
 import { colors } from 'theme'
 
@@ -28,12 +28,13 @@ const SheshimResponseContent = styled.div`
   margin-bottom: 8px;
 `
 
-const Started = styled.div`
-  align-self: flex-end;
-  padding-top: 4px;
-  line-height: 18px;
-  font-size: 12px;
-  color: ${colors.eclipse};
+const SheshimResponseBody = styled.div`
+  background: ${colors.whiteSmoke};
+  width: 100%;
+  margin-left: 8px;
+  margin-right: 8px;
+  border-radius: 8px;
+  padding: 12px;
 `
 
 export function SheshimDetails() {
@@ -43,7 +44,7 @@ export function SheshimDetails() {
   const sheshim = data.find((item) => String(item.id) === sheshimId)
 
   if (!sheshim) {
-    return <div>Loading</div>
+    return <PageLoader />
   }
 
   return (
@@ -63,12 +64,16 @@ export function SheshimDetails() {
       <Sheshimder>
         <SheshimResponse>
           <SheshimResponseContent>
-            <Button.Group size="mini" vertical>
-              <Button icon="angle up" />
-              <Button>{sheshim.votes}</Button>
-              <Button icon="angle down" />
-            </Button.Group>
-            <TextEditor initialValue={sheshim.body} readonly />
+            <div>
+              <Button.Group size="mini" vertical>
+                <Button icon="angle up" />
+                <Button>{sheshim.votes}</Button>
+                <Button icon="angle down" />
+              </Button.Group>
+            </div>
+            <SheshimResponseBody>
+              <TextEditor initialValue={sheshim.body} readonly />
+            </SheshimResponseBody>
           </SheshimResponseContent>
           <Label.Group color="blue">
             {sheshim.tags.map((tag, idx) => (
@@ -77,10 +82,10 @@ export function SheshimDetails() {
               </Label>
             ))}
           </Label.Group>
-          <Started>
+          <QuestionItem.Started>
             <span>{sheshim.createdAt}</span>&nbsp;
             <Link to="/users">{sheshim.createdBy}</Link>
-          </Started>
+          </QuestionItem.Started>
           <SheshimComments comments={[]} />
         </SheshimResponse>
 
@@ -89,17 +94,21 @@ export function SheshimDetails() {
         {sheshim.answers.map((answer: Answer) => (
           <SheshimResponse key={answer.id}>
             <SheshimResponseContent>
-              <Button.Group size="mini" vertical>
-                <Button icon="angle up" />
-                <Button>{answer.votes}</Button>
-                <Button icon="angle down" />
-              </Button.Group>
-              <TextEditor initialValue={answer.body} readonly />
+              <div>
+                <Button.Group size="mini" vertical>
+                  <Button icon="angle up" />
+                  <Button>{answer.votes}</Button>
+                  <Button icon="angle down" />
+                </Button.Group>
+              </div>
+              <SheshimResponseBody>
+                <TextEditor initialValue={answer.body} readonly />
+              </SheshimResponseBody>
             </SheshimResponseContent>
-            <Started>
+            <QuestionItem.Started>
               <span>{answer.createdAt}</span>&nbsp;
               <Link to="/users">{answer.createdBy}</Link>
-            </Started>
+            </QuestionItem.Started>
             <SheshimComments comments={answer.comments} />
             <Divider />
           </SheshimResponse>
