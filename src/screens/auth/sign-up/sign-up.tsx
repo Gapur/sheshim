@@ -58,7 +58,7 @@ export function SignUp() {
           </Button>
           <Segment raised>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Field error={Boolean(errors?.name)}>
+              <Form.Field error={Boolean(errors.name)}>
                 <label>Name</label>
                 <input
                   placeholder="Name"
@@ -70,7 +70,7 @@ export function SignUp() {
                   </Label>
                 )}
               </Form.Field>
-              <Form.Field error={Boolean(errors?.email)}>
+              <Form.Field error={Boolean(errors.email)}>
                 <label>Email</label>
                 <input
                   placeholder="example@gmail.com"
@@ -82,7 +82,7 @@ export function SignUp() {
                   </Label>
                 )}
               </Form.Field>
-              <Form.Field error={Boolean(errors?.password)}>
+              <Form.Field error={Boolean(errors.password)}>
                 <label>Password</label>
                 <input
                   type="password"
@@ -95,7 +95,7 @@ export function SignUp() {
                   </Label>
                 )}
               </Form.Field>
-              <Form.Field error={Boolean(errors?.confirmPassword)}>
+              <Form.Field error={Boolean(errors.confirmPassword)}>
                 <label>Confirm Password</label>
                 <input
                   type="password"

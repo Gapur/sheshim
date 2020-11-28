@@ -38,7 +38,7 @@ export function ForgotPassword() {
         <Grid.Column>
           <Segment raised>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Field error={Boolean(errors?.email)}>
+              <Form.Field error={Boolean(errors.email)}>
                 <label>Email</label>
                 <input
                   placeholder="example@gmail.com"

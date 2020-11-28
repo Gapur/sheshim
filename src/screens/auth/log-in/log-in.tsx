@@ -64,7 +64,7 @@ export function LogIn() {
           </Button>
           <Segment raised>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Field error={Boolean(errors?.email)}>
+              <Form.Field error={Boolean(errors.email)}>
                 <label>Email</label>
                 <input
                   placeholder="example@gmail.com"
@@ -76,7 +76,7 @@ export function LogIn() {
                   </Label>
                 )}
               </Form.Field>
-              <Form.Field error={Boolean(errors?.password)}>
+              <Form.Field error={Boolean(errors.password)}>
                 <label>Password</label>
                 <input
                   type="password"

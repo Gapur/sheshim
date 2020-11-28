@@ -1,7 +1,9 @@
 import React from 'react'
-import { Button, Comment, Icon } from 'semantic-ui-react'
+import { Comment, Icon } from 'semantic-ui-react'
 
 import { Comment as AnswerComment } from 'screens/home/mock'
+
+import { SheshimCommentForm } from './sheshim-comment-form'
 
 interface SheshimCommentsProps {
   comments: AnswerComment[]
@@ -31,9 +33,7 @@ export function SheshimComments({ comments }: SheshimCommentsProps) {
           </Comment>
         ))}
       </Comment.Group>
-      <Button basic size="mini">
-        Add a comment
-      </Button>
+      <SheshimCommentForm />
     </Comment.Group>
   )
 }

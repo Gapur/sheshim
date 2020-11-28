@@ -66,7 +66,7 @@ export function SheshimCreate() {
       </ReactBlob>
       <Container>
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Field error={Boolean(errors?.title)}>
+          <Form.Field error={Boolean(errors.title)}>
             <label>Title</label>
             <input
               placeholder="Title"
@@ -79,7 +79,7 @@ export function SheshimCreate() {
             )}
           </Form.Field>
           <TextEditor />
-          <Form.Field error={Boolean(errors?.tags)}>
+          <Form.Field error={Boolean(errors.tags)}>
             <label>Tags</label>
             <Dropdown
               label="Tags"
