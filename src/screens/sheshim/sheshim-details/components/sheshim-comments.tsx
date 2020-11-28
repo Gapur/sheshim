@@ -9,7 +9,6 @@ interface SheshimCommentsProps {
 }
 
 const Container = styled.div`
-  margin-left: 4%;
   margin-top: 8px;
 `
 
