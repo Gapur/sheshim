@@ -9,6 +9,7 @@ import { data, Answer } from 'screens/home/mock'
 import { colors } from 'theme'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
+import { SheshimAnswerForm } from './components/sheshim-answer-form'
 
 interface SheshimDetailsParams {
   sheshimId: string
@@ -86,6 +87,8 @@ export function SheshimDetails() {
             />
           </SheshimResponse>
         ))}
+
+        <SheshimAnswerForm />
       </Sheshimder>
     </AppLayout>
   )

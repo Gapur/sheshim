@@ -13,6 +13,7 @@ import { SlateElement } from './slate-element'
 interface TextEditorProps {
   initialValue?: SlateNode[]
   readonly?: boolean
+  placeholder?: string
 }
 
 const Editor = styled.div`
@@ -21,7 +22,11 @@ const Editor = styled.div`
   margin-bottom: 8px;
 `
 
-export function TextEditor({ initialValue = [{ children: [{ text: '' }] }], readonly = false }: TextEditorProps) {
+export function TextEditor({
+  initialValue = [{ children: [{ text: '' }] }],
+  readonly = false,
+  placeholder = 'Enter some text...',
+}: TextEditorProps) {
   const [slateValue, setSlateValue] = useState<SlateNode[]>(initialValue)
   const renderElement = useCallback((props) => <SlateElement {...props} />, [])
   const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, [])
@@ -38,7 +43,7 @@ export function TextEditor({ initialValue = [{ children: [{ text: '' }] }], read
           readOnly={readonly}
           renderElement={renderElement}
           renderLeaf={renderLeaf}
-          placeholder="Enter some text..."
+          placeholder={placeholder}
           spellCheck
           autoFocus
         />
