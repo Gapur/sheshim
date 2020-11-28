@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Comment, Icon } from 'semantic-ui-react'
-import styled from 'styled-components'
 
 import { Comment as AnswerComment } from 'screens/home/mock'
 
@@ -8,13 +7,9 @@ interface SheshimCommentsProps {
   comments: AnswerComment[]
 }
 
-const Container = styled.div`
-  margin-top: 8px;
-`
-
 export function SheshimComments({ comments }: SheshimCommentsProps) {
   return (
-    <Container>
+    <Comment.Group>
       <Comment.Group>
         {comments.map((comment: AnswerComment) => (
           <Comment key={comment.id}>
@@ -39,6 +34,6 @@ export function SheshimComments({ comments }: SheshimCommentsProps) {
       <Button basic size="mini">
         Add a comment
       </Button>
-    </Container>
+    </Comment.Group>
   )
 }
