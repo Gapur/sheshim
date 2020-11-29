@@ -1,21 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Form, Button, Image, Label } from 'semantic-ui-react'
-import { useDropzone } from 'react-dropzone'
-import styled from 'styled-components'
+import { Form, Button, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
 
-const DragDropzone = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 24px;
-`
+import { DragDropzone, DropzoneFile } from './drag-dropzone'
 
-const PLACEHOLDER_IMAGE = 'https://react.semantic-ui.com/images/wireframe/square-image.png'
 const REGEX_EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-
-interface DropzoneFile extends File {
-  preview: string
-}
 
 interface FormValues {
   firstName: string
@@ -30,13 +19,6 @@ interface FormValues {
 export function ProfileForm() {
   const [files, setFiles] = useState<DropzoneFile[]>([])
   const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
-
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFiles: File[]) => {
-      setFiles(acceptedFiles.map((file) => Object.assign(file, { preview: URL.createObjectURL(file) })))
-    },
-  })
 
   useEffect(() => {
     files.forEach((file) => URL.revokeObjectURL(file.preview))
@@ -60,14 +42,11 @@ export function ProfileForm() {
     await trigger(name)
   }
 
-  const onSubmit = (data: FormValues) => console.log(data)
+  const onSubmit = (data: FormValues) => console.log({ ...data, file: files[0] })
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <DragDropzone {...getRootProps({ refKey: 'ref' })}>
-        <input {...getInputProps()} />
-        <Image src={files.length ? files[0].preview : PLACEHOLDER_IMAGE} size="small" circular />
-      </DragDropzone>
+      <DragDropzone files={files} onChange={setFiles} />
       <Form.Group widths="equal">
         <Form.Field error={Boolean(errors.firstName)}>
           <label>First Name</label>
