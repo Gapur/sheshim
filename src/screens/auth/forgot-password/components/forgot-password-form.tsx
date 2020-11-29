@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Form, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
 
-const REGEX_EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+import { constants } from 'utils'
 
 export interface FormValues {
   email: string
@@ -16,7 +16,10 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
   const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
 
   useEffect(() => {
-    register('email', { required: 'Email is required', pattern: { value: REGEX_EMAIL, message: 'Email is not valid' } })
+    register('email', {
+      required: 'Email is required',
+      pattern: { value: constants.REGEX.EMAIL, message: 'Email is not valid' },
+    })
   }, [register])
 
   const onInputChange = async (name: 'email', value: string) => {

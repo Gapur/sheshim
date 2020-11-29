@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+import { constants } from 'utils'
+
 export interface FormValues {
   email: string
   password: string
@@ -12,9 +14,6 @@ export interface FormValues {
 interface LogInFormProps {
   onSubmit: (formValues: FormValues) => void
 }
-
-const REGEX_EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-const REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 
 const FormFieldEnd = styled(Form.Field)`
   display: flex;
@@ -25,10 +24,13 @@ export function LogInForm({ onSubmit }: LogInFormProps) {
   const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
 
   useEffect(() => {
-    register('email', { required: 'Email is required', pattern: { value: REGEX_EMAIL, message: 'Email is not valid' } })
+    register('email', {
+      required: 'Email is required',
+      pattern: { value: constants.REGEX.EMAIL, message: 'Email is not valid' },
+    })
     register('password', {
       required: 'Password is required',
-      pattern: { value: REGEX_PASSWORD, message: 'Password it not valid' },
+      pattern: { value: constants.REGEX.PASSWORD, message: 'Password it not valid' },
     })
   }, [register])
 

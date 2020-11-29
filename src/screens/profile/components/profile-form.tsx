@@ -3,8 +3,7 @@ import { Form, Button, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
 
 import { DragDropzone, DropzoneFile } from './drag-dropzone'
-
-const REGEX_EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+import { constants } from 'utils'
 
 interface FormValues {
   firstName: string
@@ -27,7 +26,10 @@ export function ProfileForm() {
   useEffect(() => {
     register('firstName', { required: 'First name is required' })
     register('lastName', { required: 'Last name is required' })
-    register('email', { required: 'Email is required', pattern: { value: REGEX_EMAIL, message: 'Email is not valid' } })
+    register('email', {
+      required: 'Email is required',
+      pattern: { value: constants.REGEX.EMAIL, message: 'Email is not valid' },
+    })
     register('position')
     register('city')
     register('country')
@@ -47,6 +49,7 @@ export function ProfileForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <DragDropzone files={files} onChange={setFiles} />
+
       <Form.Group widths="equal">
         <Form.Field error={Boolean(errors.firstName)}>
           <label>First Name</label>
@@ -73,6 +76,7 @@ export function ProfileForm() {
           )}
         </Form.Field>
       </Form.Group>
+
       <Form.Group widths="equal">
         <Form.Field error={Boolean(errors.email)}>
           <label>Email</label>
@@ -94,6 +98,7 @@ export function ProfileForm() {
           />
         </Form.Field>
       </Form.Group>
+
       <Form.Group widths="equal">
         <Form.Field>
           <label>City</label>

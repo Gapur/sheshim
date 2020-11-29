@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { Button, Form, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
 
+import { constants } from 'utils'
+
 export interface FormValues {
   name: string
   email: string
@@ -13,18 +15,18 @@ interface SignUpFormProps {
   onSubmit: (formValues: FormValues) => void
 }
 
-const REGEX_EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-const REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
-
 export function SignUpForm({ onSubmit }: SignUpFormProps) {
   const { errors, register, handleSubmit, setValue, trigger, watch } = useForm<FormValues>()
 
   useEffect(() => {
     register('name', { required: 'Name is required' })
-    register('email', { required: 'Email is required', pattern: { value: REGEX_EMAIL, message: 'Email is not valid' } })
+    register('email', {
+      required: 'Email is required',
+      pattern: { value: constants.REGEX.EMAIL, message: 'Email is not valid' },
+    })
     register('password', {
       required: 'Password is required',
-      pattern: { value: REGEX_PASSWORD, message: 'Password it not valid' },
+      pattern: { value: constants.REGEX.PASSWORD, message: 'Password it not valid' },
     })
     register('confirmPassword', {
       validate: (value: string) => value === watch('password') || 'Password don`t match',
