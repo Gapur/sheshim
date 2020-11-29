@@ -1,21 +1,17 @@
 import React from 'react'
-import { Button, Comment, Icon } from 'semantic-ui-react'
-import styled from 'styled-components'
+import { Comment, Icon } from 'semantic-ui-react'
 
 import { Comment as AnswerComment } from 'screens/home/mock'
+
+import { SheshimCommentForm } from './sheshim-comment-form'
 
 interface SheshimCommentsProps {
   comments: AnswerComment[]
 }
 
-const Container = styled.div`
-  margin-left: 4%;
-  margin-top: 8px;
-`
-
 export function SheshimComments({ comments }: SheshimCommentsProps) {
   return (
-    <Container>
+    <Comment.Group>
       <Comment.Group>
         {comments.map((comment: AnswerComment) => (
           <Comment key={comment.id}>
@@ -37,9 +33,7 @@ export function SheshimComments({ comments }: SheshimCommentsProps) {
           </Comment>
         ))}
       </Comment.Group>
-      <Button basic size="mini">
-        Add a comment
-      </Button>
-    </Container>
+      <SheshimCommentForm />
+    </Comment.Group>
   )
 }
