@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import { Grid, Button, Form, Icon, Segment, Image, Label } from 'semantic-ui-react'
+import { Grid, Button, Icon, Segment, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
 
 import { AuthLayout } from 'components'
 import { images } from 'assets'
 
-const REGEX_EMAIL = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
-const REGEX_PASSWORD = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
+import { LogInForm, FormValues } from './components/log-in-form'
 
 const Logo = styled(Image)`
   width: 72px;
@@ -21,32 +19,7 @@ const Span = styled.span`
   padding-top: 16px;
 `
 
-const FormFieldEnd = styled(Form.Field)`
-  display: flex;
-  justify-content: flex-end;
-`
-
-interface FormValues {
-  email: string
-  password: string
-}
-
 export function LogIn() {
-  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
-
-  useEffect(() => {
-    register('email', { required: 'Email is required', pattern: { value: REGEX_EMAIL, message: 'Email is not valid' } })
-    register('password', {
-      required: 'Password is required',
-      pattern: { value: REGEX_PASSWORD, message: 'Password it not valid' },
-    })
-  }, [register])
-
-  const onInputChange = async (name: 'email' | 'password', value: string) => {
-    setValue(name, value)
-    await trigger(name)
-  }
-
   const onSubmit = (data: FormValues) => console.log(data)
 
   return (
@@ -63,39 +36,7 @@ export function LogIn() {
             Log in with Facebook
           </Button>
           <Segment raised>
-            <Form onSubmit={handleSubmit(onSubmit)}>
-              <Form.Field error={Boolean(errors.email)}>
-                <label>Email</label>
-                <input
-                  placeholder="example@gmail.com"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('email', e.target.value)}
-                />
-                {errors.email && (
-                  <Label pointing prompt>
-                    {errors.email.message}
-                  </Label>
-                )}
-              </Form.Field>
-              <Form.Field error={Boolean(errors.password)}>
-                <label>Password</label>
-                <input
-                  type="password"
-                  placeholder="password"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('password', e.target.value)}
-                />
-                {errors.password && (
-                  <Label pointing prompt>
-                    {errors.password.message}
-                  </Label>
-                )}
-              </Form.Field>
-              <FormFieldEnd>
-                <Link to="/forgot">Forgot password?</Link>
-              </FormFieldEnd>
-              <Button type="submit" fluid color="twitter">
-                Log in
-              </Button>
-            </Form>
+            <LogInForm onSubmit={onSubmit} />
           </Segment>
           <Span>
             Don’t have an account? <Link to="/signup">Sign Up</Link>
