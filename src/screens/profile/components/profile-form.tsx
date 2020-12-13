@@ -3,7 +3,7 @@ import { Form, Button, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
 
 import { DragDropzone, DropzoneFile } from './drag-dropzone'
-import { constants } from 'utils'
+import { constants } from 'config'
 
 interface FormValues {
   firstName: string
