@@ -7,8 +7,6 @@ import { colors, metrics } from 'theme'
 import { images } from 'assets'
 import { firebase, logout } from 'services/firebase'
 
-const PLACEHOLDER_IMAGE = 'https://react.semantic-ui.com/images/wireframe/square-image.png'
-
 const Header = styled.header`
   && {
     display: flex;
@@ -102,7 +100,7 @@ export function AppHeader({ user }: { user: firebase.UserInfo }) {
               className="profile"
               trigger={
                 <DropdownAvatar>
-                  <Image src={PLACEHOLDER_IMAGE} />
+                  <Image src={user.photoURL ?? images.user} />
                   {user.displayName ?? user.email}
                 </DropdownAvatar>
               }
