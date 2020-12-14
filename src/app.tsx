@@ -9,6 +9,8 @@ const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'))
 export function App() {
   const { user } = useAuth()
   return (
-    <React.Suspense fallback={<PageLoader />}>{user ? <AuthenticatedApp /> : <UnauthenticatedApp />}</React.Suspense>
+    <React.Suspense fallback={<PageLoader />}>
+      {!user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
+    </React.Suspense>
   )
 }

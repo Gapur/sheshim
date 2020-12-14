@@ -7,6 +7,10 @@ import { QuestionItem } from 'components'
 import { colors } from 'theme'
 import { Question } from '../mock'
 
+interface QuestionListItemProps {
+  question: Question
+}
+
 const Stat = styled.div`
   display: flex;
   flex-direction: column;
@@ -20,10 +24,6 @@ const Stat = styled.div`
     color: ${colors.eclipse};
   }
 `
-
-interface QuestionListItemProps {
-  question: Question
-}
 
 export function QuestionListItem({ question }: QuestionListItemProps) {
   return (

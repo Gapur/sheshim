@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { constants } from 'utils'
+import { constants } from 'config'
 
 export interface FormValues {
   email: string

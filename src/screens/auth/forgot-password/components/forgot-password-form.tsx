@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Form, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
 
-import { constants } from 'utils'
+import { constants } from 'config'
 
 export interface FormValues {
   email: string

@@ -4,6 +4,7 @@ import { Grid, Button, Icon, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import { AuthLayout } from 'components'
+import { signUpWithEmailAndPassword } from 'services/firebase/auth'
 
 import { SignUpForm, FormValues } from './components/sign-up-form'
 
@@ -14,7 +15,7 @@ const Span = styled.span`
 `
 
 export function SignUp() {
-  const onSubmit = (data: FormValues) => console.log(data)
+  const onSubmit = (data: FormValues) => signUpWithEmailAndPassword(data)
 
   return (
     <AuthLayout>

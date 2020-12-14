@@ -7,6 +7,10 @@ import { colors } from 'theme'
 import { TextEditor, QuestionItem } from 'components'
 import { Question } from 'screens/home/mock'
 
+interface SheshimListItemProps {
+  question: Question
+}
+
 const Vote = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,10 +45,6 @@ const AnswerStatus = styled.div`
     font-size: 12px;
   }
 `
-
-interface SheshimListItemProps {
-  question: Question
-}
 
 export function SheshimListItem({ question }: SheshimListItemProps) {
   return (
