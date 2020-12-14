@@ -17,13 +17,6 @@ export const loginWithEmailAndPassword = async ({ email, password }: LogInValues
     .signInWithEmailAndPassword(email, password)
     .then((res) => JSON.stringify(res))
     .then((res) => JSON.parse(res))
-    .then(({ token, role, uid }) => {
-      return {
-        token,
-        role,
-        uid,
-      }
-    })
 
 export const signUpWithEmailAndPassword = async (userData: SignUpValues) => {
   const { email, password } = userData

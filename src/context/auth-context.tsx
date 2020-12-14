@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, createContext } from 'react'
 
 import { PageLoader } from 'components'
-import { onAuthStateChanged } from 'services/firebase/auth'
+import { firebase, onAuthStateChanged } from 'services/firebase'
 
 export enum AuthStatus {
   Idle = 'idle',
@@ -13,7 +13,7 @@ export enum AuthStatus {
 export interface AuthContextProps {
   status: AuthStatus
   error: string | null
-  user: string | null
+  user: firebase.UserInfo | null
 }
 
 interface AuthProviderProps {
@@ -33,7 +33,9 @@ export function AuthProvider(props: AuthProviderProps) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(
-      (user) => setState({ status: AuthStatus.Success, error: null, user: 'user' }),
+      (user: firebase.User) => {
+        setState({ status: AuthStatus.Success, error: null, user })
+      },
       () => setState({ status: AuthStatus.Error, error: 'No user is signed in.', user: null }),
     )
 
