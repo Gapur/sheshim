@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { useAuth } from './context/auth-context'
-import { PageLoader } from './components'
+import { useAuth } from 'context/auth-context'
+import { PageLoader } from 'components'
 
 const AuthenticatedApp = React.lazy(() => import('./authenticated-app'))
 const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'))

@@ -27,3 +27,5 @@ export const signUpWithEmailAndPassword = async (userData: SignUpValues) => {
     .then((res) => JSON.stringify(res))
     .then((res) => JSON.parse(res))
 }
+
+export const logout = () => firebase.auth().signOut()

@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { colors, metrics } from 'theme'
-import { images } from '../assets'
+import { images } from 'assets'
+import { firebase, logout } from 'services/firebase'
 
 const PLACEHOLDER_IMAGE = 'https://react.semantic-ui.com/images/wireframe/square-image.png'
 
@@ -22,6 +23,7 @@ const Header = styled.header`
 
     .search {
       width: 68%;
+      padding-right: 8px;
     }
     .search > .input {
       width: 100%;
@@ -77,7 +79,7 @@ const DropdownAvatar = styled.span`
   }
 `
 
-export function AppHeader() {
+export function AppHeader({ user }: { user: firebase.UserInfo }) {
   const history = useHistory()
 
   return (
@@ -87,7 +89,12 @@ export function AppHeader() {
           <Image src={images.logo} />
           <span>Sheshim</span>
         </Logo>
-        <Search loading={false} onResultSelect={(e, data) => {}} onSearchChange={() => {}} results={[]} />
+        <Search
+          loading={false}
+          onResultSelect={(e, data) => {}}
+          onSearchChange={() => {}}
+          results={[]}
+        />
         <Menu className="header-menu" secondary size="large">
           <Menu.Menu position="right">
             <Dropdown
@@ -96,7 +103,7 @@ export function AppHeader() {
               trigger={
                 <DropdownAvatar>
                   <Image src={PLACEHOLDER_IMAGE} />
-                  Gapur
+                  {user.displayName ?? user.email}
                 </DropdownAvatar>
               }
             >
@@ -109,7 +116,7 @@ export function AppHeader() {
                 >
                   Help
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => {}}>Logout</Dropdown.Item>
+                <Dropdown.Item onClick={logout}>Logout</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Menu.Menu>
