@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { AuthLayout } from 'components'
 import { images } from 'assets'
+import { loginWithEmailAndPassword } from 'services/firebase/auth'
 
 import { LogInForm, FormValues } from './components/log-in-form'
 
@@ -20,7 +21,7 @@ const Span = styled.span`
 `
 
 export function LogIn() {
-  const onSubmit = (data: FormValues) => console.log(data)
+  const onSubmit = (data: FormValues) => loginWithEmailAndPassword(data)
 
   return (
     <AuthLayout>

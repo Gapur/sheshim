@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useContext, createContext } from 'react'
 
 import { PageLoader } from 'components'
-
-const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
-
-const getUser = () => sleep(1000).then(() => 'gapur')
+import { onAuthStateChanged } from 'services/firebase/auth'
 
 export enum AuthStatus {
   Idle = 'idle',
@@ -35,10 +32,12 @@ export function AuthProvider(props: AuthProviderProps) {
   })
 
   useEffect(() => {
-    getUser().then(
-      (user) => setState({ status: AuthStatus.Success, error: null, user }),
-      (error) => setState({ status: AuthStatus.Error, error, user: null }),
+    const unsubscribe = onAuthStateChanged(
+      (user) => setState({ status: AuthStatus.Success, error: null, user: 'user' }),
+      () => setState({ status: AuthStatus.Error, error: 'No user is signed in.', user: null }),
     )
+
+    return () => unsubscribe()
   }, [])
 
   if (state.status === AuthStatus.Idle || state.status === AuthStatus.Pending) {
