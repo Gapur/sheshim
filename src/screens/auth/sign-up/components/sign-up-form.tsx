@@ -16,7 +16,9 @@ interface SignUpFormProps {
 }
 
 export function SignUpForm({ onSubmit }: SignUpFormProps) {
-  const { errors, register, handleSubmit, setValue, trigger, watch } = useForm<FormValues>()
+  const { errors, formState, register, handleSubmit, setValue, trigger, watch } = useForm<
+    FormValues
+  >()
 
   useEffect(() => {
     register('name', { required: 'Name is required' })
@@ -33,18 +35,23 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
     })
   }, [register, watch])
 
-  const onInputChange = async (name: 'name' | 'email' | 'password' | 'confirmPassword', value: string) => {
+  const onInputChange = async (
+    name: 'name' | 'email' | 'password' | 'confirmPassword',
+    value: string,
+  ) => {
     setValue(name, value)
     await trigger(name)
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form loading={formState.isSubmitting} onSubmit={handleSubmit(onSubmit)}>
       <Form.Field error={Boolean(errors.name)}>
         <label>Name</label>
         <input
           placeholder="Name"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('name', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('name', e.target.value)
+          }
         />
         {errors.name && (
           <Label pointing prompt>
@@ -57,7 +64,9 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
         <label>Email</label>
         <input
           placeholder="example@gmail.com"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('email', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('email', e.target.value)
+          }
         />
         {errors.email && (
           <Label pointing prompt>
@@ -71,7 +80,9 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
         <input
           type="password"
           placeholder="Password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('password', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('password', e.target.value)
+          }
         />
         {errors.password && (
           <Label pointing prompt>
@@ -85,7 +96,9 @@ export function SignUpForm({ onSubmit }: SignUpFormProps) {
         <input
           type="password"
           placeholder="Confirm password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('confirmPassword', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('confirmPassword', e.target.value)
+          }
         />
         {errors.confirmPassword && (
           <Label pointing prompt>
