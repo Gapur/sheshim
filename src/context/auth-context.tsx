@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext, createContext } from 'react'
 
-import { PageLoader } from 'components'
+import { PageLoader, PageErrorFallback } from 'components'
 import { firebase, onAuthStateChanged } from 'services/firebase'
 
 export enum AuthStatus {
@@ -47,7 +47,8 @@ export function AuthProvider(props: AuthProviderProps) {
   }
 
   if (state.error === AuthStatus.Error) {
-    return <div>Oh no</div>
+    const fallbackProps = { error: new Error(state.error), resetErrorBoundary: () => {} }
+    return <PageErrorFallback {...fallbackProps} />
   }
 
   return <AuthContext.Provider value={state} {...props} />

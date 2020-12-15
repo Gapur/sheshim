@@ -22,7 +22,8 @@
     "slate": "^0.59.0",
     "slate-history": "^0.59.0",
     "slate-react": "^0.59.0",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
+    "sweetalert2": "^10.12.5"
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",

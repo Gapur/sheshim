@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Grid, Button, Icon, Segment, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
 import { images } from 'assets'
@@ -21,7 +22,14 @@ const Span = styled.span`
 `
 
 export function LogIn() {
-  const onSubmit = (data: FormValues) => loginWithEmailAndPassword(data)
+  const onSubmit = (data: FormValues) =>
+    loginWithEmailAndPassword(data).catch((err) =>
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err.message,
+      }),
+    )
 
   return (
     <AuthLayout>
