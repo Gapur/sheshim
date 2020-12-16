@@ -21,7 +21,7 @@ const FormFieldEnd = styled(Form.Field)`
 `
 
 export function LogInForm({ onSubmit }: LogInFormProps) {
-  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
+  const { errors, formState, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
 
   useEffect(() => {
     register('email', {
@@ -40,12 +40,14 @@ export function LogInForm({ onSubmit }: LogInFormProps) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form loading={formState.isSubmitting} onSubmit={handleSubmit(onSubmit)}>
       <Form.Field error={Boolean(errors.email)}>
         <label>Email</label>
         <input
           placeholder="example@gmail.com"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('email', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('email', e.target.value)
+          }
         />
         {errors.email && (
           <Label pointing prompt>
@@ -59,7 +61,9 @@ export function LogInForm({ onSubmit }: LogInFormProps) {
         <input
           type="password"
           placeholder="password"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('password', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('password', e.target.value)
+          }
         />
         {errors.password && (
           <Label pointing prompt>

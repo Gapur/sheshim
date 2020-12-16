@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Grid, Button, Icon, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
 import { signUpWithEmailAndPassword } from 'services/firebase/auth'
@@ -15,7 +16,21 @@ const Span = styled.span`
 `
 
 export function SignUp() {
-  const onSubmit = (data: FormValues) => signUpWithEmailAndPassword(data)
+  const onSubmit = (data: FormValues) =>
+    signUpWithEmailAndPassword(data)
+      .then(() =>
+        Swal.fire({
+          icon: 'success',
+          title: 'You have successfully created your account.',
+        }),
+      )
+      .catch((err) =>
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.message,
+        }),
+      )
 
   return (
     <AuthLayout>

@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useContext, createContext } from 'react'
 
-import { PageLoader } from 'components'
-
-const sleep = (time: number) => new Promise((resolve) => setTimeout(resolve, time))
-
-const getUser = () => sleep(1000).then(() => 'gapur')
+import { PageLoader, PageErrorFallback } from 'components'
+import { firebase, onAuthStateChanged } from 'services/firebase'
 
 export enum AuthStatus {
   Idle = 'idle',
@@ -16,7 +13,7 @@ export enum AuthStatus {
 export interface AuthContextProps {
   status: AuthStatus
   error: string | null
-  user: string | null
+  user: firebase.UserInfo | null
 }
 
 interface AuthProviderProps {
@@ -35,10 +32,14 @@ export function AuthProvider(props: AuthProviderProps) {
   })
 
   useEffect(() => {
-    getUser().then(
-      (user) => setState({ status: AuthStatus.Success, error: null, user }),
-      (error) => setState({ status: AuthStatus.Error, error, user: null }),
+    const unsubscribe = onAuthStateChanged(
+      (user: firebase.User) => {
+        setState({ status: AuthStatus.Success, error: null, user })
+      },
+      () => setState({ status: AuthStatus.Error, error: 'No user is signed in.', user: null }),
     )
+
+    return () => unsubscribe()
   }, [])
 
   if (state.status === AuthStatus.Idle || state.status === AuthStatus.Pending) {
@@ -46,7 +47,8 @@ export function AuthProvider(props: AuthProviderProps) {
   }
 
   if (state.error === AuthStatus.Error) {
-    return <div>Oh no</div>
+    const fallbackProps = { error: new Error(state.error), resetErrorBoundary: () => {} }
+    return <PageErrorFallback {...fallbackProps} />
   }
 
   return <AuthContext.Provider value={state} {...props} />
