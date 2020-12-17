@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
-import { forgotPassword } from 'services/firebase'
+import { firebase, forgotPassword } from 'services/firebase'
 
 import { ForgotPasswordForm, FormValues } from './components/forgot-password-form'
 
@@ -17,7 +17,7 @@ const Span = styled.span`
 
 export function ForgotPassword() {
   const onSubmit = (data: FormValues) =>
-    forgotPassword(data).catch((err) =>
+    forgotPassword(data).catch((err: firebase.FirebaseError) =>
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

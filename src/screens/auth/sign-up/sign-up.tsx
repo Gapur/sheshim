@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
-import { signUpWithEmailAndPassword } from 'services/firebase/auth'
+import { firebase, signUpWithEmailAndPassword } from 'services/firebase'
 
 import { SignUpForm, FormValues } from './components/sign-up-form'
 
@@ -24,7 +24,7 @@ export function SignUp() {
           title: 'You have successfully created your account.',
         }),
       )
-      .catch((err) =>
+      .catch((err: firebase.FirebaseError) =>
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
