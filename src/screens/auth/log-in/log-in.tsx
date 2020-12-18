@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
 import { images } from 'assets'
-import { firebase, loginWithEmailAndPassword } from 'services/firebase'
+import { firebase, loginWithEmailAndPassword, loginWithGoogle } from 'services/firebase'
 
 import { LogInForm, FormValues } from './components/log-in-form'
 
@@ -36,7 +36,7 @@ export function LogIn() {
       <Grid columns={3} centered container stackable>
         <Grid.Column>
           <Logo src={images.logo} centered />
-          <Button fluid color="google plus">
+          <Button fluid color="google plus" onClick={loginWithGoogle}>
             <Icon name="google" />
             Log in with Google
           </Button>
