@@ -2,8 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { Grid, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
+import { firebase, forgotPassword } from 'services/firebase'
 
 import { ForgotPasswordForm, FormValues } from './components/forgot-password-form'
 
@@ -14,7 +16,22 @@ const Span = styled.span`
 `
 
 export function ForgotPassword() {
-  const onSubmit = (data: FormValues) => console.log(data)
+  const onSubmit = (data: FormValues) =>
+    forgotPassword(data)
+      .then(() =>
+        Swal.fire({
+          icon: 'success',
+          text:
+            'If the email you have entered exists in our system, we will send a link to reset your password.',
+        }),
+      )
+      .catch((err: firebase.FirebaseError) =>
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.message,
+        }),
+      )
 
   return (
     <AuthLayout>

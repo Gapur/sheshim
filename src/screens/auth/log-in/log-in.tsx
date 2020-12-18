@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
 import { images } from 'assets'
-import { loginWithEmailAndPassword } from 'services/firebase/auth'
+import { firebase, loginWithEmailAndPassword } from 'services/firebase'
 
 import { LogInForm, FormValues } from './components/log-in-form'
 
@@ -23,7 +23,7 @@ const Span = styled.span`
 
 export function LogIn() {
   const onSubmit = (data: FormValues) =>
-    loginWithEmailAndPassword(data).catch((err) =>
+    loginWithEmailAndPassword(data).catch((err: firebase.FirebaseError) =>
       Swal.fire({
         icon: 'error',
         title: 'Oops...',

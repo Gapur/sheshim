@@ -13,7 +13,7 @@ interface ForgotPasswordFormProps {
 }
 
 export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
-  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
+  const { errors, formState, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
 
   useEffect(() => {
     register('email', {
@@ -28,12 +28,14 @@ export function ForgotPasswordForm({ onSubmit }: ForgotPasswordFormProps) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form loading={formState.isSubmitting} onSubmit={handleSubmit(onSubmit)}>
       <Form.Field error={Boolean(errors.email)}>
         <label>Email</label>
         <input
           placeholder="example@gmail.com"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('email', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('email', e.target.value)
+          }
         />
         {errors.email && (
           <Label pointing prompt>
