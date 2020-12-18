@@ -17,13 +17,21 @@ const Span = styled.span`
 
 export function ForgotPassword() {
   const onSubmit = (data: FormValues) =>
-    forgotPassword(data).catch((err: firebase.FirebaseError) =>
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.message,
-      }),
-    )
+    forgotPassword(data)
+      .then(() =>
+        Swal.fire({
+          icon: 'success',
+          text:
+            'If the email you have entered exists in our system, we will send a link to reset your password.',
+        }),
+      )
+      .catch((err: firebase.FirebaseError) =>
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.message,
+        }),
+      )
 
   return (
     <AuthLayout>
