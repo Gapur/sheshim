@@ -6,7 +6,12 @@ import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
 import { images } from 'assets'
-import { firebase, loginWithEmailAndPassword } from 'services/firebase'
+import {
+  firebase,
+  loginWithEmailAndPassword,
+  loginWithGoogle,
+  loginWithFacebook,
+} from 'services/firebase'
 
 import { LogInForm, FormValues } from './components/log-in-form'
 
@@ -22,8 +27,26 @@ const Span = styled.span`
 `
 
 export function LogIn() {
-  const onSubmit = (data: FormValues) =>
+  const onLoginWithEmailAndPassword = (data: FormValues) =>
     loginWithEmailAndPassword(data).catch((err: firebase.FirebaseError) =>
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err.message,
+      }),
+    )
+
+  const onLoginWithGoogle = () =>
+    loginWithGoogle().catch((err: firebase.FirebaseError) =>
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err.message,
+      }),
+    )
+
+  const onLoginWithFacebook = () =>
+    loginWithFacebook().catch((err: firebase.FirebaseError) =>
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -36,16 +59,16 @@ export function LogIn() {
       <Grid columns={3} centered container stackable>
         <Grid.Column>
           <Logo src={images.logo} centered />
-          <Button fluid color="google plus">
+          <Button fluid color="google plus" onClick={onLoginWithGoogle}>
             <Icon name="google" />
             Log in with Google
           </Button>
-          <Button color="facebook" fluid>
+          <Button color="facebook" fluid onClick={onLoginWithFacebook}>
             <Icon name="facebook" />
             Log in with Facebook
           </Button>
           <Segment raised>
-            <LogInForm onSubmit={onSubmit} />
+            <LogInForm onSubmit={onLoginWithEmailAndPassword} />
           </Segment>
           <Span>
             Don’t have an account? <Link to="/signup">Sign Up</Link>

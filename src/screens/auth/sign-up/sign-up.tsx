@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Grid, Button, Icon, Segment } from 'semantic-ui-react'
+import { Grid, Segment } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
@@ -36,14 +36,6 @@ export function SignUp() {
     <AuthLayout>
       <Grid columns={3} centered container stackable>
         <Grid.Column>
-          <Button fluid color="google plus">
-            <Icon name="google" />
-            Sign up with Google
-          </Button>
-          <Button color="facebook" fluid>
-            <Icon name="facebook" />
-            Sign up with Facebook
-          </Button>
           <Segment raised>
             <SignUpForm onSubmit={onSubmit} />
           </Segment>
