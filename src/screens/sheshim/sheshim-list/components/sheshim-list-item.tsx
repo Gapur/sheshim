@@ -64,7 +64,7 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           <Link to={`/sheshim/${question.id}`}>{question.title}</Link>
         </Header>
         <QuestionItem.Body>
-          <TextEditor initialValue={question.body} readonly />
+          <TextEditor value={question.body} readonly />
         </QuestionItem.Body>
         <Label.Group color="blue">
           {question.tags.map((tag: string, idx: number) => (

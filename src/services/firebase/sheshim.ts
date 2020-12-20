@@ -7,9 +7,8 @@ import { CollectionManager } from './collection-manager'
 export const sheshimCollection = new CollectionManager('sheshims')
 
 export const createSheshim = (data: FormValues) => {
-  console.log('data---', data)
   const { currentUser } = firebase.auth()
-  if (!currentUser) {
+  if (currentUser) {
     const newQuestion: Question = {
       title: data.title,
       tags: data.tags,

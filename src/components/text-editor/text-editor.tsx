@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Editable, withReact, Slate } from 'slate-react'
 import { createEditor, Node as SlateNode } from 'slate'
 import { withHistory } from 'slate-history'
@@ -11,9 +11,10 @@ import { SlateLeaf } from './slate-leaf'
 import { SlateElement } from './slate-element'
 
 interface TextEditorProps {
-  initialValue?: SlateNode[]
+  value?: SlateNode[]
   readonly?: boolean
   placeholder?: string
+  onChange?: (value: SlateNode[]) => void
 }
 
 const Editor = styled.div`
@@ -23,11 +24,11 @@ const Editor = styled.div`
 `
 
 export function TextEditor({
-  initialValue = [{ children: [{ text: '' }] }],
+  value = [{ children: [{ text: '' }] }],
   readonly = false,
   placeholder = 'Enter some text...',
+  onChange = () => value,
 }: TextEditorProps) {
-  const [slateValue, setSlateValue] = useState<SlateNode[]>(initialValue)
   const renderElement = useCallback((props) => <SlateElement {...props} />, [])
   const renderLeaf = useCallback((props) => <SlateLeaf {...props} />, [])
   const slateEditor = useMemo(() => withHistory(withReact(createEditor())), [])
@@ -52,7 +53,7 @@ export function TextEditor({
   }
 
   return (
-    <Slate editor={slateEditor} value={slateValue} onChange={setSlateValue}>
+    <Slate editor={slateEditor} value={value} onChange={onChange}>
       {renderEditor()}
     </Slate>
   )

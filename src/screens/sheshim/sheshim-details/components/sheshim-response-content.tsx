@@ -44,7 +44,7 @@ export function SheshimResponseContent({
   return (
     <ResponseContent>
       <ResponseBody>
-        <TextEditor initialValue={body} readonly />
+        <TextEditor value={body} readonly />
       </ResponseBody>
       {tags && (
         <Label.Group color="blue">

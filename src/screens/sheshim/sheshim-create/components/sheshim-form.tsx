@@ -16,14 +16,15 @@ interface SheshimFormProps {
 }
 
 export function SheshimForm({ onSubmit }: SheshimFormProps) {
-  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
+  const { errors, register, handleSubmit, setValue, trigger, watch } = useForm<FormValues>()
 
   useEffect(() => {
     register('title', { required: 'Title is required' })
+    register('body')
     register('tags', { validate: (value) => value?.length || 'Tags are required' })
   }, [register])
 
-  const onInputChange = async (name: string, value: string) => {
+  const onInputChange = async (name: string, value: string | SlateNode[]) => {
     setValue(name, value)
     await trigger(name)
   }
@@ -39,7 +40,9 @@ export function SheshimForm({ onSubmit }: SheshimFormProps) {
         <label>Title</label>
         <input
           placeholder="Title"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('title', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('title', e.target.value)
+          }
         />
         {errors.title && (
           <Label pointing prompt>
@@ -48,7 +51,10 @@ export function SheshimForm({ onSubmit }: SheshimFormProps) {
         )}
       </Form.Field>
 
-      <TextEditor />
+      <TextEditor
+        value={watch('body')}
+        onChange={(value: SlateNode[]) => onInputChange('body', value)}
+      />
 
       <Form.Field error={Boolean(errors.tags)}>
         <label>Tags</label>
