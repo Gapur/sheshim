@@ -2,7 +2,7 @@ import { Question, Answer, Comment, User } from 'models'
 
 import { firebase } from './firebase'
 
-export const timestamp = firebase.firestore.FieldValue.serverTimestamp()
+export const timestamp = firebase.firestore?.FieldValue?.serverTimestamp()
 export const { now } = firebase.firestore.Timestamp
 
 type DocType = Question | Answer | Comment | User
@@ -13,7 +13,7 @@ interface SnapshotObserver {
   complete?: () => void
 }
 
-class CollectionManager {
+export class CollectionManager {
   db: firebase.firestore.Firestore
   collectionName: string
   collection: firebase.firestore.CollectionReference
@@ -103,5 +103,3 @@ class CollectionManager {
     })
   }
 }
-
-export default CollectionManager
