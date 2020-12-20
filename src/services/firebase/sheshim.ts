@@ -1,4 +1,4 @@
-import { Question } from 'models'
+import { Question, QuestionView } from 'models'
 import { FormValues } from 'screens/sheshim/sheshim-create/components/sheshim-form'
 
 import { firebase } from './firebase'
@@ -18,8 +18,35 @@ export const createSheshim = (data: FormValues) => {
       views: 0,
       answers: [],
       comments: [],
+      createdBy: {
+        id: currentUser.uid,
+        name: currentUser.displayName ?? currentUser.email ?? 'Anonymous',
+      },
     }
     return sheshimCollection.addDoc(newQuestion)
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const fetchSheshims = () => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return sheshimCollection
+      .collectionRef()
+      .orderBy('createdAt', 'desc')
+      .get()
+      .then((querySnapshot) => {
+        if (querySnapshot.empty) {
+          return []
+        }
+        return querySnapshot.docs.map((doc) => {
+          const question = doc.data() as Question
+          return {
+            ...question,
+            body: JSON.parse(question.body),
+          } as QuestionView
+        })
+      })
   }
   return Promise.reject(new Error('You are not signed in.'))
 }

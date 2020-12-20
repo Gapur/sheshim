@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { AppLayout } from 'components'
 import { data } from 'screens/home/mock'
+import { fetchSheshims } from 'services/firebase/sheshim'
+
 import { SheshimListItem } from './components/sheshim-list-item'
 
 const List = styled.div`
@@ -17,6 +19,10 @@ const List = styled.div`
 
 export function SheshimList() {
   const history = useHistory()
+
+  useEffect(() => {
+    fetchSheshims().then(console.log)
+  }, [])
 
   return (
     <AppLayout page="sheshim">
