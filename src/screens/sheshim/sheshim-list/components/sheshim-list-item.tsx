@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { colors } from 'theme'
 import { TextEditor, QuestionItem } from 'components'
-import { Question } from 'screens/home/mock'
+import { Question } from 'models'
 
 interface SheshimListItemProps {
   question: Question

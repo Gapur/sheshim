@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 
 import { QuestionItem } from 'components'
 import { colors } from 'theme'
-import { Question } from '../mock'
+import { Question } from 'models'
 
 interface QuestionListItemProps {
   question: Question

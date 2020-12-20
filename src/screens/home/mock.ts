@@ -1,35 +1,4 @@
-import { Node as SlateNode } from 'slate'
-
-export interface Question {
-  id: number
-  votes: number
-  answersCount: number
-  views: number
-  title: string
-  body: SlateNode[]
-  tags: string[]
-  createdAt: string
-  createdBy: string
-  answers: Answer[]
-  comments: Comment[]
-}
-
-export interface Answer {
-  id: number
-  votes: number
-  body: SlateNode[]
-  createdAt: string
-  createdBy: string
-  comments: Comment[]
-}
-
-export interface Comment {
-  id: number
-  votes: number
-  text: string
-  createdAt: string
-  createdBy: string
-}
+import { Question } from 'models'
 
 export const data: Question[] = [
   {
@@ -59,7 +28,8 @@ export const data: Question[] = [
           },
           { text: 'bold', bold: true },
           {
-            text: ', or add a semantically rendered block quote in the middle of the page, like this:',
+            text:
+              ', or add a semantically rendered block quote in the middle of the page, like this:',
           },
         ],
       },
@@ -80,7 +50,12 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [
@@ -103,7 +78,12 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -125,7 +105,12 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -133,7 +118,12 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -155,7 +145,12 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -163,7 +158,12 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -198,7 +198,12 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -206,7 +211,12 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -241,7 +251,12 @@ export const data: Question[] = [
       {
         id: 1,
         votes: 1,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],
@@ -249,7 +264,12 @@ export const data: Question[] = [
       {
         id: 2,
         votes: 6,
-        body: [{ type: 'paragraph', children: [{ text: 'If you are using React Router, you have to use this' }] }],
+        body: [
+          {
+            type: 'paragraph',
+            children: [{ text: 'If you are using React Router, you have to use this' }],
+          },
+        ],
         createdAt: 'asked 3 hours ago',
         createdBy: 'Gapur Kassym',
         comments: [],

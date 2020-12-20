@@ -1,7 +1,11 @@
+import { Question, Answer, Comment, User } from 'models'
+
 import { firebase } from './firebase'
 
 export const timestamp = firebase.firestore.FieldValue.serverTimestamp()
 export const { now } = firebase.firestore.Timestamp
+
+type DocType = Question | Answer | Comment | User
 
 interface SnapshotObserver {
   next?: (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => void
@@ -12,7 +16,7 @@ interface SnapshotObserver {
 class CollectionManager {
   db: firebase.firestore.Firestore
   collectionName: string
-  collection: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+  collection: firebase.firestore.CollectionReference
 
   constructor(collection: string) {
     this.db = firebase.firestore()
@@ -26,14 +30,14 @@ class CollectionManager {
 
   docRef = (id: string) => this.collection.doc(id)
 
-  setDoc = (id: string, data: firebase.firestore.DocumentData) =>
+  setDoc = (id: string, data: DocType) =>
     this.collection.doc(id).set({
       ...data,
       created_at: timestamp,
       updated_at: timestamp,
     })
 
-  setMergeDoc = (id: string, data: firebase.firestore.DocumentData) =>
+  setMergeDoc = (id: string, data: DocType) =>
     this.collection.doc(id).set(
       {
         ...data,
@@ -44,14 +48,14 @@ class CollectionManager {
       },
     )
 
-  addDoc = (data: firebase.firestore.DocumentData) =>
+  addDoc = (data: DocType) =>
     this.collection.add({
       ...data,
       created_at: now(),
       updated_at: now(),
     })
 
-  updateDoc = (id: string, data: firebase.firestore.DocumentData) =>
+  updateDoc = (id: string, data: DocType) =>
     this.collection.doc(id).update({ ...data, updated_at: timestamp })
 
   removeDoc = (id: string) => this.collection.doc(id).delete()
@@ -60,30 +64,21 @@ class CollectionManager {
 
   getAll = () => this.collection.get()
 
-  getSome = (ids: string[]) => {
-    return Promise.all(
-      ids.map((id) => {
-        return this.collection.doc(id).get()
-      }),
-    )
-  }
+  getSome = (ids: string[]) => Promise.all(ids.map((id) => this.collection.doc(id).get()))
 
   onSnapshot = (observer: SnapshotObserver) => this.collection.onSnapshot(observer)
 
   search = (
     fieldPath: string | firebase.firestore.FieldPath,
     op: firebase.firestore.WhereFilterOp,
-    value: string,
+    value: unknown,
   ) => this.collection.where(fieldPath, op, value)
 
   where = (
     fieldPath: string | firebase.firestore.FieldPath,
     op: firebase.firestore.WhereFilterOp,
-    value: string,
+    value: unknown,
   ) => this.collection.where(fieldPath, op, value)
-
-  deleteField = (id: string, field: string) =>
-    this.collection.doc(id).update({ [field]: firebase.firestore.FieldValue.delete() })
 
   addArrayItem = (id: string, field: string, item: unknown) => {
     const ref = this.collection.doc(id)

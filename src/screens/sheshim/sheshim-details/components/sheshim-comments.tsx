@@ -1,7 +1,7 @@
 import React from 'react'
 import { Comment, Icon } from 'semantic-ui-react'
 
-import { Comment as AnswerComment } from 'screens/home/mock'
+import { Comment as AnswerComment } from 'models'
 
 import { SheshimCommentForm } from './sheshim-comment-form'
 

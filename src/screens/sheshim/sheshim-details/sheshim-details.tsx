@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { AppLayout, PageLoader } from 'components'
-import { data, Answer } from 'screens/home/mock'
+import { Answer } from 'models'
+import { data } from 'screens/home/mock'
 import { colors } from 'theme'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
