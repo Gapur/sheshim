@@ -64,7 +64,7 @@ export function SheshimDetails() {
             body={sheshim.body}
             tags={sheshim.tags}
             createdAt={sheshim.createdAt}
-            createdBy={sheshim.createdBy}
+            createdBy={sheshim.createdBy.name}
             comments={sheshim.comments}
           />
         </SheshimResponse>
@@ -83,7 +83,7 @@ export function SheshimDetails() {
             <SheshimResponseContent
               body={answer.body}
               createdAt={answer.createdAt}
-              createdBy={answer.createdBy}
+              createdBy={answer.createdBy.name}
               comments={answer.comments}
             />
           </SheshimResponse>

@@ -4,7 +4,7 @@ import { Answer } from './answer'
 import { Comment } from './comment'
 
 export interface Question {
-  id: number
+  id: string
   votes: number
   answersCount: number
   views: number
@@ -12,7 +12,10 @@ export interface Question {
   body: SlateNode[]
   tags: string[]
   createdAt: string
-  createdBy: string
+  createdBy: {
+    id: string
+    name: string
+  }
   answers: Answer[]
   comments: Comment[]
 }

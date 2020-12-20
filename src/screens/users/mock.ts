@@ -2,7 +2,7 @@ import { User } from 'models'
 
 export const data: User[] = [
   {
-    id: 1,
+    id: '1',
     firstName: 'Gapur',
     lastName: 'Kassym',
     email: 'test@gmail.com',
@@ -13,7 +13,7 @@ export const data: User[] = [
     position: 'Software Developer',
   },
   {
-    id: 2,
+    id: '2',
     firstName: 'Quantin',
     lastName: 'Gordon',
     email: 'test@gmail.com',
@@ -24,7 +24,7 @@ export const data: User[] = [
     position: 'Software Developer',
   },
   {
-    id: 3,
+    id: '3',
     firstName: 'John',
     lastName: 'Lucas',
     email: 'test@gmail.com',
@@ -35,7 +35,7 @@ export const data: User[] = [
     position: 'Software Developer',
   },
   {
-    id: 4,
+    id: '4',
     firstName: 'Sarah',
     lastName: 'Donald',
     email: 'test@gmail.com',
@@ -46,7 +46,7 @@ export const data: User[] = [
     position: 'Software Developer',
   },
   {
-    id: 5,
+    id: '5',
     firstName: 'Aidana',
     lastName: 'Daulenova',
     email: 'test@gmail.com',

@@ -3,10 +3,13 @@ import { Node as SlateNode } from 'slate'
 import { Comment } from './comment'
 
 export interface Answer {
-  id: number
+  id: string
   votes: number
   body: SlateNode[]
   createdAt: string
-  createdBy: string
+  createdBy: {
+    id: string
+    name: string
+  }
   comments: Comment[]
 }

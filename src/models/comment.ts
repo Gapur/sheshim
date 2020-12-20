@@ -1,7 +1,10 @@
 export interface Comment {
-  id: number
+  id: string
   votes: number
   text: string
   createdAt: string
-  createdBy: string
+  createdBy: {
+    id: string
+    name: string
+  }
 }
