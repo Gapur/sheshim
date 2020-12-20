@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom'
 
 import { colors } from 'theme'
 import { TextEditor, QuestionItem } from 'components'
-import { Question } from 'models'
+import { QuestionView } from 'models'
 
 interface SheshimListItemProps {
-  question: Question
+  question: QuestionView
 }
 
 const Vote = styled.div`
@@ -67,7 +67,7 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           <TextEditor initialValue={question.body} readonly />
         </QuestionItem.Body>
         <Label.Group color="blue">
-          {question.tags.map((tag, idx) => (
+          {question.tags.map((tag: string, idx: number) => (
             <Label as="a" key={idx}>
               {tag}
             </Label>
@@ -75,7 +75,7 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
         </Label.Group>
         <QuestionItem.Started>
           <span>{question.createdAt}</span>&nbsp;
-          <Link to="/users">{question.createdBy}</Link>
+          <Link to="/users">{question.createdBy?.name}</Link>
         </QuestionItem.Started>
       </QuestionItem.Content>
     </Segment>

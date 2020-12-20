@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom'
 
 import { QuestionItem } from 'components'
 import { colors } from 'theme'
-import { Question } from 'models'
+import { QuestionView } from 'models'
 
 interface QuestionListItemProps {
-  question: Question
+  question: QuestionView
 }
 
 const Stat = styled.div`
@@ -47,7 +47,7 @@ export function QuestionListItem({ question }: QuestionListItemProps) {
           <Link to={`sheshim/${question.id}`}>{question.title}</Link>
         </Header>
         <Label.Group color="blue">
-          {question.tags.map((tag, idx) => (
+          {question.tags.map((tag: string, idx: number) => (
             <Label as="a" key={idx}>
               {tag}
             </Label>
@@ -55,7 +55,7 @@ export function QuestionListItem({ question }: QuestionListItemProps) {
         </Label.Group>
         <QuestionItem.Started>
           <span>{question.createdAt}</span>&nbsp;
-          <Link to="/users">{question.createdBy}</Link>
+          <Link to="/users">{question.createdBy?.name}</Link>
         </QuestionItem.Started>
       </QuestionItem.Content>
     </Segment>

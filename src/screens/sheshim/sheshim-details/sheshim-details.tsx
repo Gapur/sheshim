@@ -63,8 +63,8 @@ export function SheshimDetails() {
           <SheshimResponseContent
             body={sheshim.body}
             tags={sheshim.tags}
-            createdAt={sheshim.createdAt}
-            createdBy={sheshim.createdBy.name}
+            createdAt={sheshim.createdAt ?? 'time'}
+            createdBy={sheshim.createdBy?.name ?? 'user'}
             comments={sheshim.comments}
           />
         </SheshimResponse>

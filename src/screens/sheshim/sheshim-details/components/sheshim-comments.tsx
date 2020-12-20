@@ -17,7 +17,7 @@ export function SheshimComments({ comments }: SheshimCommentsProps) {
           <Comment key={comment.id}>
             <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
             <Comment.Content>
-              <Comment.Author as="a">{comment.createdBy}</Comment.Author>
+              <Comment.Author as="a">{comment.createdBy.name}</Comment.Author>
               <Comment.Metadata>
                 <div>{comment.createdAt}</div>
                 <div>

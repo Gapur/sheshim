@@ -4,18 +4,22 @@ import { Answer } from './answer'
 import { Comment } from './comment'
 
 export interface Question {
-  id: string
+  id?: string
+  title: string
+  tags: string[]
   votes: number
   answersCount: number
   views: number
-  title: string
-  body: SlateNode[]
-  tags: string[]
-  createdAt: string
-  createdBy: {
+  body: string
+  createdAt?: string
+  createdBy?: {
     id: string
     name: string
   }
   answers: Answer[]
   comments: Comment[]
+}
+
+export interface QuestionView extends Omit<Question, 'body'> {
+  body: SlateNode[]
 }

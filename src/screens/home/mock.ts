@@ -1,6 +1,6 @@
-import { Question } from 'models'
+import { QuestionView } from 'models'
 
-export const data: Question[] = [
+export const data: QuestionView[] = [
   {
     id: '1',
     votes: 0,
