@@ -2,9 +2,11 @@ import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Blob } from 'react-blob'
+import Swal from 'sweetalert2'
 
 import { AppLayout } from 'components'
 import { colors } from 'theme'
+import { createSheshim } from 'services/firebase/sheshim'
 
 import { SheshimForm, FormValues } from './components/sheshim-form'
 
@@ -33,7 +35,14 @@ const ReactBlob = styled(Blob)`
 `
 
 export function SheshimCreate() {
-  const onSubmit = (data: FormValues) => console.log(data)
+  const onSubmit = (data: FormValues) =>
+    createSheshim(data).catch((err) =>
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err.message,
+      }),
+    )
 
   return (
     <AppLayout page="sheshim">

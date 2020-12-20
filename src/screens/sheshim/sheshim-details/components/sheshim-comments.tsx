@@ -1,7 +1,7 @@
 import React from 'react'
 import { Comment, Icon } from 'semantic-ui-react'
 
-import { Comment as AnswerComment } from 'screens/home/mock'
+import { Comment as AnswerComment } from 'models'
 
 import { SheshimCommentForm } from './sheshim-comment-form'
 
@@ -17,7 +17,7 @@ export function SheshimComments({ comments }: SheshimCommentsProps) {
           <Comment key={comment.id}>
             <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
             <Comment.Content>
-              <Comment.Author as="a">{comment.createdBy}</Comment.Author>
+              <Comment.Author as="a">{comment.createdBy.name}</Comment.Author>
               <Comment.Metadata>
                 <div>{comment.createdAt}</div>
                 <div>

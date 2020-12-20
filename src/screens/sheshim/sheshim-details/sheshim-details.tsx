@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { AppLayout, PageLoader } from 'components'
-import { data, Answer } from 'screens/home/mock'
+import { Answer } from 'models'
+import { data } from 'screens/home/mock'
 import { colors } from 'theme'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
@@ -62,8 +63,8 @@ export function SheshimDetails() {
           <SheshimResponseContent
             body={sheshim.body}
             tags={sheshim.tags}
-            createdAt={sheshim.createdAt}
-            createdBy={sheshim.createdBy}
+            createdAt={sheshim.createdAt ?? 'time'}
+            createdBy={sheshim.createdBy?.name ?? 'user'}
             comments={sheshim.comments}
           />
         </SheshimResponse>
@@ -82,7 +83,7 @@ export function SheshimDetails() {
             <SheshimResponseContent
               body={answer.body}
               createdAt={answer.createdAt}
-              createdBy={answer.createdBy}
+              createdBy={answer.createdBy.name}
               comments={answer.comments}
             />
           </SheshimResponse>

@@ -6,7 +6,7 @@ import { Node as SlateNode } from 'slate'
 
 import { TextEditor, QuestionItem } from 'components'
 import { colors } from 'theme'
-import { Comment } from 'screens/home/mock'
+import { Comment } from 'models'
 
 import { SheshimComments } from './sheshim-comments'
 
@@ -34,11 +34,17 @@ interface SheshimResponseContentProps {
   comments: Comment[]
 }
 
-export function SheshimResponseContent({ body, tags, createdAt, createdBy, comments }: SheshimResponseContentProps) {
+export function SheshimResponseContent({
+  body,
+  tags,
+  createdAt,
+  createdBy,
+  comments,
+}: SheshimResponseContentProps) {
   return (
     <ResponseContent>
       <ResponseBody>
-        <TextEditor initialValue={body} readonly />
+        <TextEditor value={body} readonly />
       </ResponseBody>
       {tags && (
         <Label.Group color="blue">
