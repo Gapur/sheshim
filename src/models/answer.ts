@@ -6,7 +6,7 @@ export interface Answer {
   id: string
   votes: number
   body: SlateNode[]
-  createdAt: string
+  createdAt: Date
   createdBy: {
     id: string
     name: string

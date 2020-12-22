@@ -52,3 +52,22 @@ export const fetchSheshims = async () => {
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
+
+export const getSheshim = (id: string) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return sheshimCollection.getDoc(id).then((doc) => {
+      if (doc.exists) {
+        const question = doc.data() as Question
+        return {
+          ...question,
+          id: doc.id,
+          body: JSON.parse(question.body),
+          createdAt: question.createdAt?.toDate(),
+        } as QuestionView
+      }
+      return null
+    })
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}

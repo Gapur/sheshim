@@ -22,6 +22,7 @@ export interface Question {
   comments: Comment[]
 }
 
-export interface QuestionView extends Omit<Question, 'body'> {
+export interface QuestionView extends Omit<Question, 'body' | 'createdAt'> {
   body: SlateNode[]
+  createdAt: Date
 }

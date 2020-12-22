@@ -26,14 +26,12 @@ const List = styled.div`
 export function SheshimList() {
   const [sheshims, setSheshims] = useState<QuestionView[]>([])
   const [loading, setLoading] = useState(true)
+
   const history = useHistory()
 
   useEffect(() => {
     fetchSheshims()
-      .then((data: QuestionView[]) => {
-        setSheshims(data)
-        setLoading(false)
-      })
+      .then(setSheshims)
       .catch((err) =>
         Swal.fire({
           icon: 'error',
@@ -41,6 +39,7 @@ export function SheshimList() {
           text: err.message,
         }),
       )
+      .finally(() => setLoading(false))
   }, [])
 
   return (
