@@ -1,5 +1,7 @@
 import { Node as SlateNode } from 'slate'
 
+import { firebase } from 'services/firebase'
+
 import { Answer } from './answer'
 import { Comment } from './comment'
 
@@ -11,7 +13,7 @@ export interface Question {
   answersCount: number
   views: number
   body: string
-  createdAt?: string
+  createdAt?: firebase.firestore.Timestamp
   createdBy?: {
     id: string
     name: string

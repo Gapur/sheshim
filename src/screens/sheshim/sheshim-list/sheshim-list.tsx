@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { AppLayout } from 'components'
-import { data } from 'screens/home/mock'
+import { QuestionView } from 'models'
 import { fetchSheshims } from 'services/firebase/sheshim'
 
 import { SheshimListItem } from './components/sheshim-list-item'
@@ -19,9 +19,10 @@ const List = styled.div`
 
 export function SheshimList() {
   const history = useHistory()
+  const [sheshims, setSheshims] = useState<QuestionView[]>([])
 
   useEffect(() => {
-    fetchSheshims().then(console.log)
+    fetchSheshims().then(setSheshims)
   }, [])
 
   return (
@@ -33,7 +34,7 @@ export function SheshimList() {
         </Button>
       </Header>
       <List>
-        {data.map((item) => (
+        {sheshims.map((item: QuestionView) => (
           <SheshimListItem key={item.id} question={item} />
         ))}
       </List>

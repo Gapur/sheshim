@@ -28,7 +28,7 @@ export const createSheshim = (data: FormValues) => {
   return Promise.reject(new Error('You are not signed in.'))
 }
 
-export const fetchSheshims = () => {
+export const fetchSheshims = async () => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
     return sheshimCollection
@@ -43,7 +43,9 @@ export const fetchSheshims = () => {
           const question = doc.data() as Question
           return {
             ...question,
+            id: doc.id,
             body: JSON.parse(question.body),
+            createdAt: question.createdAt?.toDate(),
           } as QuestionView
         })
       })

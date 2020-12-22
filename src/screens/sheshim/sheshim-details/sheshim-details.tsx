@@ -5,8 +5,7 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { AppLayout, PageLoader } from 'components'
-import { Answer } from 'models'
-import { data } from 'screens/home/mock'
+import { Answer, QuestionView } from 'models'
 import { colors } from 'theme'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
@@ -31,7 +30,9 @@ export function SheshimDetails() {
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
 
-  const sheshim = data.find((item) => String(item.id) === sheshimId)
+  const sheshim: QuestionView | undefined = [].find(
+    (item: QuestionView) => String(item.id) === sheshimId,
+  )
 
   if (!sheshim) {
     return <PageLoader />
@@ -39,7 +40,7 @@ export function SheshimDetails() {
 
   return (
     <AppLayout page="sheshim">
-      <Header>
+      {/* <Header>
         {sheshim.title}
         <Button color="twitter" floated="right" onClick={() => history.push('/sheshim/create')}>
           Ask Question
@@ -90,7 +91,7 @@ export function SheshimDetails() {
         ))}
 
         <SheshimAnswerForm />
-      </Sheshimder>
+      </Sheshimder> */}
     </AppLayout>
   )
 }

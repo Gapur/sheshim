@@ -2,6 +2,7 @@ import React from 'react'
 import { Segment, Header, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import { colors } from 'theme'
 import { TextEditor, QuestionItem } from 'components'
@@ -74,7 +75,7 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           ))}
         </Label.Group>
         <QuestionItem.Started>
-          <span>{question.createdAt}</span>&nbsp;
+          <span>{`asked ${moment(question.createdAt).fromNow()} by`}</span>&nbsp;
           <Link to="/users">{question.createdBy?.name}</Link>
         </QuestionItem.Started>
       </QuestionItem.Content>
