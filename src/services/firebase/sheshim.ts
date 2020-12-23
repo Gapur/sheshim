@@ -45,7 +45,6 @@ export const fetchSheshims = async () => {
             ...question,
             id: doc.id,
             body: JSON.parse(question.body),
-            createdAt: question.createdAt?.toDate(),
           } as QuestionView
         })
       })
@@ -53,7 +52,7 @@ export const fetchSheshims = async () => {
   return Promise.reject(new Error('You are not signed in.'))
 }
 
-export const getSheshim = (id: string) => {
+export const getSheshim = async (id: string) => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
     return sheshimCollection.getDoc(id).then((doc) => {
@@ -63,7 +62,6 @@ export const getSheshim = (id: string) => {
           ...question,
           id: doc.id,
           body: JSON.parse(question.body),
-          createdAt: question.createdAt?.toDate(),
         } as QuestionView
       }
       return null

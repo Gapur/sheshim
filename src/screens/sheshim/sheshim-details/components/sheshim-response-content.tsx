@@ -30,7 +30,7 @@ const ResponseBody = styled.div`
 interface SheshimResponseContentProps {
   body: SlateNode[]
   tags?: string[]
-  createdAt: Date
+  createdAt?: Date
   createdBy: string
   comments: Comment[]
 }

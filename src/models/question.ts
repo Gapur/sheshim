@@ -14,6 +14,7 @@ export interface Question {
   views: number
   body: string
   createdAt?: firebase.firestore.Timestamp
+  updatedAt?: firebase.firestore.Timestamp
   createdBy?: {
     id: string
     name: string
@@ -22,7 +23,6 @@ export interface Question {
   comments: Comment[]
 }
 
-export interface QuestionView extends Omit<Question, 'body' | 'createdAt'> {
+export interface QuestionView extends Omit<Question, 'body'> {
   body: SlateNode[]
-  createdAt: Date
 }

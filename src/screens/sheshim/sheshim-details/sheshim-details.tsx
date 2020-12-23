@@ -6,13 +6,14 @@ import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import moment from 'moment'
 
-import { AppLayout, NotFound, PageLoader } from 'components'
+import { AppLayout, NotFound } from 'components'
 import { Answer, QuestionView } from 'models'
 import { colors } from 'theme'
 import { getSheshim } from 'services/firebase/sheshim'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
+import { SheshimDetailsLoader } from './components/sheshim-details-loader'
 
 interface SheshimDetailsParams {
   sheshimId: string
@@ -49,7 +50,7 @@ export function SheshimDetails() {
   }, [sheshimId, history])
 
   if (loading) {
-    return <PageLoader />
+    return <SheshimDetailsLoader />
   }
 
   if (!sheshim) {
@@ -82,7 +83,7 @@ export function SheshimDetails() {
           <SheshimResponseContent
             body={sheshim.body}
             tags={sheshim.tags}
-            createdAt={sheshim.createdAt}
+            createdAt={sheshim.createdAt?.toDate()}
             createdBy={sheshim.createdBy?.name ?? 'user'}
             comments={sheshim.comments}
           />
@@ -101,7 +102,7 @@ export function SheshimDetails() {
             </div>
             <SheshimResponseContent
               body={answer.body}
-              createdAt={answer.createdAt}
+              createdAt={answer.createdAt?.toDate()}
               createdBy={answer.createdBy.name}
               comments={answer.comments}
             />

@@ -75,7 +75,7 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           ))}
         </Label.Group>
         <QuestionItem.Started>
-          <span>{`asked ${moment(question.createdAt).fromNow()} by`}</span>&nbsp;
+          <span>{`asked ${moment(question.createdAt?.toDate()).fromNow()} by`}</span>&nbsp;
           <Link to="/users">{question.createdBy?.name}</Link>
         </QuestionItem.Started>
       </QuestionItem.Content>
