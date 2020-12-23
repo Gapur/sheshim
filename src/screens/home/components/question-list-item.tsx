@@ -2,6 +2,7 @@ import React from 'react'
 import { Segment, Header, Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import moment from 'moment'
 
 import { QuestionItem } from 'components'
 import { colors } from 'theme'
@@ -34,7 +35,7 @@ export function QuestionListItem({ question }: QuestionListItemProps) {
           <span>votes</span>
         </Stat>
         <Stat>
-          <span>{question.answersCount}</span>
+          <span>{question.answers.length}</span>
           <span>answers</span>
         </Stat>
         <Stat>
@@ -54,7 +55,7 @@ export function QuestionListItem({ question }: QuestionListItemProps) {
           ))}
         </Label.Group>
         <QuestionItem.Started>
-          <span>{question.createdAt}</span>&nbsp;
+          <span>{`asked ${moment(question.createdAt?.toDate()).fromNow()} by`}</span>&nbsp;
           <Link to="/users">{question.createdBy?.name}</Link>
         </QuestionItem.Started>
       </QuestionItem.Content>

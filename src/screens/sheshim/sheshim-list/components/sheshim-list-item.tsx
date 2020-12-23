@@ -56,7 +56,7 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           <span>votes</span>
         </Vote>
         <AnswerStatus>
-          <strong>{question.answersCount}</strong>
+          <strong>{question.answers.length}</strong>
           <span>answers</span>
         </AnswerStatus>
       </QuestionItem.Stats>

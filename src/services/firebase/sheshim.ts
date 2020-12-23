@@ -14,7 +14,6 @@ export const createSheshim = (data: FormValues) => {
       tags: data.tags,
       body: JSON.stringify(data.body),
       votes: 0,
-      answersCount: 0,
       views: 0,
       answers: [],
       comments: [],
@@ -66,6 +65,31 @@ export const getSheshim = async (id: string) => {
       }
       return null
     })
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const fetchTopSheshims = async () => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return sheshimCollection
+      .collectionRef()
+      .orderBy('votes', 'desc')
+      .limit(50)
+      .get()
+      .then((querySnapshot) => {
+        if (querySnapshot.empty) {
+          return []
+        }
+        return querySnapshot.docs.map((doc) => {
+          const question = doc.data() as Question
+          return {
+            ...question,
+            id: doc.id,
+            body: JSON.parse(question.body),
+          } as QuestionView
+        })
+      })
   }
   return Promise.reject(new Error('You are not signed in.'))
 }

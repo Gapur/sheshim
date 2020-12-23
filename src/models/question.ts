@@ -10,7 +10,6 @@ export interface Question {
   title: string
   tags: string[]
   votes: number
-  answersCount: number
   views: number
   body: string
   createdAt?: firebase.firestore.Timestamp

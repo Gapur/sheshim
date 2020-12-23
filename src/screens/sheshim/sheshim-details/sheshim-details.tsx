@@ -67,7 +67,7 @@ export function SheshimDetails() {
       </Header>
       <Label.Group tag color="teal">
         <Label as="a">{`Asked: ${moment(sheshim.createdAt).fromNow()}`}</Label>
-        <Label as="a">{`Responded: ${sheshim.answersCount}`}</Label>
+        <Label as="a">{`Responded: ${sheshim.answers.length}`}</Label>
         <Label as="a">{`Viewed: ${sheshim.views} times`}</Label>
       </Label.Group>
       <Divider />
