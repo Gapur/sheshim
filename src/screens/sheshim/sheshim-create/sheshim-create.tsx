@@ -3,10 +3,12 @@ import { Icon } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Blob } from 'react-blob'
 import Swal from 'sweetalert2'
+import { useHistory } from 'react-router-dom'
 
 import { AppLayout } from 'components'
 import { colors } from 'theme'
 import { createSheshim } from 'services/firebase/sheshim'
+import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimForm, FormValues } from './components/sheshim-form'
 
@@ -35,14 +37,17 @@ const ReactBlob = styled(Blob)`
 `
 
 export function SheshimCreate() {
+  const history = useHistory()
+
   const onSubmit = (data: FormValues) =>
-    createSheshim(data).catch((err) =>
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.message,
-      }),
-    )
+    createSheshim(data)
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'You have successfully created a question.',
+        }).then(() => history.push('/sheshim'))
+      })
+      .catch(fireSwalError)
 
   return (
     <AppLayout page="sheshim">

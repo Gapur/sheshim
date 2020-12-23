@@ -6,10 +6,10 @@ import moment from 'moment'
 
 import { colors } from 'theme'
 import { TextEditor, QuestionItem } from 'components'
-import { QuestionView } from 'models'
+import { Sheshimim } from 'models'
 
 interface SheshimListItemProps {
-  question: QuestionView
+  question: Sheshimim
 }
 
 const Vote = styled.div`
@@ -56,7 +56,7 @@ export function SheshimListItem({ question }: SheshimListItemProps) {
           <span>votes</span>
         </Vote>
         <AnswerStatus>
-          <strong>{question.answersCount}</strong>
+          <strong>{question.answers.length}</strong>
           <span>answers</span>
         </AnswerStatus>
       </QuestionItem.Stats>

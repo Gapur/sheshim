@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import Swal from 'sweetalert2'
 
 import { AppLayout } from 'components'
-import { QuestionView } from 'models'
+import { Sheshimim } from 'models'
 import { fetchSheshims } from 'services/firebase/sheshim'
+import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimListItem } from './components/sheshim-list-item'
 import { SheshimListLoader } from './components/sheshim-list-loader'
@@ -24,7 +24,7 @@ const List = styled.div`
 `
 
 export function SheshimList() {
-  const [sheshims, setSheshims] = useState<QuestionView[]>([])
+  const [sheshims, setSheshims] = useState<Sheshimim[]>([])
   const [loading, setLoading] = useState(true)
 
   const history = useHistory()
@@ -32,13 +32,7 @@ export function SheshimList() {
   useEffect(() => {
     fetchSheshims()
       .then(setSheshims)
-      .catch((err) =>
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: err.message,
-        }),
-      )
+      .catch(fireSwalError)
       .finally(() => setLoading(false))
   }, [])
 
@@ -54,7 +48,7 @@ export function SheshimList() {
         {loading ? (
           <SheshimListLoader />
         ) : (
-          sheshims.map((item: QuestionView) => <SheshimListItem key={item.id} question={item} />)
+          sheshims.map((item: Sheshimim) => <SheshimListItem key={item.id} question={item} />)
         )}
       </List>
     </AppLayout>

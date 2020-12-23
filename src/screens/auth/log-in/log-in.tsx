@@ -2,16 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 import { Grid, Button, Icon, Segment, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
 import { images } from 'assets'
-import {
-  firebase,
-  loginWithEmailAndPassword,
-  loginWithGoogle,
-  loginWithFacebook,
-} from 'services/firebase'
+import { loginWithEmailAndPassword, loginWithGoogle, loginWithFacebook } from 'services/firebase'
+import { fireSwalError } from 'utils/error-handler'
 
 import { LogInForm, FormValues } from './components/log-in-form'
 
@@ -28,31 +23,11 @@ const Span = styled.span`
 
 export function LogIn() {
   const onLoginWithEmailAndPassword = (data: FormValues) =>
-    loginWithEmailAndPassword(data).catch((err: firebase.FirebaseError) =>
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.message,
-      }),
-    )
+    loginWithEmailAndPassword(data).catch(fireSwalError)
 
-  const onLoginWithGoogle = () =>
-    loginWithGoogle().catch((err: firebase.FirebaseError) =>
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.message,
-      }),
-    )
+  const onLoginWithGoogle = () => loginWithGoogle().catch(fireSwalError)
 
-  const onLoginWithFacebook = () =>
-    loginWithFacebook().catch((err: firebase.FirebaseError) =>
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: err.message,
-      }),
-    )
+  const onLoginWithFacebook = () => loginWithFacebook().catch(fireSwalError)
 
   return (
     <AuthLayout>

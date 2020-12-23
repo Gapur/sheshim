@@ -16,7 +16,9 @@ interface SheshimFormProps {
 }
 
 export function SheshimForm({ onSubmit }: SheshimFormProps) {
-  const { errors, register, handleSubmit, setValue, trigger, watch } = useForm<FormValues>()
+  const { errors, formState, register, handleSubmit, setValue, trigger, watch } = useForm<
+    FormValues
+  >()
 
   useEffect(() => {
     register('title', { required: 'Title is required' })
@@ -35,7 +37,7 @@ export function SheshimForm({ onSubmit }: SheshimFormProps) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form loading={formState.isSubmitting} onSubmit={handleSubmit(onSubmit)}>
       <Form.Field error={Boolean(errors.title)}>
         <label>Title</label>
         <input

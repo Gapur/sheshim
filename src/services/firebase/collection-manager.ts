@@ -1,11 +1,11 @@
-import { Question, Answer, Comment, User } from 'models'
+import { Sheshim, Answer, Comment, User } from 'models'
 
 import { firebase } from './firebase'
 
 export const timestamp = firebase.firestore.FieldValue.serverTimestamp()
 export const { now } = firebase.firestore.Timestamp
 
-type DocType = Question | Answer | Comment | User
+type DocType = Sheshim | Answer | Comment | User
 
 interface SnapshotObserver {
   next?: (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => void
