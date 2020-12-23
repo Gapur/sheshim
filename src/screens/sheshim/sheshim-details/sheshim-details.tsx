@@ -3,13 +3,13 @@ import { Header, Label, Divider, Button } from 'semantic-ui-react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import Swal from 'sweetalert2'
 import moment from 'moment'
 
 import { AppLayout, NotFound } from 'components'
 import { Answer, Sheshimim } from 'models'
 import { colors } from 'theme'
 import { getSheshim } from 'services/firebase/sheshim'
+import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
@@ -39,13 +39,7 @@ export function SheshimDetails() {
   useEffect(() => {
     getSheshim(sheshimId)
       .then(setSheshim)
-      .catch((err) =>
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: err.message,
-        }),
-      )
+      .catch(fireSwalError)
       .finally(() => setLoading(false))
   }, [sheshimId, history])
 

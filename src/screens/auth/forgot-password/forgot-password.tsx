@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import { AuthLayout } from 'components'
-import { firebase, forgotPassword } from 'services/firebase'
+import { forgotPassword } from 'services/firebase'
+import { fireSwalError } from 'utils/error-handler'
 
 import { ForgotPasswordForm, FormValues } from './components/forgot-password-form'
 
@@ -25,13 +26,7 @@ export function ForgotPassword() {
             'If the email you have entered exists in our system, we will send a link to reset your password.',
         }),
       )
-      .catch((err: firebase.FirebaseError) =>
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: err.message,
-        }),
-      )
+      .catch(fireSwalError)
 
   return (
     <AuthLayout>

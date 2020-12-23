@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { Header, Button } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
-import Swal from 'sweetalert2'
 
 import { AppLayout } from 'components'
 import { Sheshimim } from 'models'
 import { fetchSheshims } from 'services/firebase/sheshim'
+import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimListItem } from './components/sheshim-list-item'
 import { SheshimListLoader } from './components/sheshim-list-loader'
@@ -32,13 +32,7 @@ export function SheshimList() {
   useEffect(() => {
     fetchSheshims()
       .then(setSheshims)
-      .catch((err) =>
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: err.message,
-        }),
-      )
+      .catch(fireSwalError)
       .finally(() => setLoading(false))
   }, [])
 
