@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import { AppLayout } from 'components'
-import { QuestionView } from 'models'
+import { Sheshimim } from 'models'
 import { fetchSheshims } from 'services/firebase/sheshim'
 
 import { SheshimListItem } from './components/sheshim-list-item'
@@ -24,7 +24,7 @@ const List = styled.div`
 `
 
 export function SheshimList() {
-  const [sheshims, setSheshims] = useState<QuestionView[]>([])
+  const [sheshims, setSheshims] = useState<Sheshimim[]>([])
   const [loading, setLoading] = useState(true)
 
   const history = useHistory()
@@ -54,7 +54,7 @@ export function SheshimList() {
         {loading ? (
           <SheshimListLoader />
         ) : (
-          sheshims.map((item: QuestionView) => <SheshimListItem key={item.id} question={item} />)
+          sheshims.map((item: Sheshimim) => <SheshimListItem key={item.id} question={item} />)
         )}
       </List>
     </AppLayout>

@@ -6,10 +6,10 @@ import moment from 'moment'
 
 import { QuestionItem } from 'components'
 import { colors } from 'theme'
-import { QuestionView } from 'models'
+import { Sheshimim } from 'models'
 
 interface QuestionListItemProps {
-  question: QuestionView
+  question: Sheshimim
 }
 
 const Stat = styled.div`

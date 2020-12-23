@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import moment from 'moment'
 
 import { AppLayout, NotFound } from 'components'
-import { Answer, QuestionView } from 'models'
+import { Answer, Sheshimim } from 'models'
 import { colors } from 'theme'
 import { getSheshim } from 'services/firebase/sheshim'
 
@@ -31,7 +31,7 @@ const SheshimResponse = styled.div`
 `
 
 export function SheshimDetails() {
-  const [sheshim, setSheshim] = useState<QuestionView | null>(null)
+  const [sheshim, setSheshim] = useState<Sheshimim | null>(null)
   const [loading, setLoading] = useState(true)
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
