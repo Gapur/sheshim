@@ -1,16 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Header, Label, Divider, Button } from 'semantic-ui-react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import moment from 'moment'
 
-import { AppLayout, PageLoader } from 'components'
-import { Answer } from 'models'
-import { data } from 'screens/home/mock'
+import { AppLayout, NotFound } from 'components'
+import { Answer, QuestionView } from 'models'
 import { colors } from 'theme'
+import { getSheshim } from 'services/firebase/sheshim'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
+import { SheshimDetailsLoader } from './components/sheshim-details-loader'
 
 interface SheshimDetailsParams {
   sheshimId: string
@@ -28,13 +31,30 @@ const SheshimResponse = styled.div`
 `
 
 export function SheshimDetails() {
+  const [sheshim, setSheshim] = useState<QuestionView | null>(null)
+  const [loading, setLoading] = useState(true)
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
 
-  const sheshim = data.find((item) => String(item.id) === sheshimId)
+  useEffect(() => {
+    getSheshim(sheshimId)
+      .then(setSheshim)
+      .catch((err) =>
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: err.message,
+        }),
+      )
+      .finally(() => setLoading(false))
+  }, [sheshimId, history])
+
+  if (loading) {
+    return <SheshimDetailsLoader />
+  }
 
   if (!sheshim) {
-    return <PageLoader />
+    return <NotFound />
   }
 
   return (
@@ -46,7 +66,7 @@ export function SheshimDetails() {
         </Button>
       </Header>
       <Label.Group tag color="teal">
-        <Label as="a">{`Asked: ${sheshim.createdAt}`}</Label>
+        <Label as="a">{`Asked: ${moment(sheshim.createdAt).fromNow()}`}</Label>
         <Label as="a">{`Responded: ${sheshim.answersCount}`}</Label>
         <Label as="a">{`Viewed: ${sheshim.views} times`}</Label>
       </Label.Group>
@@ -63,7 +83,7 @@ export function SheshimDetails() {
           <SheshimResponseContent
             body={sheshim.body}
             tags={sheshim.tags}
-            createdAt={sheshim.createdAt ?? 'time'}
+            createdAt={sheshim.createdAt?.toDate()}
             createdBy={sheshim.createdBy?.name ?? 'user'}
             comments={sheshim.comments}
           />
@@ -82,7 +102,7 @@ export function SheshimDetails() {
             </div>
             <SheshimResponseContent
               body={answer.body}
-              createdAt={answer.createdAt}
+              createdAt={answer.createdAt?.toDate()}
               createdBy={answer.createdBy.name}
               comments={answer.comments}
             />

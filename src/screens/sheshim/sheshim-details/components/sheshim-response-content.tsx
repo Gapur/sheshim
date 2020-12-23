@@ -3,6 +3,7 @@ import { Label } from 'semantic-ui-react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { Node as SlateNode } from 'slate'
+import moment from 'moment'
 
 import { TextEditor, QuestionItem } from 'components'
 import { colors } from 'theme'
@@ -29,7 +30,7 @@ const ResponseBody = styled.div`
 interface SheshimResponseContentProps {
   body: SlateNode[]
   tags?: string[]
-  createdAt: string
+  createdAt?: Date
   createdBy: string
   comments: Comment[]
 }
@@ -56,7 +57,7 @@ export function SheshimResponseContent({
         </Label.Group>
       )}
       <QuestionItem.Started>
-        <span>{createdAt}</span>&nbsp;
+        <span>{`asked ${moment(createdAt).fromNow()} by`}</span>&nbsp;
         <Link to="/users">{createdBy}</Link>
       </QuestionItem.Started>
       <SheshimComments comments={comments} />

@@ -4,8 +4,9 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 
 import { AppLayout } from 'components'
+import { QuestionView } from 'models'
+
 import { QuestionListItem } from './components/question-list-item'
-import { data } from './mock'
 
 const QuestionList = styled.div`
   width: 72%;
@@ -27,7 +28,7 @@ export function Home() {
         </Button>
       </Header>
       <QuestionList>
-        {data.map((item) => (
+        {[].map((item: QuestionView) => (
           <QuestionListItem key={item.id} question={item} />
         ))}
       </QuestionList>

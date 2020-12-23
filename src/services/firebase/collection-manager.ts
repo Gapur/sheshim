@@ -33,15 +33,15 @@ export class CollectionManager {
   setDoc = (id: string, data: DocType) =>
     this.collection.doc(id).set({
       ...data,
-      created_at: timestamp,
-      updated_at: timestamp,
+      createdAt: timestamp,
+      updatedAt: timestamp,
     })
 
   setMergeDoc = (id: string, data: DocType) =>
     this.collection.doc(id).set(
       {
         ...data,
-        updated_at: timestamp,
+        updatedAt: timestamp,
       },
       {
         merge: true,
@@ -51,12 +51,12 @@ export class CollectionManager {
   addDoc = (data: DocType) =>
     this.collection.add({
       ...data,
-      created_at: now(),
-      updated_at: now(),
+      createdAt: now(),
+      updatedAt: now(),
     })
 
   updateDoc = (id: string, data: DocType) =>
-    this.collection.doc(id).update({ ...data, updated_at: timestamp })
+    this.collection.doc(id).update({ ...data, updatedAt: timestamp })
 
   removeDoc = (id: string) => this.collection.doc(id).delete()
 
@@ -86,7 +86,7 @@ export class CollectionManager {
       return transaction.get(ref).then((snapshot) => {
         const updatedList = snapshot.get(field) || []
         updatedList.push(item)
-        return transaction.update(ref, field, updatedList).update(ref, 'updated_at', timestamp)
+        return transaction.update(ref, field, updatedList).update(ref, 'updatedAt', timestamp)
       })
     })
   }
@@ -98,7 +98,7 @@ export class CollectionManager {
         const updatedList = (snapshot.get(field) || []).filter(
           (arrayItem: unknown) => JSON.stringify(arrayItem) !== JSON.stringify(item),
         )
-        transaction.update(ref, field, updatedList).update(ref, 'updated_at', timestamp)
+        transaction.update(ref, field, updatedList).update(ref, 'updatedAt', timestamp)
       })
     })
   }
