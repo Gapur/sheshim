@@ -5,7 +5,9 @@ import { firebase } from './firebase'
 export const timestamp = firebase.firestore.FieldValue.serverTimestamp()
 export const { now } = firebase.firestore.Timestamp
 
-type DocType = Sheshim | Answer | Comment | User
+type DocType = Sheshim | User
+
+type DocArrayType = Answer | Comment
 
 interface SnapshotObserver {
   next?: (snapshot: firebase.firestore.QuerySnapshot<firebase.firestore.DocumentData>) => void
@@ -80,18 +82,22 @@ export class CollectionManager {
     value: unknown,
   ) => this.collection.where(fieldPath, op, value)
 
-  addArrayItem = (id: string, field: string, item: unknown) => {
+  addArrayItem = (id: string, field: string, item: DocArrayType) => {
     const ref = this.collection.doc(id)
     return firebase.firestore().runTransaction((transaction) => {
       return transaction.get(ref).then((snapshot) => {
         const updatedList = snapshot.get(field) || []
-        updatedList.push(item)
+        updatedList.push({
+          ...item,
+          createdAt: now(),
+          updatedAt: now(),
+        })
         return transaction.update(ref, field, updatedList).update(ref, 'updatedAt', timestamp)
       })
     })
   }
 
-  removeArrayItem = (id: string, field: string, item: unknown) => {
+  removeArrayItem = (id: string, field: string, item: DocArrayType) => {
     const ref = this.collection.doc(id)
     return firebase.firestore().runTransaction((transaction) => {
       return transaction.get(ref).then((snapshot) => {

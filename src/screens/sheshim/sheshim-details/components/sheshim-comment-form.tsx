@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
 
-interface FormValues {
+export interface FormValues {
   comment: string
 }
 
-export function SheshimCommentForm() {
+interface SheshimCommentFormProps {
+  onSubmit: (formValues: FormValues) => void
+}
+
+export function SheshimCommentForm({ onSubmit }: SheshimCommentFormProps) {
   const { errors, register, handleSubmit, setValue, trigger, reset } = useForm<FormValues>()
   const [showForm, setShowForm] = useState(false)
 
@@ -18,8 +22,6 @@ export function SheshimCommentForm() {
     setValue(name, value)
     await trigger(name)
   }
-
-  const onSubmit = (data: FormValues) => console.log(data)
 
   const onCancel = () => {
     reset()
@@ -40,7 +42,9 @@ export function SheshimCommentForm() {
         <textarea
           rows={3}
           placeholder="Use comments to ask for more information or suggest improvements"
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onInputChange('comment', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            onInputChange('comment', e.target.value)
+          }
         />
         {errors.comment && (
           <Label pointing prompt>

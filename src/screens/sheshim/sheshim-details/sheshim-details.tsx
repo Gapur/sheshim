@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Header, Label, Divider, Button } from 'semantic-ui-react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 
 import { AppLayout, NotFound } from 'components'
@@ -15,7 +14,7 @@ import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
 import { SheshimDetailsLoader } from './components/sheshim-details-loader'
 
-interface SheshimDetailsParams {
+export interface SheshimDetailsParams {
   sheshimId: string
 }
 
