@@ -5,7 +5,6 @@ import { firebase } from 'services/firebase'
 import { Comment } from './comment'
 
 export interface Answer {
-  id: string
   votes: number
   body: SlateNode[]
   createdAt?: firebase.firestore.Timestamp

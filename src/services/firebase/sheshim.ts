@@ -1,4 +1,4 @@
-import { Sheshim, Comment, createInitialSheshim, parseSheshim } from 'models'
+import { Sheshim, Comment, createInitialSheshim, parseSheshim, creatInitialComment } from 'models'
 import { FormValues as SheshimValues } from 'screens/sheshim/sheshim-create/components/sheshim-form'
 import { FormValues as SheshimCommentValues } from 'screens/sheshim/sheshim-details/components/sheshim-comment-form'
 
@@ -52,15 +52,8 @@ export const fetchTopSheshims = async () => {
 export const createSheshimComment = (sheshimId: string, data: SheshimCommentValues) => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
-    const newComment: Comment = {
-      text: data.comment,
-      votes: 0,
-      createdBy: {
-        id: currentUser.uid,
-        name: currentUser.displayName ?? currentUser.email ?? 'Anonymous',
-      },
-    }
-    return sheshimCollection.addArrayItem(sheshimId, 'comment', newComment)
+    const newComment: Comment = creatInitialComment(data, currentUser)
+    return sheshimCollection.addArrayItem(sheshimId, 'comments', newComment).then(() => newComment)
   }
   return Promise.reject(new Error('You are not signed in.'))
 }

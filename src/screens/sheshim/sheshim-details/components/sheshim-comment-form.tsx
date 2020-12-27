@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
+import { SweetAlertResult } from 'sweetalert2'
 
 export interface FormValues {
   comment: string
 }
 
 interface SheshimCommentFormProps {
-  onSubmit: (formValues: FormValues) => void
+  onSubmit: (formValues: FormValues) => Promise<void | SweetAlertResult>
 }
 
 export function SheshimCommentForm({ onSubmit }: SheshimCommentFormProps) {
@@ -23,6 +24,11 @@ export function SheshimCommentForm({ onSubmit }: SheshimCommentFormProps) {
     await trigger(name)
   }
 
+  const onFormSubmit = (formValues: FormValues) =>
+    onSubmit(formValues)
+      .then()
+      .finally(() => setShowForm(false))
+
   const onCancel = () => {
     reset()
     setShowForm(false)
@@ -37,7 +43,7 @@ export function SheshimCommentForm({ onSubmit }: SheshimCommentFormProps) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onFormSubmit)}>
       <Form.Field error={Boolean(errors.comment)}>
         <textarea
           rows={3}

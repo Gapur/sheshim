@@ -34,7 +34,7 @@ export function SheshimDetails() {
   const [loading, setLoading] = useState(true)
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
-
+  console.log('shes', sheshim)
   useEffect(() => {
     getSheshim(sheshimId)
       .then(setSheshim)
@@ -84,8 +84,8 @@ export function SheshimDetails() {
 
         <Header>{`${sheshim.answers.length} Answers`}</Header>
 
-        {sheshim.answers.map((answer: Answer) => (
-          <SheshimResponse key={answer.id}>
+        {sheshim.answers.map((answer: Answer, idx: number) => (
+          <SheshimResponse key={idx}>
             <div>
               <Button.Group size="mini" vertical>
                 <Button icon="angle up" />
