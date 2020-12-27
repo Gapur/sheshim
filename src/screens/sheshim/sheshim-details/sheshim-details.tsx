@@ -34,7 +34,7 @@ export function SheshimDetails() {
   const [loading, setLoading] = useState(true)
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
-  console.log('shes', sheshim)
+
   useEffect(() => {
     getSheshim(sheshimId)
       .then(setSheshim)

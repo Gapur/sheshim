@@ -25,9 +25,7 @@ export function SheshimCommentForm({ onSubmit }: SheshimCommentFormProps) {
   }
 
   const onFormSubmit = (formValues: FormValues) =>
-    onSubmit(formValues)
-      .then()
-      .finally(() => setShowForm(false))
+    onSubmit(formValues).finally(() => setShowForm(false))
 
   const onCancel = () => {
     reset()

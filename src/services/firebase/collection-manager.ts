@@ -85,15 +85,6 @@ export class CollectionManager {
   addArrayItem = (id: string, field: string, item: DocArrayType) =>
     this.collection.doc(id).update({ [field]: firebase.firestore.FieldValue.arrayUnion(item) })
 
-  removeArrayItem = (id: string, field: string, item: DocArrayType) => {
-    const ref = this.collection.doc(id)
-    return firebase.firestore().runTransaction((transaction) => {
-      return transaction.get(ref).then((snapshot) => {
-        const updatedList = (snapshot.get(field) || []).filter(
-          (arrayItem: unknown) => JSON.stringify(arrayItem) !== JSON.stringify(item),
-        )
-        transaction.update(ref, field, updatedList).update(ref, 'updatedAt', timestamp)
-      })
-    })
-  }
+  removeArrayItem = (id: string, field: string, item: DocArrayType) =>
+    this.collection.doc(id).update({ [field]: firebase.firestore.FieldValue.arrayRemove(item) })
 }
