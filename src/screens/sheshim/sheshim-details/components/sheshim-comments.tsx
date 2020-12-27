@@ -1,25 +1,39 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Comment, Icon } from 'semantic-ui-react'
+import { useParams } from 'react-router-dom'
+import moment from 'moment'
 
 import { Comment as AnswerComment } from 'models'
+import { createSheshimComment } from 'services/firebase'
+import { fireSwalError } from 'utils/error-handler'
+import { images } from 'assets'
 
-import { SheshimCommentForm } from './sheshim-comment-form'
+import { SheshimCommentForm, FormValues } from './sheshim-comment-form'
+import { SheshimDetailsParams } from '../sheshim-details'
 
 interface SheshimCommentsProps {
   comments: AnswerComment[]
 }
 
 export function SheshimComments({ comments }: SheshimCommentsProps) {
+  const [sheshimComments, setSheshimComments] = useState<AnswerComment[]>(comments)
+  const { sheshimId } = useParams<SheshimDetailsParams>()
+
+  const onCreateComment = (data: FormValues) =>
+    createSheshimComment(sheshimId, data)
+      .then((comment) => setSheshimComments(sheshimComments.concat(comment)))
+      .catch(fireSwalError)
+
   return (
     <Comment.Group>
       <Comment.Group>
-        {comments.map((comment: AnswerComment) => (
-          <Comment key={comment.id}>
-            <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/elliot.jpg" />
+        {sheshimComments.map((comment: AnswerComment, idx: number) => (
+          <Comment key={idx}>
+            <Comment.Avatar src={images.user} />
             <Comment.Content>
               <Comment.Author as="a">{comment.createdBy.name}</Comment.Author>
               <Comment.Metadata>
-                <div>{comment.createdAt}</div>
+                <div>{moment(comment.createdAt?.toDate()).format('lll')}</div>
                 <div>
                   <Icon name="star" />
                   {comment.votes}
@@ -33,7 +47,7 @@ export function SheshimComments({ comments }: SheshimCommentsProps) {
           </Comment>
         ))}
       </Comment.Group>
-      <SheshimCommentForm />
+      <SheshimCommentForm onSubmit={onCreateComment} />
     </Comment.Group>
   )
 }

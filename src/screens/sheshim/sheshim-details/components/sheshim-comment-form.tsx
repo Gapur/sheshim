@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Label } from 'semantic-ui-react'
 import { useForm } from 'react-hook-form'
+import { SweetAlertResult } from 'sweetalert2'
 
-interface FormValues {
+export interface FormValues {
   comment: string
 }
 
-export function SheshimCommentForm() {
+interface SheshimCommentFormProps {
+  onSubmit: (formValues: FormValues) => Promise<void | SweetAlertResult>
+}
+
+export function SheshimCommentForm({ onSubmit }: SheshimCommentFormProps) {
   const { errors, register, handleSubmit, setValue, trigger, reset } = useForm<FormValues>()
   const [showForm, setShowForm] = useState(false)
 
@@ -19,7 +24,8 @@ export function SheshimCommentForm() {
     await trigger(name)
   }
 
-  const onSubmit = (data: FormValues) => console.log(data)
+  const onFormSubmit = (formValues: FormValues) =>
+    onSubmit(formValues).finally(() => setShowForm(false))
 
   const onCancel = () => {
     reset()
@@ -35,12 +41,14 @@ export function SheshimCommentForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onFormSubmit)}>
       <Form.Field error={Boolean(errors.comment)}>
         <textarea
           rows={3}
           placeholder="Use comments to ask for more information or suggest improvements"
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onInputChange('comment', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            onInputChange('comment', e.target.value)
+          }
         />
         {errors.comment && (
           <Label pointing prompt>
