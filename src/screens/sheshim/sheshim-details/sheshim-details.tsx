@@ -3,11 +3,12 @@ import { Header, Label, Divider, Button } from 'semantic-ui-react'
 import { useParams, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import moment from 'moment'
+import { Node as SlateNode } from 'slate'
 
 import { AppLayout, NotFound } from 'components'
 import { Answer, Sheshimim } from 'models'
 import { colors } from 'theme'
-import { getSheshim } from 'services/firebase/sheshim'
+import { getSheshim, createSheshimAnswer } from 'services/firebase/sheshim'
 import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
@@ -41,6 +42,17 @@ export function SheshimDetails() {
       .catch(fireSwalError)
       .finally(() => setLoading(false))
   }, [sheshimId, history])
+
+  const onCreateSheshimAnswer = (data: SlateNode[]) =>
+    createSheshimAnswer(sheshimId, data)
+      .then((sheshimAnswer) => {
+        const updatedSheshim = {
+          ...sheshim,
+          answers: sheshim?.answers.concat(sheshimAnswer),
+        } as Sheshimim
+        setSheshim(updatedSheshim)
+      })
+      .catch(fireSwalError)
 
   if (loading) {
     return <SheshimDetailsLoader />
@@ -102,7 +114,7 @@ export function SheshimDetails() {
           </SheshimResponse>
         ))}
 
-        <SheshimAnswerForm />
+        <SheshimAnswerForm onSubmit={onCreateSheshimAnswer} />
       </Sheshimder>
     </AppLayout>
   )
