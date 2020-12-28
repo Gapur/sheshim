@@ -6,7 +6,7 @@ import moment from 'moment'
 import { Node as SlateNode } from 'slate'
 
 import { AppLayout, NotFound } from 'components'
-import { Answer, Sheshimim } from 'models'
+import { SheshimAnswer, Sheshimim } from 'models'
 import { colors } from 'theme'
 import { getSheshim, createSheshimAnswer } from 'services/firebase/sheshim'
 import { fireSwalError } from 'utils/error-handler'
@@ -96,7 +96,7 @@ export function SheshimDetails() {
 
         <Header>{`${sheshim.answers.length} Answers`}</Header>
 
-        {sheshim.answers.map((answer: Answer, idx: number) => (
+        {sheshim.answers.map((answer: SheshimAnswer, idx: number) => (
           <SheshimResponse key={idx}>
             <div>
               <Button.Group size="mini" vertical>

@@ -72,7 +72,9 @@ export const createSheshimAnswer = async (sheshimId: string, data: SlateNode[]) 
   const { currentUser } = firebase.auth()
   if (currentUser) {
     const newAnswer: Answer = createInitialAnswer(data, currentUser)
-    return sheshimCollection.addArrayItem(sheshimId, 'answers', newAnswer).then(() => newAnswer)
+    return sheshimCollection
+      .addArrayItem(sheshimId, 'answers', newAnswer)
+      .then(() => ({ ...newAnswer, body: JSON.parse(newAnswer.body) }))
   }
   return Promise.reject(new Error('You are not signed in.'))
 }

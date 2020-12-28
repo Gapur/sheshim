@@ -7,7 +7,7 @@ import { Comment } from './comment'
 
 export interface Answer {
   votes: number
-  body: SlateNode[]
+  body: string
   createdAt?: firebase.firestore.Timestamp
   updatedAt?: firebase.firestore.Timestamp
   createdBy: {
@@ -17,9 +17,13 @@ export interface Answer {
   comments: Comment[]
 }
 
-export const createInitialAnswer = (data: SlateNode[], user: firebase.User): Answer => ({
+export interface SheshimAnswer extends Omit<Answer, 'body'> {
+  body: SlateNode[]
+}
+
+export const createInitialAnswer = (data: SlateNode[], user: firebase.User) => ({
   votes: 0,
-  body: data,
+  body: JSON.stringify(data),
   createdBy: {
     id: user.uid,
     name: user.displayName ?? user.email ?? 'Anonymous',
