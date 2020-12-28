@@ -10,6 +10,13 @@ import { SlateToolbar } from './slate-toolbar'
 import { SlateLeaf } from './slate-leaf'
 import { SlateElement } from './slate-element'
 
+export const INITIAL_EDITOR_VALUE: SlateNode[] = [
+  {
+    type: 'paragraph',
+    children: [{ text: '' }],
+  },
+]
+
 interface TextEditorProps {
   value?: SlateNode[]
   readonly?: boolean
@@ -24,7 +31,7 @@ const Editor = styled.div`
 `
 
 export function TextEditor({
-  value = [{ children: [{ text: '' }] }],
+  value = INITIAL_EDITOR_VALUE,
   readonly = false,
   placeholder = 'Enter some text...',
   onChange = () => value,
