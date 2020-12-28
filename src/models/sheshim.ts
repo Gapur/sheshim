@@ -3,7 +3,7 @@ import { Node as SlateNode } from 'slate'
 import { firebase } from 'services/firebase'
 import { FormValues } from 'screens/sheshim/sheshim-create/components/sheshim-form'
 
-import { Answer } from './answer'
+import { Answer, SheshimAnswer } from './answer'
 import { Comment } from './comment'
 
 export interface Sheshim {
@@ -23,8 +23,9 @@ export interface Sheshim {
   comments: Comment[]
 }
 
-export interface Sheshimim extends Omit<Sheshim, 'body'> {
+export interface Sheshimim extends Omit<Sheshim, 'body' | 'answers'> {
   body: SlateNode[]
+  answers: SheshimAnswer[]
 }
 
 export const createInitialSheshim = (data: FormValues, user: firebase.User) => ({
@@ -47,5 +48,6 @@ export const parseSheshim = (doc: firebase.firestore.DocumentSnapshot) => {
     ...sheshim,
     id: doc.id,
     body: JSON.parse(sheshim.body),
+    answers: sheshim.answers.map((answer) => ({ ...answer, body: JSON.parse(answer.body) })),
   } as Sheshimim
 }

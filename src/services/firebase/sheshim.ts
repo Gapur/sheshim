@@ -1,4 +1,14 @@
-import { Sheshim, Comment, createInitialSheshim, parseSheshim, creatInitialComment } from 'models'
+import { Node as SlateNode } from 'slate'
+
+import {
+  Sheshim,
+  Comment,
+  createInitialSheshim,
+  parseSheshim,
+  creatInitialComment,
+  createInitialAnswer,
+  Answer,
+} from 'models'
 import { FormValues as SheshimValues } from 'screens/sheshim/sheshim-create/components/sheshim-form'
 import { FormValues as SheshimCommentValues } from 'screens/sheshim/sheshim-details/components/sheshim-comment-form'
 
@@ -49,11 +59,22 @@ export const fetchTopSheshims = async () => {
   return Promise.reject(new Error('You are not signed in.'))
 }
 
-export const createSheshimComment = (sheshimId: string, data: SheshimCommentValues) => {
+export const createSheshimComment = async (sheshimId: string, data: SheshimCommentValues) => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
     const newComment: Comment = creatInitialComment(data, currentUser)
     return sheshimCollection.addArrayItem(sheshimId, 'comments', newComment).then(() => newComment)
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const createSheshimAnswer = async (sheshimId: string, data: SlateNode[]) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    const newAnswer: Answer = createInitialAnswer(data, currentUser)
+    return sheshimCollection
+      .addArrayItem(sheshimId, 'answers', newAnswer)
+      .then(() => ({ ...newAnswer, body: JSON.parse(newAnswer.body) }))
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
