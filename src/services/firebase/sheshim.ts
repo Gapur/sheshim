@@ -78,3 +78,11 @@ export const createSheshimAnswer = async (sheshimId: string, data: SlateNode[]) 
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
+
+export const updateSheshimVote = (sheshimId: string, votes: number) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return sheshimCollection.docRef(sheshimId).update('votes', votes)
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}

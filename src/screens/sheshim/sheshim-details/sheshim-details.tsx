@@ -8,7 +8,7 @@ import { Node as SlateNode } from 'slate'
 import { AppLayout, NotFound } from 'components'
 import { SheshimAnswer, Sheshimim } from 'models'
 import { colors } from 'theme'
-import { getSheshim, createSheshimAnswer } from 'services/firebase/sheshim'
+import { getSheshim, createSheshimAnswer, updateSheshimVote } from 'services/firebase/sheshim'
 import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
@@ -33,6 +33,7 @@ const SheshimResponse = styled.div`
 export function SheshimDetails() {
   const [sheshim, setSheshim] = useState<Sheshimim | null>(null)
   const [loading, setLoading] = useState(true)
+  const [sheshimVoting, setSheshimVoting] = useState(false)
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
 
@@ -62,6 +63,13 @@ export function SheshimDetails() {
     return <NotFound />
   }
 
+  const onUpdateSheshimVote = (votes: number) => {
+    setSheshimVoting(true)
+    updateSheshimVote(sheshimId, votes)
+      .then(() => setSheshim({ ...sheshim, votes }))
+      .finally(() => setSheshimVoting(false))
+  }
+
   return (
     <AppLayout page="sheshim">
       <Header>
@@ -80,9 +88,17 @@ export function SheshimDetails() {
         <SheshimResponse>
           <div>
             <Button.Group size="mini" vertical>
-              <Button icon="angle up" />
+              <Button
+                icon="angle up"
+                disabled={sheshimVoting}
+                onClick={() => onUpdateSheshimVote(sheshim.votes + 1)}
+              />
               <Button>{sheshim.votes}</Button>
-              <Button icon="angle down" />
+              <Button
+                icon="angle down"
+                disabled={sheshimVoting}
+                onClick={() => onUpdateSheshimVote(sheshim.votes - 1)}
+              />
             </Button.Group>
           </div>
           <SheshimResponseContent
