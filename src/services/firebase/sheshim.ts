@@ -88,14 +88,30 @@ export const updateSheshimVote = (sheshimId: string, votes: number) => {
   return Promise.reject(new Error('You are not signed in.'))
 }
 
-export const updateSheshimAnswers = (sheshimId: string, sheshimAnswers: SheshimAnswer[]) => {
+export const updateSheshimAnswerVote = async (
+  sheshimId: string,
+  sheshimAnswers: SheshimAnswer[],
+  answerIdx: number,
+  votes: number,
+) => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
-    const answers = sheshimAnswers.map((sheshimAnswer) => ({
-      ...sheshimAnswer,
-      body: JSON.stringify(sheshimAnswer.body),
-    }))
-    return sheshimCollection.docRef(sheshimId).update('answers', answers)
+    const answers: Answer[] = sheshimAnswers.map((sheshimAnswer: SheshimAnswer, idx: number) =>
+      idx === answerIdx
+        ? { ...sheshimAnswer, votes, body: JSON.stringify(sheshimAnswer.body) }
+        : {
+            ...sheshimAnswer,
+            body: JSON.stringify(sheshimAnswer.body),
+          },
+    )
+    const updatedSheshimAnswers: SheshimAnswer[] = sheshimAnswers.map(
+      (sheshimAnswer: SheshimAnswer, idx: number) =>
+        idx === answerIdx ? { ...sheshimAnswer, votes } : sheshimAnswer,
+    )
+    return sheshimCollection
+      .docRef(sheshimId)
+      .update('answers', answers)
+      .then(() => updatedSheshimAnswers)
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
@@ -109,7 +125,7 @@ export const updateSheshimAnswerComments = async (
   const { currentUser } = firebase.auth()
   if (currentUser) {
     const newComment: Comment = creatInitialComment(data, currentUser)
-    const answers = sheshimAnswers.map((sheshimAnswer: SheshimAnswer, idx: number) =>
+    const answers: Answer[] = sheshimAnswers.map((sheshimAnswer: SheshimAnswer, idx: number) =>
       idx === answerIdx
         ? {
             ...sheshimAnswer,

@@ -6,13 +6,13 @@ import moment from 'moment'
 import { Node as SlateNode } from 'slate'
 
 import { AppLayout, NotFound } from 'components'
-import { SheshimAnswer, Sheshimim, Comment } from 'models'
+import { SheshimAnswer, Sheshimim } from 'models'
 import { colors } from 'theme'
 import {
   getSheshim,
   createSheshimAnswer,
   updateSheshimVote,
-  updateSheshimAnswers,
+  updateSheshimAnswerVote,
   createSheshimComment,
   updateSheshimAnswerComments,
 } from 'services/firebase/sheshim'
@@ -81,11 +81,8 @@ export function SheshimDetails() {
 
   const onUpdateSheshimAnswers = (answerIdx: number, votes: number) => {
     setSheshimAnswerVoting(true)
-    const updatedSheshimAnswers = sheshim.answers.map((answer, idx) =>
-      idx === answerIdx ? { ...answer, votes } : answer,
-    )
-    updateSheshimAnswers(sheshimId, updatedSheshimAnswers)
-      .then(() => setSheshim({ ...sheshim, answers: updatedSheshimAnswers }))
+    updateSheshimAnswerVote(sheshimId, sheshim.answers, answerIdx, votes)
+      .then((updatedSheshimAnswers) => setSheshim({ ...sheshim, answers: updatedSheshimAnswers }))
       .finally(() => setSheshimAnswerVoting(false))
   }
 

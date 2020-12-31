@@ -9,8 +9,8 @@ import { images } from 'assets'
 import { SheshimCommentForm, FormValues } from './sheshim-comment-form'
 
 interface SheshimCommentsProps {
-  onAddComment: (data: FormValues) => Promise<AnswerComment>
   comments: AnswerComment[]
+  onAddComment: (data: FormValues) => Promise<AnswerComment>
 }
 
 export function SheshimComments({ comments, onAddComment }: SheshimCommentsProps) {
