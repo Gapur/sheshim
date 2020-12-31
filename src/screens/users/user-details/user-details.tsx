@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Header, Image, Card, Icon, List } from 'semantic-ui-react'
-import { Link, useParams } from 'react-router-dom'
+import { Header, Image, Card, Icon } from 'semantic-ui-react'
+import { useParams } from 'react-router-dom'
 
 import { AppLayout, NotFound } from 'components'
 import { User } from 'models'
@@ -9,6 +9,7 @@ import { fireSwalError } from 'utils/error-handler'
 import { images } from 'assets'
 
 import { UserDetailsLoader } from './components/user-details-loader'
+import { UserSheshimList } from './components/user-sheshim-list'
 
 interface UserDetailsParams {
   userId: string
@@ -55,40 +56,7 @@ export function UserDetails() {
         </Card.Content>
       </Card>
 
-      <Header>My Questions</Header>
-
-      <List animated divided selection verticalAlign="middle">
-        <List.Item>
-          <List.Content>
-            <List.Header>
-              <Link to="/">
-                React live server is not displaying anything just showing the tab keep on loading
-              </Link>
-            </List.Header>
-            <List.Description>asked 3 hours ago</List.Description>
-          </List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>
-            <List.Header>
-              <Link to="/">
-                React live server is not displaying anything just showing the tab keep on loading
-              </Link>
-            </List.Header>
-            <List.Description>asked 3 hours ago</List.Description>
-          </List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>
-            <List.Header>
-              <Link to="/">
-                React live server is not displaying anything just showing the tab keep on loading
-              </Link>
-            </List.Header>
-            <List.Description>asked 3 hours ago</List.Description>
-          </List.Content>
-        </List.Item>
-      </List>
+      <UserSheshimList />
     </AppLayout>
   )
 }
