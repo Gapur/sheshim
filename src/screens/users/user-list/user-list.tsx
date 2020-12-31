@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Header, Table, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Header, Table } from 'semantic-ui-react'
 
 import { AppLayout } from 'components'
 import { User } from 'models'
 import { fetchUsers } from 'services/firebase/user'
 import { fireSwalError } from 'utils/error-handler'
-import { images } from 'assets'
+
+import { UserListItem } from './components/user-list-item'
+import { UserListLoader } from './components/user-list-loader'
 
 export function UserList() {
   const [users, setUsers] = useState<User[]>([])
@@ -32,22 +33,11 @@ export function UserList() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {users.map((user) => (
-            <Table.Row key={user.id}>
-              <Table.Cell>
-                <Header as="h4" image>
-                  <Image src={user.avatar ?? images.user} rounded size="mini" />
-                  <Header.Content>
-                    <Link to={`/users/${user.id}`}>{user.name}</Link>
-                    <Header.Subheader>{user.email}</Header.Subheader>
-                  </Header.Content>
-                </Header>
-              </Table.Cell>
-              <Table.Cell>{user.reputation}</Table.Cell>
-              <Table.Cell>{user.position}</Table.Cell>
-              <Table.Cell>{`${user.city}, ${user.country}`}</Table.Cell>
-            </Table.Row>
-          ))}
+          {loading ? (
+            <UserListLoader />
+          ) : (
+            users.map((user) => <UserListItem key={user.id} user={user} />)
+          )}
         </Table.Body>
       </Table>
     </AppLayout>
