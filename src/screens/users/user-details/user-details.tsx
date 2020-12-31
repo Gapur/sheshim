@@ -11,7 +11,7 @@ import { images } from 'assets'
 import { UserDetailsLoader } from './components/user-details-loader'
 import { UserSheshimList } from './components/user-sheshim-list'
 
-interface UserDetailsParams {
+export interface UserDetailsParams {
   userId: string
 }
 

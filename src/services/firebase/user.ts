@@ -1,8 +1,9 @@
-import { User, parseUser, createInitialUser } from 'models'
+import { User, parseUser, createInitialUser, parseSheshim } from 'models'
 import { FormValues as SignUpValues } from 'screens/auth/sign-up/components/sign-up-form'
 
 import { firebase } from './firebase'
 import { CollectionManager } from './collection-manager'
+import { sheshimCollection } from './sheshim'
 
 export const userCollection = new CollectionManager('users')
 
@@ -27,6 +28,17 @@ export const getUser = async (id: string) => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
     return userCollection.getDoc(id).then((doc) => (doc.exists ? parseUser(doc) : null))
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const getUserSheshims = (userId: string) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return sheshimCollection
+      .where('createdAt.id', '==', userId)
+      .get()
+      .then((snapshot) => (snapshot.empty ? [] : snapshot.docs.map(parseSheshim)))
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
