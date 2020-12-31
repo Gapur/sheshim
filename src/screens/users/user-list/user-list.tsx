@@ -1,11 +1,25 @@
-import React from 'react'
-import { Header, Table, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Header, Table } from 'semantic-ui-react'
 
 import { AppLayout } from 'components'
-import { data } from '../mock'
+import { User } from 'models'
+import { fetchUsers } from 'services/firebase/user'
+import { fireSwalError } from 'utils/error-handler'
+
+import { UserListItem } from './components/user-list-item'
+import { UserListLoader } from './components/user-list-loader'
 
 export function UserList() {
+  const [users, setUsers] = useState<User[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchUsers()
+      .then(setUsers)
+      .catch(fireSwalError)
+      .finally(() => setLoading(false))
+  }, [])
+
   return (
     <AppLayout page="users">
       <Header>Users</Header>
@@ -19,22 +33,11 @@ export function UserList() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data.map((item) => (
-            <Table.Row key={item.id}>
-              <Table.Cell>
-                <Header as="h4" image>
-                  <Image src={item.avatar} rounded size="mini" />
-                  <Header.Content>
-                    <Link to={`/users/${item.id}`}>{`${item.firstName} ${item.lastName}`}</Link>
-                    <Header.Subheader>{item.email}</Header.Subheader>
-                  </Header.Content>
-                </Header>
-              </Table.Cell>
-              <Table.Cell>{item.reputation}</Table.Cell>
-              <Table.Cell>{item.position}</Table.Cell>
-              <Table.Cell>{`${item.city}, ${item.country}`}</Table.Cell>
-            </Table.Row>
-          ))}
+          {loading ? (
+            <UserListLoader />
+          ) : (
+            users.map((user) => <UserListItem key={user.id} user={user} />)
+          )}
         </Table.Body>
       </Table>
     </AppLayout>
