@@ -22,3 +22,11 @@ export const fetchUsers = async () => {
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
+
+export const getUser = async (id: string) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return userCollection.getDoc(id).then((doc) => (doc.exists ? parseUser(doc) : null))
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}

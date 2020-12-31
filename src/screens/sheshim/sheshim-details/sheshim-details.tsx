@@ -51,7 +51,7 @@ export function SheshimDetails() {
       .then(setSheshim)
       .catch(fireSwalError)
       .finally(() => setLoading(false))
-  }, [sheshimId, history])
+  }, [sheshimId])
 
   const onCreateSheshimAnswer = (data: SlateNode[]) =>
     createSheshimAnswer(sheshimId, data)
