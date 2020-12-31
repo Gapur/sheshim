@@ -66,7 +66,7 @@ export function SheshimForm({ onSubmit }: SheshimFormProps) {
           selection
           multiple
           allowAdditions
-          options={[]}
+          options={(watch('tags') ?? []).map((tag) => ({ text: tag, value: tag }))}
           onChange={(_, data: DropdownProps) => onSelectChange({ name: 'tags', ...data })}
         />
         {errors.tags && (

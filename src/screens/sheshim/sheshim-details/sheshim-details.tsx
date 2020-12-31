@@ -8,12 +8,20 @@ import { Node as SlateNode } from 'slate'
 import { AppLayout, NotFound } from 'components'
 import { SheshimAnswer, Sheshimim } from 'models'
 import { colors } from 'theme'
-import { getSheshim, createSheshimAnswer } from 'services/firebase/sheshim'
+import {
+  getSheshim,
+  createSheshimAnswer,
+  updateSheshimVote,
+  updateSheshimAnswerVote,
+  createSheshimComment,
+  updateSheshimAnswerComments,
+} from 'services/firebase/sheshim'
 import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
 import { SheshimDetailsLoader } from './components/sheshim-details-loader'
+import { FormValues } from './components/sheshim-comment-form'
 
 export interface SheshimDetailsParams {
   sheshimId: string
@@ -33,6 +41,8 @@ const SheshimResponse = styled.div`
 export function SheshimDetails() {
   const [sheshim, setSheshim] = useState<Sheshimim | null>(null)
   const [loading, setLoading] = useState(true)
+  const [sheshimVoting, setSheshimVoting] = useState(false)
+  const [sheshimAnswerVoting, setSheshimAnswerVoting] = useState(false)
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
 
@@ -62,6 +72,20 @@ export function SheshimDetails() {
     return <NotFound />
   }
 
+  const onUpdateSheshimVote = (votes: number) => {
+    setSheshimVoting(true)
+    updateSheshimVote(sheshimId, votes)
+      .then(() => setSheshim({ ...sheshim, votes }))
+      .finally(() => setSheshimVoting(false))
+  }
+
+  const onUpdateSheshimAnswers = (answerIdx: number, votes: number) => {
+    setSheshimAnswerVoting(true)
+    updateSheshimAnswerVote(sheshimId, sheshim.answers, answerIdx, votes)
+      .then((updatedSheshimAnswers) => setSheshim({ ...sheshim, answers: updatedSheshimAnswers }))
+      .finally(() => setSheshimAnswerVoting(false))
+  }
+
   return (
     <AppLayout page="sheshim">
       <Header>
@@ -80,9 +104,17 @@ export function SheshimDetails() {
         <SheshimResponse>
           <div>
             <Button.Group size="mini" vertical>
-              <Button icon="angle up" />
+              <Button
+                icon="angle up"
+                disabled={sheshimVoting}
+                onClick={() => onUpdateSheshimVote(sheshim.votes + 1)}
+              />
               <Button>{sheshim.votes}</Button>
-              <Button icon="angle down" />
+              <Button
+                icon="angle down"
+                disabled={sheshimVoting}
+                onClick={() => onUpdateSheshimVote(sheshim.votes - 1)}
+              />
             </Button.Group>
           </div>
           <SheshimResponseContent
@@ -91,18 +123,27 @@ export function SheshimDetails() {
             createdAt={sheshim.createdAt?.toDate()}
             createdBy={sheshim.createdBy?.name ?? 'user'}
             comments={sheshim.comments}
+            onAddComment={(data: FormValues) => createSheshimComment(sheshimId, data)}
           />
         </SheshimResponse>
 
         <Header>{`${sheshim.answers.length} Answers`}</Header>
 
-        {sheshim.answers.map((answer: SheshimAnswer, idx: number) => (
-          <SheshimResponse key={idx}>
+        {sheshim.answers.map((answer: SheshimAnswer, answerIdx: number) => (
+          <SheshimResponse key={answerIdx}>
             <div>
               <Button.Group size="mini" vertical>
-                <Button icon="angle up" />
+                <Button
+                  icon="angle up"
+                  disabled={sheshimAnswerVoting}
+                  onClick={() => onUpdateSheshimAnswers(answerIdx, answer.votes + 1)}
+                />
                 <Button>{answer.votes}</Button>
-                <Button icon="angle down" />
+                <Button
+                  icon="angle down"
+                  disabled={sheshimAnswerVoting}
+                  onClick={() => onUpdateSheshimAnswers(answerIdx, answer.votes - 1)}
+                />
               </Button.Group>
             </div>
             <SheshimResponseContent
@@ -110,6 +151,9 @@ export function SheshimDetails() {
               createdAt={answer.createdAt?.toDate()}
               createdBy={answer.createdBy.name}
               comments={answer.comments}
+              onAddComment={(data: FormValues) =>
+                updateSheshimAnswerComments(sheshimId, sheshim.answers, answerIdx, data)
+              }
             />
           </SheshimResponse>
         ))}

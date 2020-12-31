@@ -8,6 +8,7 @@ import {
   creatInitialComment,
   createInitialAnswer,
   Answer,
+  SheshimAnswer,
 } from 'models'
 import { FormValues as SheshimValues } from 'screens/sheshim/sheshim-create/components/sheshim-form'
 import { FormValues as SheshimCommentValues } from 'screens/sheshim/sheshim-details/components/sheshim-comment-form'
@@ -75,6 +76,68 @@ export const createSheshimAnswer = async (sheshimId: string, data: SlateNode[]) 
     return sheshimCollection
       .addArrayItem(sheshimId, 'answers', newAnswer)
       .then(() => ({ ...newAnswer, body: JSON.parse(newAnswer.body) }))
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const updateSheshimVote = (sheshimId: string, votes: number) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return sheshimCollection.docRef(sheshimId).update('votes', votes)
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const updateSheshimAnswerVote = async (
+  sheshimId: string,
+  sheshimAnswers: SheshimAnswer[],
+  answerIdx: number,
+  votes: number,
+) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    const answers: Answer[] = sheshimAnswers.map((sheshimAnswer: SheshimAnswer, idx: number) =>
+      idx === answerIdx
+        ? { ...sheshimAnswer, votes, body: JSON.stringify(sheshimAnswer.body) }
+        : {
+            ...sheshimAnswer,
+            body: JSON.stringify(sheshimAnswer.body),
+          },
+    )
+    const updatedSheshimAnswers: SheshimAnswer[] = sheshimAnswers.map(
+      (sheshimAnswer: SheshimAnswer, idx: number) =>
+        idx === answerIdx ? { ...sheshimAnswer, votes } : sheshimAnswer,
+    )
+    return sheshimCollection
+      .docRef(sheshimId)
+      .update('answers', answers)
+      .then(() => updatedSheshimAnswers)
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const updateSheshimAnswerComments = async (
+  sheshimId: string,
+  sheshimAnswers: SheshimAnswer[],
+  answerIdx: number,
+  data: SheshimCommentValues,
+) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    const newComment: Comment = creatInitialComment(data, currentUser)
+    const answers: Answer[] = sheshimAnswers.map((sheshimAnswer: SheshimAnswer, idx: number) =>
+      idx === answerIdx
+        ? {
+            ...sheshimAnswer,
+            body: JSON.stringify(sheshimAnswer.body),
+            comments: sheshimAnswer.comments.concat(newComment),
+          }
+        : { ...sheshimAnswer, body: JSON.stringify(sheshimAnswer.body) },
+    )
+    return sheshimCollection
+      .docRef(sheshimId)
+      .update('answers', answers)
+      .then(() => newComment)
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
