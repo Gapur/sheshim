@@ -1,26 +1,23 @@
 import React, { useState } from 'react'
 import { Comment, Icon } from 'semantic-ui-react'
-import { useParams } from 'react-router-dom'
 import moment from 'moment'
 
 import { Comment as AnswerComment } from 'models'
-import { createSheshimComment } from 'services/firebase'
 import { fireSwalError } from 'utils/error-handler'
 import { images } from 'assets'
 
 import { SheshimCommentForm, FormValues } from './sheshim-comment-form'
-import { SheshimDetailsParams } from '../sheshim-details'
 
 interface SheshimCommentsProps {
+  onAddComment: (data: FormValues) => Promise<AnswerComment>
   comments: AnswerComment[]
 }
 
-export function SheshimComments({ comments }: SheshimCommentsProps) {
+export function SheshimComments({ comments, onAddComment }: SheshimCommentsProps) {
   const [sheshimComments, setSheshimComments] = useState<AnswerComment[]>(comments)
-  const { sheshimId } = useParams<SheshimDetailsParams>()
 
   const onCreateComment = (data: FormValues) =>
-    createSheshimComment(sheshimId, data)
+    onAddComment(data)
       .then((comment) => setSheshimComments(sheshimComments.concat(comment)))
       .catch(fireSwalError)
 

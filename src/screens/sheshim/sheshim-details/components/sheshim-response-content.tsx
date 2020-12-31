@@ -10,6 +10,7 @@ import { colors } from 'theme'
 import { Comment } from 'models'
 
 import { SheshimComments } from './sheshim-comments'
+import { FormValues } from './sheshim-comment-form'
 
 const ResponseContent = styled.div`
   display: flex;
@@ -33,6 +34,7 @@ interface SheshimResponseContentProps {
   createdAt?: Date
   createdBy: string
   comments: Comment[]
+  onAddComment: (data: FormValues) => Promise<Comment>
 }
 
 export function SheshimResponseContent({
@@ -41,6 +43,7 @@ export function SheshimResponseContent({
   createdAt,
   createdBy,
   comments,
+  onAddComment,
 }: SheshimResponseContentProps) {
   return (
     <ResponseContent>
@@ -60,7 +63,7 @@ export function SheshimResponseContent({
         <span>{`asked ${moment(createdAt).fromNow()} by`}</span>&nbsp;
         <Link to="/users">{createdBy}</Link>
       </QuestionItem.Started>
-      <SheshimComments comments={comments} />
+      <SheshimComments comments={comments} onAddComment={onAddComment} />
     </ResponseContent>
   )
 }

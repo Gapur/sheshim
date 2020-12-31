@@ -6,19 +6,22 @@ import moment from 'moment'
 import { Node as SlateNode } from 'slate'
 
 import { AppLayout, NotFound } from 'components'
-import { SheshimAnswer, Sheshimim } from 'models'
+import { SheshimAnswer, Sheshimim, Comment } from 'models'
 import { colors } from 'theme'
 import {
   getSheshim,
   createSheshimAnswer,
   updateSheshimVote,
   updateSheshimAnswers,
+  createSheshimComment,
+  updateSheshimAnswerComments,
 } from 'services/firebase/sheshim'
 import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
 import { SheshimDetailsLoader } from './components/sheshim-details-loader'
+import { FormValues } from './components/sheshim-comment-form'
 
 export interface SheshimDetailsParams {
   sheshimId: string
@@ -123,6 +126,7 @@ export function SheshimDetails() {
             createdAt={sheshim.createdAt?.toDate()}
             createdBy={sheshim.createdBy?.name ?? 'user'}
             comments={sheshim.comments}
+            onAddComment={(data: FormValues) => createSheshimComment(sheshimId, data)}
           />
         </SheshimResponse>
 
@@ -150,6 +154,9 @@ export function SheshimDetails() {
               createdAt={answer.createdAt?.toDate()}
               createdBy={answer.createdBy.name}
               comments={answer.comments}
+              onAddComment={(data: FormValues) =>
+                updateSheshimAnswerComments(sheshimId, sheshim.answers, idx, data)
+              }
             />
           </SheshimResponse>
         ))}
