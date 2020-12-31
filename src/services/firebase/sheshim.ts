@@ -8,6 +8,7 @@ import {
   creatInitialComment,
   createInitialAnswer,
   Answer,
+  SheshimAnswer,
 } from 'models'
 import { FormValues as SheshimValues } from 'screens/sheshim/sheshim-create/components/sheshim-form'
 import { FormValues as SheshimCommentValues } from 'screens/sheshim/sheshim-details/components/sheshim-comment-form'
@@ -83,6 +84,18 @@ export const updateSheshimVote = (sheshimId: string, votes: number) => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
     return sheshimCollection.docRef(sheshimId).update('votes', votes)
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const updateSheshimAnswers = (sheshimId: string, sheshimAnswers: SheshimAnswer[]) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    const answers = sheshimAnswers.map((sheshimAnswer) => ({
+      ...sheshimAnswer,
+      body: JSON.stringify(sheshimAnswer.body),
+    }))
+    return sheshimCollection.docRef(sheshimId).update('answers', answers)
   }
   return Promise.reject(new Error('You are not signed in.'))
 }

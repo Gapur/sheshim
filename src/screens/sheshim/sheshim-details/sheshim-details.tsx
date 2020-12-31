@@ -8,7 +8,12 @@ import { Node as SlateNode } from 'slate'
 import { AppLayout, NotFound } from 'components'
 import { SheshimAnswer, Sheshimim } from 'models'
 import { colors } from 'theme'
-import { getSheshim, createSheshimAnswer, updateSheshimVote } from 'services/firebase/sheshim'
+import {
+  getSheshim,
+  createSheshimAnswer,
+  updateSheshimVote,
+  updateSheshimAnswers,
+} from 'services/firebase/sheshim'
 import { fireSwalError } from 'utils/error-handler'
 
 import { SheshimResponseContent } from './components/sheshim-response-content'
@@ -34,6 +39,7 @@ export function SheshimDetails() {
   const [sheshim, setSheshim] = useState<Sheshimim | null>(null)
   const [loading, setLoading] = useState(true)
   const [sheshimVoting, setSheshimVoting] = useState(false)
+  const [sheshimAnswerVoting, setSheshimAnswerVoting] = useState(false)
   const history = useHistory()
   const { sheshimId } = useParams<SheshimDetailsParams>()
 
@@ -68,6 +74,16 @@ export function SheshimDetails() {
     updateSheshimVote(sheshimId, votes)
       .then(() => setSheshim({ ...sheshim, votes }))
       .finally(() => setSheshimVoting(false))
+  }
+
+  const onUpdateSheshimAnswers = (answerIdx: number, votes: number) => {
+    setSheshimAnswerVoting(true)
+    const updatedSheshimAnswers = sheshim.answers.map((answer, idx) =>
+      idx === answerIdx ? { ...answer, votes } : answer,
+    )
+    updateSheshimAnswers(sheshimId, updatedSheshimAnswers)
+      .then(() => setSheshim({ ...sheshim, answers: updatedSheshimAnswers }))
+      .finally(() => setSheshimAnswerVoting(false))
   }
 
   return (
@@ -116,9 +132,17 @@ export function SheshimDetails() {
           <SheshimResponse key={idx}>
             <div>
               <Button.Group size="mini" vertical>
-                <Button icon="angle up" />
+                <Button
+                  icon="angle up"
+                  disabled={sheshimAnswerVoting}
+                  onClick={() => onUpdateSheshimAnswers(idx, answer.votes + 1)}
+                />
                 <Button>{answer.votes}</Button>
-                <Button icon="angle down" />
+                <Button
+                  icon="angle down"
+                  disabled={sheshimAnswerVoting}
+                  onClick={() => onUpdateSheshimAnswers(idx, answer.votes - 1)}
+                />
               </Button.Group>
             </div>
             <SheshimResponseContent
