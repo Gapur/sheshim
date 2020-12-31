@@ -26,7 +26,7 @@ export function SheshimComments({ comments, onAddComment }: SheshimCommentsProps
       <Comment.Group>
         {sheshimComments.map((comment: AnswerComment, idx: number) => (
           <Comment key={idx}>
-            <Comment.Avatar src={images.user} />
+            <Comment.Avatar src={comment.createdBy.avatar ?? images.user} />
             <Comment.Content>
               <Comment.Author as="a">{comment.createdBy.name}</Comment.Author>
               <Comment.Metadata>

@@ -10,6 +10,7 @@ export interface Comment {
   createdBy: {
     id: string
     name: string
+    avatar: string | null
   }
 }
 
@@ -19,6 +20,7 @@ export const creatInitialComment = (data: FormValues, user: firebase.User) => ({
   createdBy: {
     id: user.uid,
     name: user.displayName ?? user.email ?? 'Anonymous',
+    avatar: user.photoURL,
   },
   createdAt: now(),
   updatedAt: now(),
