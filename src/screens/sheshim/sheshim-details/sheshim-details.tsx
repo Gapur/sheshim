@@ -129,20 +129,20 @@ export function SheshimDetails() {
 
         <Header>{`${sheshim.answers.length} Answers`}</Header>
 
-        {sheshim.answers.map((answer: SheshimAnswer, idx: number) => (
-          <SheshimResponse key={idx}>
+        {sheshim.answers.map((answer: SheshimAnswer, answerIdx: number) => (
+          <SheshimResponse key={answerIdx}>
             <div>
               <Button.Group size="mini" vertical>
                 <Button
                   icon="angle up"
                   disabled={sheshimAnswerVoting}
-                  onClick={() => onUpdateSheshimAnswers(idx, answer.votes + 1)}
+                  onClick={() => onUpdateSheshimAnswers(answerIdx, answer.votes + 1)}
                 />
                 <Button>{answer.votes}</Button>
                 <Button
                   icon="angle down"
                   disabled={sheshimAnswerVoting}
-                  onClick={() => onUpdateSheshimAnswers(idx, answer.votes - 1)}
+                  onClick={() => onUpdateSheshimAnswers(answerIdx, answer.votes - 1)}
                 />
               </Button.Group>
             </div>
@@ -152,7 +152,7 @@ export function SheshimDetails() {
               createdBy={answer.createdBy.name}
               comments={answer.comments}
               onAddComment={(data: FormValues) =>
-                updateSheshimAnswerComments(sheshimId, sheshim.answers, idx, data)
+                updateSheshimAnswerComments(sheshimId, sheshim.answers, answerIdx, data)
               }
             />
           </SheshimResponse>
