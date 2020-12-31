@@ -1,8 +1,9 @@
-import { firebase } from './firebase'
-
 import { FormValues as SignUpValues } from 'screens/auth/sign-up/components/sign-up-form'
 import { FormValues as LogInValues } from 'screens/auth/log-in/components/log-in-form'
 import { FormValues as ForgotValues } from 'screens/auth/forgot-password/components/forgot-password-form'
+
+import { firebase } from './firebase'
+import { createUser } from './user'
 
 export const onAuthStateChanged = (
   successFn: (user: firebase.User) => void,
@@ -19,14 +20,15 @@ export const loginWithEmailAndPassword = async ({ email, password }: LogInValues
     .then((res) => JSON.stringify(res))
     .then((res) => JSON.parse(res))
 
-export const signUpWithEmailAndPassword = async (userData: SignUpValues) => {
-  const { email, password } = userData
+export const signUpWithEmailAndPassword = async (data: SignUpValues) => {
+  const { email, password } = data
 
   return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .then((res) => JSON.stringify(res))
     .then((res) => JSON.parse(res))
+    .then((user: firebase.auth.UserCredential) => createUser(user, data))
 }
 
 export const forgotPassword = ({ email }: ForgotValues) =>

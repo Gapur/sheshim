@@ -2,13 +2,11 @@ import { firebase } from 'services/firebase'
 
 export interface User {
   id: string
-  firstName: string
-  lastName: string
+  name: string | null
   email: string
-  password?: string
   city?: string
   country?: string
-  avatar?: string
+  avatar?: string | null
   reputation?: number
   position?: string
   createdAt?: firebase.firestore.Timestamp

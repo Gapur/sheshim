@@ -3,7 +3,6 @@ import { Header, Image, Card, Icon, List } from 'semantic-ui-react'
 import { Link, useParams } from 'react-router-dom'
 
 import { AppLayout } from 'components'
-import { data } from '../mock'
 
 interface UserDetailsParams {
   userId: string
@@ -12,17 +11,11 @@ interface UserDetailsParams {
 export function UserDetails() {
   const { userId } = useParams<UserDetailsParams>()
 
-  const user = data.find((item) => String(item.id) === userId)
-
-  if (!user) {
-    return <div>Loading</div>
-  }
-
   return (
     <AppLayout page="users">
       <Header>User Details</Header>
 
-      <Card color="yellow">
+      {/* <Card color="yellow">
         <Image src={user.avatar} wrapped ui={false} />
         <Card.Content>
           <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
@@ -37,7 +30,7 @@ export function UserDetails() {
             {`${user.reputation} reputation`}
           </a>
         </Card.Content>
-      </Card>
+      </Card> */}
 
       <Header>My Questions</Header>
 
@@ -45,7 +38,9 @@ export function UserDetails() {
         <List.Item>
           <List.Content>
             <List.Header>
-              <Link to="/">React live server is not displaying anything just showing the tab keep on loading</Link>
+              <Link to="/">
+                React live server is not displaying anything just showing the tab keep on loading
+              </Link>
             </List.Header>
             <List.Description>asked 3 hours ago</List.Description>
           </List.Content>
@@ -53,7 +48,9 @@ export function UserDetails() {
         <List.Item>
           <List.Content>
             <List.Header>
-              <Link to="/">React live server is not displaying anything just showing the tab keep on loading</Link>
+              <Link to="/">
+                React live server is not displaying anything just showing the tab keep on loading
+              </Link>
             </List.Header>
             <List.Description>asked 3 hours ago</List.Description>
           </List.Content>
@@ -61,7 +58,9 @@ export function UserDetails() {
         <List.Item>
           <List.Content>
             <List.Header>
-              <Link to="/">React live server is not displaying anything just showing the tab keep on loading</Link>
+              <Link to="/">
+                React live server is not displaying anything just showing the tab keep on loading
+              </Link>
             </List.Header>
             <List.Description>asked 3 hours ago</List.Description>
           </List.Content>

@@ -3,7 +3,6 @@ import { Header, Table, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import { AppLayout } from 'components'
-import { data } from '../mock'
 
 export function UserList() {
   return (
@@ -19,7 +18,7 @@ export function UserList() {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {data.map((item) => (
+          {/* {[].map((item) => (
             <Table.Row key={item.id}>
               <Table.Cell>
                 <Header as="h4" image>
@@ -34,7 +33,7 @@ export function UserList() {
               <Table.Cell>{item.position}</Table.Cell>
               <Table.Cell>{`${item.city}, ${item.country}`}</Table.Cell>
             </Table.Row>
-          ))}
+          ))} */}
         </Table.Body>
       </Table>
     </AppLayout>
