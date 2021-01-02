@@ -20,6 +20,8 @@ export function UserList() {
       .finally(() => setLoading(false))
   }, [])
 
+  console.log(users)
+
   return (
     <AppLayout page="users">
       <Header>Users</Header>

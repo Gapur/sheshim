@@ -1,4 +1,4 @@
-import { User, parseUser, createInitialUser, parseSheshim } from 'models'
+import { User, parseUser, createInitialUser, parseSheshim, UserWithSheshims } from 'models'
 import { FormValues as SignUpValues } from 'screens/auth/sign-up/components/sign-up-form'
 
 import { firebase } from './firebase'
@@ -27,18 +27,26 @@ export const fetchUsers = async () => {
 export const getUser = async (id: string) => {
   const { currentUser } = firebase.auth()
   if (currentUser) {
-    return userCollection.getDoc(id).then((doc) => (doc.exists ? parseUser(doc) : null))
+    return userCollection
+      .getDoc(id)
+      .then((doc) => (doc.exists ? parseUser(doc) : null))
+      .then((user: UserWithSheshims | null) => {
+        if (user) {
+          return getUserSheshims(user.authId).then((sheshims) => ({ ...user, sheshims }))
+        }
+        return user
+      })
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
 
-export const getUserSheshims = (userId: string) => {
-  const { currentUser } = firebase.auth()
-  if (currentUser) {
-    return sheshimCollection
-      .where('createdAt.id', '==', userId)
-      .get()
-      .then((snapshot) => (snapshot.empty ? [] : snapshot.docs.map(parseSheshim)))
-  }
-  return Promise.reject(new Error('You are not signed in.'))
-}
+export const getUserSheshims = (userId: string) =>
+  sheshimCollection
+    .where('createdBy.id', '==', userId)
+    .get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        return []
+      }
+      return snapshot.docs.map(parseSheshim)
+    })

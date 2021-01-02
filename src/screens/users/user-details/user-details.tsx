@@ -3,7 +3,7 @@ import { Header, Image, Card, Icon } from 'semantic-ui-react'
 import { useParams } from 'react-router-dom'
 
 import { AppLayout, NotFound } from 'components'
-import { User } from 'models'
+import { UserWithSheshims } from 'models'
 import { getUser } from 'services/firebase/user'
 import { fireSwalError } from 'utils/error-handler'
 import { images } from 'assets'
@@ -16,7 +16,7 @@ export interface UserDetailsParams {
 }
 
 export function UserDetails() {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<UserWithSheshims | null>(null)
   const [loading, setLoading] = useState(true)
   const { userId } = useParams<UserDetailsParams>()
 
@@ -56,7 +56,7 @@ export function UserDetails() {
         </Card.Content>
       </Card>
 
-      <UserSheshimList />
+      <UserSheshimList sheshims={user.sheshims} />
     </AppLayout>
   )
 }
