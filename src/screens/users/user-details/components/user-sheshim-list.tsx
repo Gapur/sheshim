@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Header } from 'semantic-ui-react'
+import { List, Header, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import moment from 'moment'
@@ -19,18 +19,27 @@ export function UserSheshimList({ sheshims }: UserSheshimListProps) {
     <SheshimList>
       <Header>My Questions</Header>
       <List animated divided selection verticalAlign="middle">
-        {sheshims.map((sheshim) => (
-          <List.Item key={sheshim.id}>
-            <List.Content>
-              <List.Header>
-                <Link to="/">{sheshim.title}</Link>
-              </List.Header>
-              <List.Description>
-                {`asked ${moment(sheshim.createdAt?.toDate()).fromNow()}`}
-              </List.Description>
-            </List.Content>
+        {sheshims.length ? (
+          sheshims.map((sheshim) => (
+            <List.Item key={sheshim.id}>
+              <List.Content>
+                <List.Header>
+                  <Link to="/">{sheshim.title}</Link>
+                </List.Header>
+                <List.Description>
+                  {`asked ${moment(sheshim.createdAt?.toDate()).fromNow()}`}
+                </List.Description>
+              </List.Content>
+            </List.Item>
+          ))
+        ) : (
+          <List.Item>
+            <Header as="h4" icon textAlign="center">
+              <Icon name="database" />
+              <Header.Content>No questions data</Header.Content>
+            </Header>
           </List.Item>
-        ))}
+        )}
       </List>
     </SheshimList>
   )
