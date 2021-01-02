@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Search, Dropdown, Menu } from 'semantic-ui-react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 import { colors, metrics } from 'theme'
 import { images } from 'assets'
@@ -49,7 +49,7 @@ const Nav = styled.div`
   margin: 0 auto;
 `
 
-const Logo = styled.div`
+const LogoLink = styled(Link)`
   display: flex;
   align-items: center;
   height: 100%;
@@ -62,6 +62,7 @@ const Logo = styled.div`
   span {
     font-size: 1.28571429em;
     margin-left: 8px;
+    color: ${colors.black};
   }
 `
 
@@ -83,10 +84,10 @@ export function AppHeader({ user }: { user: firebase.UserInfo }) {
   return (
     <Header>
       <Nav>
-        <Logo>
+        <LogoLink to="/">
           <Image src={images.logo} />
           <span>Sheshim</span>
-        </Logo>
+        </LogoLink>
         <Search
           loading={false}
           onResultSelect={(e, data) => {}}

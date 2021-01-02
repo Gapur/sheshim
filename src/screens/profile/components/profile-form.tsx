@@ -32,7 +32,7 @@ export function ProfileForm({ profile, onSubmit }: ProfileFormProps) {
     description: profile.description,
   }
 
-  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>({
+  const { errors, formState, register, handleSubmit, setValue, trigger } = useForm<FormValues>({
     defaultValues,
   })
 
@@ -61,7 +61,7 @@ export function ProfileForm({ profile, onSubmit }: ProfileFormProps) {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form loading={formState.isSubmitting} onSubmit={handleSubmit(onSubmit)}>
       <DragDropzone files={files} onChange={setFiles} />
 
       <Form.Field error={Boolean(errors.name)}>
