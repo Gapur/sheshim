@@ -1,5 +1,6 @@
 import { User, parseUser, createInitialUser, parseSheshim, UserWithSheshims } from 'models'
 import { FormValues as SignUpValues } from 'screens/auth/sign-up/components/sign-up-form'
+import { FormValues as ProfileValues } from 'screens/profile/components/profile-form'
 
 import { firebase } from './firebase'
 import { CollectionManager } from './collection-manager'
@@ -50,3 +51,28 @@ export const getUserSheshims = (userId: string) =>
       }
       return snapshot.docs.map(parseSheshim)
     })
+
+export const getProfile = async () => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return userCollection
+      .where('authId', '==', currentUser.uid)
+      .get()
+      .then((snapshot) => {
+        if (snapshot.empty || snapshot.docs.length > 1) {
+          return Promise.reject(new Error('Something is wrong with your profile data.'))
+        }
+        const [userProfile] = snapshot.docs
+        return parseUser(userProfile)
+      })
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}
+
+export const updateProfile = (userId: string, data: ProfileValues) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return userCollection.updateDoc(userId, data as User)
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}

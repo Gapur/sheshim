@@ -12,6 +12,7 @@ export interface User {
   avatar?: string | null
   reputation?: number
   position?: string
+  description?: string
   createdAt?: firebase.firestore.Timestamp
   updatedAt?: firebase.firestore.Timestamp
 }
@@ -38,4 +39,5 @@ export const createInitialUser = (user: firebase.auth.UserCredential, data?: For
   city: 'Somewhere',
   country: 'World',
   position: 'Not Bot',
+  description: '',
 })
