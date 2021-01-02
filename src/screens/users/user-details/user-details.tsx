@@ -1,24 +1,48 @@
-import React from 'react'
-import { Header, Image, Card, Icon, List } from 'semantic-ui-react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Header, Image, Card, Icon } from 'semantic-ui-react'
+import { useParams } from 'react-router-dom'
 
-import { AppLayout } from 'components'
+import { AppLayout, NotFound } from 'components'
+import { UserWithSheshims } from 'models'
+import { getUser } from 'services/firebase/user'
+import { fireSwalError } from 'utils/error-handler'
+import { images } from 'assets'
 
-interface UserDetailsParams {
+import { UserDetailsLoader } from './components/user-details-loader'
+import { UserSheshimList } from './components/user-sheshim-list'
+
+export interface UserDetailsParams {
   userId: string
 }
 
 export function UserDetails() {
+  const [user, setUser] = useState<UserWithSheshims | null>(null)
+  const [loading, setLoading] = useState(true)
   const { userId } = useParams<UserDetailsParams>()
+
+  useEffect(() => {
+    getUser(userId)
+      .then(setUser)
+      .catch(fireSwalError)
+      .finally(() => setLoading(false))
+  }, [userId])
+
+  if (loading) {
+    return <UserDetailsLoader />
+  }
+
+  if (!user) {
+    return <NotFound />
+  }
 
   return (
     <AppLayout page="users">
       <Header>User Details</Header>
 
-      {/* <Card color="yellow">
-        <Image src={user.avatar} wrapped ui={false} />
+      <Card color="yellow">
+        <Image src={user.avatar ?? images.user} wrapped ui={false} />
         <Card.Content>
-          <Card.Header>{`${user.firstName} ${user.lastName}`}</Card.Header>
+          <Card.Header>{`${user.name}`}</Card.Header>
           <Card.Meta>
             <span>{user.email}</span>
           </Card.Meta>
@@ -30,42 +54,9 @@ export function UserDetails() {
             {`${user.reputation} reputation`}
           </a>
         </Card.Content>
-      </Card> */}
+      </Card>
 
-      <Header>My Questions</Header>
-
-      <List animated divided selection verticalAlign="middle">
-        <List.Item>
-          <List.Content>
-            <List.Header>
-              <Link to="/">
-                React live server is not displaying anything just showing the tab keep on loading
-              </Link>
-            </List.Header>
-            <List.Description>asked 3 hours ago</List.Description>
-          </List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>
-            <List.Header>
-              <Link to="/">
-                React live server is not displaying anything just showing the tab keep on loading
-              </Link>
-            </List.Header>
-            <List.Description>asked 3 hours ago</List.Description>
-          </List.Content>
-        </List.Item>
-        <List.Item>
-          <List.Content>
-            <List.Header>
-              <Link to="/">
-                React live server is not displaying anything just showing the tab keep on loading
-              </Link>
-            </List.Header>
-            <List.Description>asked 3 hours ago</List.Description>
-          </List.Content>
-        </List.Item>
-      </List>
+      <UserSheshimList sheshims={user.sheshims} />
     </AppLayout>
   )
 }

@@ -4,28 +4,44 @@ import { useForm } from 'react-hook-form'
 
 import { DragDropzone, DropzoneFile } from './drag-dropzone'
 import { constants } from 'config'
+import { User } from 'models'
 
-interface FormValues {
-  firstName: string
-  lastName: string
-  email: string
+export interface FormValues {
+  name: string
+  email?: string
   position?: string
   city?: string
   country?: string
   description?: string
 }
 
-export function ProfileForm() {
+interface ProfileFormProps {
+  profile: User
+  onSubmit: (data: FormValues) => void
+}
+
+export function ProfileForm({ profile, onSubmit }: ProfileFormProps) {
   const [files, setFiles] = useState<DropzoneFile[]>([])
-  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>()
+
+  const defaultValues: FormValues = {
+    name: profile.name as string,
+    email: profile.email,
+    position: profile.position,
+    city: profile.city,
+    country: profile.country,
+    description: profile.description,
+  }
+
+  const { errors, register, handleSubmit, setValue, trigger } = useForm<FormValues>({
+    defaultValues,
+  })
 
   useEffect(() => {
     files.forEach((file) => URL.revokeObjectURL(file.preview))
   }, [files])
 
   useEffect(() => {
-    register('firstName', { required: 'First name is required' })
-    register('lastName', { required: 'Last name is required' })
+    register('name', { required: 'Name is required' })
     register('email', {
       required: 'Email is required',
       pattern: { value: constants.REGEX.EMAIL, message: 'Email is not valid' },
@@ -37,52 +53,42 @@ export function ProfileForm() {
   }, [register])
 
   const onInputChange = async (
-    name: 'firstName' | 'lastName' | 'email' | 'position' | 'city' | 'country' | 'description',
+    name: 'name' | 'email' | 'position' | 'city' | 'country' | 'description',
     value: string,
   ) => {
     setValue(name, value)
     await trigger(name)
   }
 
-  const onSubmit = (data: FormValues) => console.log({ ...data, file: files[0] })
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <DragDropzone files={files} onChange={setFiles} />
 
-      <Form.Group widths="equal">
-        <Form.Field error={Boolean(errors.firstName)}>
-          <label>First Name</label>
-          <input
-            placeholder="First name"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('firstName', e.target.value)}
-          />
-          {errors.firstName && (
-            <Label pointing prompt>
-              {errors.firstName.message}
-            </Label>
-          )}
-        </Form.Field>
-        <Form.Field error={Boolean(errors.lastName)}>
-          <label>Last Name</label>
-          <input
-            placeholder="Last name"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('lastName', e.target.value)}
-          />
-          {errors.lastName && (
-            <Label pointing prompt>
-              {errors.lastName.message}
-            </Label>
-          )}
-        </Form.Field>
-      </Form.Group>
+      <Form.Field error={Boolean(errors.name)}>
+        <label>Name</label>
+        <input
+          defaultValue={defaultValues.name}
+          placeholder="Name"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onInputChange('name', e.target.value)
+          }
+        />
+        {errors.name && (
+          <Label pointing prompt>
+            {errors.name.message}
+          </Label>
+        )}
+      </Form.Field>
 
       <Form.Group widths="equal">
         <Form.Field error={Boolean(errors.email)}>
           <label>Email</label>
           <input
+            defaultValue={defaultValues.email}
             placeholder="example@gmail.com"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('email', e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onInputChange('email', e.target.value)
+            }
           />
           {errors.email && (
             <Label pointing prompt>
@@ -93,8 +99,11 @@ export function ProfileForm() {
         <Form.Field>
           <label>Job Position</label>
           <input
+            defaultValue={defaultValues.position}
             placeholder="Position"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('position', e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onInputChange('position', e.target.value)
+            }
           />
         </Form.Field>
       </Form.Group>
@@ -103,15 +112,21 @@ export function ProfileForm() {
         <Form.Field>
           <label>City</label>
           <input
+            defaultValue={defaultValues.city}
             placeholder="City"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('city', e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onInputChange('city', e.target.value)
+            }
           />
         </Form.Field>
         <Form.Field>
           <label>Country</label>
           <input
+            defaultValue={defaultValues.country}
             placeholder="Kazakhstan"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange('country', e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onInputChange('country', e.target.value)
+            }
           />
         </Form.Field>
       </Form.Group>
@@ -119,8 +134,11 @@ export function ProfileForm() {
         <label>Description</label>
         <textarea
           rows={3}
+          defaultValue={defaultValues.description}
           placeholder="Describe something about yourself"
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => onInputChange('description', e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            onInputChange('description', e.target.value)
+          }
         />
       </Form.Field>
 
