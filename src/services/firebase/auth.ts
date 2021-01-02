@@ -3,7 +3,7 @@ import { FormValues as LogInValues } from 'screens/auth/log-in/components/log-in
 import { FormValues as ForgotValues } from 'screens/auth/forgot-password/components/forgot-password-form'
 
 import { firebase } from './firebase'
-import { createUser } from './user'
+import { createUser, userCollection } from './user'
 
 export const onAuthStateChanged = (
   successFn: (user: firebase.User) => void,
@@ -36,12 +36,23 @@ export const forgotPassword = ({ email }: ForgotValues) =>
 
 export const loginWithGoogle = async () => {
   const googleProvider = new firebase.auth.GoogleAuthProvider()
-  return firebase.auth().signInWithPopup(googleProvider).then(createUser)
+  return firebase.auth().signInWithPopup(googleProvider).then(createUserWithGoogleOrFacebook)
 }
 
 export const loginWithFacebook = async () => {
   const facebookProvider = new firebase.auth.FacebookAuthProvider()
-  return firebase.auth().signInWithPopup(facebookProvider).then(createUser)
+  return firebase.auth().signInWithPopup(facebookProvider).then(createUserWithGoogleOrFacebook)
 }
+
+const createUserWithGoogleOrFacebook = (user: firebase.auth.UserCredential) =>
+  userCollection
+    .where('authId', '==', user.user?.uid)
+    .get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        return createUser(user).then(() => user)
+      }
+      return user
+    })
 
 export const logout = () => firebase.auth().signOut()
