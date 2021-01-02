@@ -23,6 +23,7 @@ import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
 import { SheshimDetailsLoader } from './components/sheshim-details-loader'
 import { FormValues } from './components/sheshim-comment-form'
+import { SheshimButtonControl } from './components/sheshim-button-control'
 
 export interface SheshimDetailsParams {
   sheshimId: string
@@ -109,21 +110,11 @@ export function SheshimDetails() {
       <Divider />
       <Sheshimder>
         <SheshimResponse>
-          <div>
-            <Button.Group size="mini" vertical>
-              <Button
-                icon="angle up"
-                disabled={sheshimVoting}
-                onClick={() => onUpdateSheshimVote(sheshim.votes + 1)}
-              />
-              <Button>{sheshim.votes}</Button>
-              <Button
-                icon="angle down"
-                disabled={sheshimVoting}
-                onClick={() => onUpdateSheshimVote(sheshim.votes - 1)}
-              />
-            </Button.Group>
-          </div>
+          <SheshimButtonControl
+            voting={sheshimVoting}
+            votes={sheshim.votes}
+            onUpdate={onUpdateSheshimVote}
+          />
           <SheshimResponseContent
             body={sheshim.body}
             tags={sheshim.tags}
@@ -138,21 +129,11 @@ export function SheshimDetails() {
 
         {sheshim.answers.map((answer: SheshimAnswer, answerIdx: number) => (
           <SheshimResponse key={answerIdx}>
-            <div>
-              <Button.Group size="mini" vertical>
-                <Button
-                  icon="angle up"
-                  disabled={sheshimAnswerVoting}
-                  onClick={() => onUpdateSheshimAnswers(answerIdx, answer.votes + 1)}
-                />
-                <Button>{answer.votes}</Button>
-                <Button
-                  icon="angle down"
-                  disabled={sheshimAnswerVoting}
-                  onClick={() => onUpdateSheshimAnswers(answerIdx, answer.votes - 1)}
-                />
-              </Button.Group>
-            </div>
+            <SheshimButtonControl
+              voting={sheshimAnswerVoting}
+              votes={answer.votes}
+              onUpdate={(votes: number) => onUpdateSheshimAnswers(answerIdx, votes)}
+            />
             <SheshimResponseContent
               body={answer.body}
               createdAt={answer.createdAt?.toDate()}
