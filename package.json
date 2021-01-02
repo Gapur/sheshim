@@ -1,7 +1,24 @@
 {
   "name": "sheshim",
   "version": "0.1.0",
+  "author": "Gapur Kassym",
+  "description": "Sheshim is a question and answer site for professional and enthusiast users.",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gapur/sheshim.git"
+  },
+  "keywords": [
+    "react",
+    "firebase",
+    "web",
+    "authentication",
+    "semantic-ui",
+    "google",
+    "facebook",
+    "javascript",
+    "react-hooks"
+  ],
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
