@@ -60,8 +60,6 @@ export function ProfileForm({ profile, onSubmit }: ProfileFormProps) {
     await trigger(name)
   }
 
-  const onFormSubmit = (data: FormValues) => console.log({ ...data, file: files[0] })
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <DragDropzone files={files} onChange={setFiles} />

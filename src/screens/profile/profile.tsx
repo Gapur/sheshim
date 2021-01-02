@@ -8,6 +8,7 @@ import { getProfile, updateProfile } from 'services/firebase/user'
 import { fireSwalError } from 'utils/error-handler'
 
 import { FormValues, ProfileForm } from './components/profile-form'
+import { ProfileLoader } from './components/profile-loader'
 
 export function Profile() {
   const [profile, setProfile] = useState<User | null>(null)
@@ -21,7 +22,7 @@ export function Profile() {
   }, [])
 
   if (loading) {
-    return <div>Loading</div>
+    return <ProfileLoader />
   }
 
   if (!profile) {
