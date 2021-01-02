@@ -7,7 +7,7 @@ import { sheshimCollection } from './sheshim'
 
 export const userCollection = new CollectionManager('users')
 
-export const createUser = (user: firebase.auth.UserCredential, data: SignUpValues) => {
+export const createUser = (user: firebase.auth.UserCredential, data?: SignUpValues) => {
   const newUser: User = createInitialUser(user, data)
   return userCollection.addDoc(newUser)
 }

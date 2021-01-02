@@ -29,10 +29,10 @@ export const parseUser = (doc: firebase.firestore.DocumentSnapshot) => {
   } as UserWithSheshims
 }
 
-export const createInitialUser = (user: firebase.auth.UserCredential, data: FormValues) => ({
+export const createInitialUser = (user: firebase.auth.UserCredential, data?: FormValues) => ({
   authId: user.user?.uid as string,
-  name: user.user?.displayName ?? data.name,
-  email: user.user?.email ?? data.email,
+  name: data?.name ?? user.user?.displayName ?? 'Anonymous',
+  email: user.user?.email ?? data?.email ?? 'anonymous@anonymous.com',
   avatar: user.user?.photoURL,
   reputation: 0,
   city: 'Somewhere',

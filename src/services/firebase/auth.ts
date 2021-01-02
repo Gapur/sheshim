@@ -34,14 +34,14 @@ export const signUpWithEmailAndPassword = async (data: SignUpValues) => {
 export const forgotPassword = ({ email }: ForgotValues) =>
   firebase.auth().sendPasswordResetEmail(email)
 
-export const loginWithGoogle = () => {
+export const loginWithGoogle = async () => {
   const googleProvider = new firebase.auth.GoogleAuthProvider()
-  return firebase.auth().signInWithPopup(googleProvider)
+  return firebase.auth().signInWithPopup(googleProvider).then(createUser)
 }
 
-export const loginWithFacebook = () => {
+export const loginWithFacebook = async () => {
   const facebookProvider = new firebase.auth.FacebookAuthProvider()
-  return firebase.auth().signInWithPopup(facebookProvider)
+  return firebase.auth().signInWithPopup(facebookProvider).then(createUser)
 }
 
 export const logout = () => firebase.auth().signOut()
