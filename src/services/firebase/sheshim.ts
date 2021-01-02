@@ -141,3 +141,17 @@ export const updateSheshimAnswerComments = async (
   }
   return Promise.reject(new Error('You are not signed in.'))
 }
+
+export const updateSheshimViews = async (sheshimId: string, views: number) => {
+  const { currentUser } = firebase.auth()
+  if (currentUser) {
+    return sheshimCollection
+      .getDoc(sheshimId)
+      .then((doc) =>
+        doc.exists
+          ? sheshimCollection.updateDoc(sheshimId, { ...doc.data, views } as Sheshim)
+          : null,
+      )
+  }
+  return Promise.reject(new Error('You are not signed in.'))
+}

@@ -15,6 +15,7 @@ import {
   updateSheshimAnswerVote,
   createSheshimComment,
   updateSheshimAnswerComments,
+  updateSheshimViews,
 } from 'services/firebase/sheshim'
 import { fireSwalError } from 'utils/error-handler'
 
@@ -48,10 +49,24 @@ export function SheshimDetails() {
 
   useEffect(() => {
     getSheshim(sheshimId)
-      .then(setSheshim)
+      .then((sheshimim: Sheshimim | null) => {
+        if (sheshimim) {
+          return updateSheshimViews(sheshimId, sheshimim.views + 1).then(() =>
+            setSheshim({ ...sheshimim, views: sheshimim.views + 1 }),
+          )
+        }
+      })
       .catch(fireSwalError)
       .finally(() => setLoading(false))
   }, [sheshimId])
+
+  if (loading) {
+    return <SheshimDetailsLoader />
+  }
+
+  if (!sheshim) {
+    return <NotFound />
+  }
 
   const onCreateSheshimAnswer = (data: SlateNode[]) =>
     createSheshimAnswer(sheshimId, data)
@@ -63,14 +78,6 @@ export function SheshimDetails() {
         setSheshim(updatedSheshim)
       })
       .catch(fireSwalError)
-
-  if (loading) {
-    return <SheshimDetailsLoader />
-  }
-
-  if (!sheshim) {
-    return <NotFound />
-  }
 
   const onUpdateSheshimVote = (votes: number) => {
     setSheshimVoting(true)
