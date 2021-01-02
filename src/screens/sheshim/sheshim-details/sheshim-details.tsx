@@ -23,7 +23,7 @@ import { SheshimResponseContent } from './components/sheshim-response-content'
 import { SheshimAnswerForm } from './components/sheshim-answer-form'
 import { SheshimDetailsLoader } from './components/sheshim-details-loader'
 import { FormValues } from './components/sheshim-comment-form'
-import { SheshimButtonControl } from './components/sheshim-button-control'
+import { SheshimVotingControl } from './components/sheshim-voting-control'
 
 export interface SheshimDetailsParams {
   sheshimId: string
@@ -110,7 +110,7 @@ export function SheshimDetails() {
       <Divider />
       <Sheshimder>
         <SheshimResponse>
-          <SheshimButtonControl
+          <SheshimVotingControl
             voting={sheshimVoting}
             votes={sheshim.votes}
             onUpdate={onUpdateSheshimVote}
@@ -129,7 +129,7 @@ export function SheshimDetails() {
 
         {sheshim.answers.map((answer: SheshimAnswer, answerIdx: number) => (
           <SheshimResponse key={answerIdx}>
-            <SheshimButtonControl
+            <SheshimVotingControl
               voting={sheshimAnswerVoting}
               votes={answer.votes}
               onUpdate={(votes: number) => onUpdateSheshimAnswers(answerIdx, votes)}

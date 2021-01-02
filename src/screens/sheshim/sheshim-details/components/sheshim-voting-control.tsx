@@ -1,13 +1,13 @@
 import React from 'react'
 import { Button } from 'semantic-ui-react'
 
-interface SheshimButtonControlProps {
+interface SheshimVotingControlProps {
   votes: number
   voting: boolean
   onUpdate: (votes: number) => void
 }
 
-export function SheshimButtonControl({ votes, voting, onUpdate }: SheshimButtonControlProps) {
+export function SheshimVotingControl({ votes, voting, onUpdate }: SheshimVotingControlProps) {
   return (
     <div>
       <Button.Group size="mini" vertical>
